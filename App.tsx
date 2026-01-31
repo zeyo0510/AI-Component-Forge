@@ -79,6 +79,7 @@ import Skeleton from './components/Skeleton';
 import Blockquote from './components/Blockquote';
 import DataGrid from './components/DataGrid';
 import Marquee from './components/Marquee';
+import CompareSlider from './components/CompareSlider';
 
 import { 
   RadioOption, 
@@ -564,7 +565,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -588,6 +589,73 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'CompareSlider':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Visual Comparison Slider</Text>
+              <Text variant="small">Interactive overlay slider for comparing two visual states, components, or images.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-12">
+              <Card title="Image Post-Processing" subtitle="Drag the handle to see the HDR effect." accent="primary">
+                 <div className="py-4">
+                    <CompareSlider 
+                      className="aspect-video"
+                      before={<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=40&w=1200&sat=-100" className="w-full h-full object-cover" alt="Grayscale" />}
+                      after={<img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="Color" />}
+                      beforeLabel="Original (RAW)"
+                      afterLabel="Processed (HDR)"
+                    />
+                 </div>
+              </Card>
+
+              <Card title="UI Theme Transformation" subtitle="Comparing interface variants." accent="info" variant="outline">
+                <div className="py-4">
+                  <CompareSlider 
+                    className="h-80 border border-slate-200"
+                    before={
+                      <div className="w-full h-full bg-slate-50 p-8 flex flex-col justify-center gap-4">
+                        <div className="w-2/3 h-4 bg-slate-200 rounded" />
+                        <div className="w-full h-4 bg-slate-200 rounded" />
+                        <div className="w-1/2 h-4 bg-slate-200 rounded" />
+                        <div className="mt-4 flex gap-2">
+                           <div className="w-20 h-8 bg-indigo-500 rounded-lg" />
+                           <div className="w-20 h-8 bg-slate-200 rounded-lg" />
+                        </div>
+                      </div>
+                    }
+                    after={
+                      <div className="w-full h-full bg-slate-900 p-8 flex flex-col justify-center gap-4">
+                        <div className="w-2/3 h-4 bg-slate-700 rounded" />
+                        <div className="w-full h-4 bg-slate-700 rounded" />
+                        <div className="w-1/2 h-4 bg-slate-700 rounded" />
+                        <div className="mt-4 flex gap-2">
+                           <div className="w-20 h-8 bg-indigo-600 rounded-lg" />
+                           <div className="w-20 h-8 bg-slate-800 rounded-lg" />
+                        </div>
+                      </div>
+                    }
+                    beforeLabel="Light Mode"
+                    afterLabel="Dark Mode"
+                  />
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Clip-Path Engine" variant="flat">
+                  <Text variant="small">Uses high-performance CSS `clip-path` for rendering the overlay, ensuring zero layout shift and smooth interactions.</Text>
+               </Card>
+               <Card title="Responsive Handling" variant="flat">
+                  <Text variant="small">Automatically recalculates relative offsets using `getBoundingClientRect` to support fluid containers and viewport resizing.</Text>
+               </Card>
+               <Card title="Dual Support" variant="flat">
+                  <Text variant="small">Not just for images! CompareSlider supports any React Nodes, allowing for complex UI component comparisons.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Marquee':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
@@ -1859,7 +1927,7 @@ const App: React.FC = () => {
         return (
           <div className="space-y-10">
             <Card title="Calibrated Controls" subtitle="Precision input with scale visualization." accent="primary">
-              <div className="max-xl py-6 space-y-12">
+              <div className="max-w-xl py-6 space-y-12">
                 <TrackBar 
                   label="Master Output Gain (dB)" 
                   min={-60} 
