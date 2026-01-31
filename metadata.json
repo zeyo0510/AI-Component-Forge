@@ -1,0 +1,5 @@
+{
+  "name": "Component Forge: AI-Powered UI Playground",
+  "description": "A comprehensive UI component library showcase featuring Buttons, Breadcrumbs, Cards, RadioButtons, CheckButtons, ToggleButtons, Menus, and Status controls, integrated with Gemini for dynamic content generation.",
+  "requestFramePermissions": []
+}

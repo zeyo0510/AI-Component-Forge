@@ -1,0 +1,2159 @@
+
+import React, { useState, useEffect } from 'react';
+import Button from './components/Button';
+import Breadcrumbs from './components/Breadcrumbs';
+import Card from './components/Card';
+import RadioButton from './components/RadioButton';
+import CheckButton from './components/CheckButton';
+import ToggleButton from './components/ToggleButton';
+import Menu from './components/Menu';
+import Status from './components/Status';
+import TreeView from './components/TreeView';
+import ListView from './components/ListView';
+import DataTable from './components/DataTable';
+import Graph from './components/Graph';
+import DropDown from './components/DropDown';
+import ComboBox from './components/ComboBox';
+import StatusBar from './components/StatusBar';
+import SideBar from './components/SideBar';
+import Window from './components/Window';
+import Text from './components/Text';
+import Tab from './components/Tab';
+import Editor from './components/Editor';
+import Paint from './components/Paint';
+import Node from './components/Node';
+import Calendar from './components/Calendar';
+import Color from './components/Color';
+import Icon from './components/Icon';
+import Table from './components/Table';
+import TextBox from './components/TextBox';
+import Slider from './components/Slider';
+import ProgressBar from './components/ProgressBar';
+import Dialog from './components/Dialog';
+import Segment from './components/Segment';
+import Tooltip from './components/Tooltip';
+import ScrollArea from './components/ScrollBar';
+import Diagram from './components/Diagram';
+import Chart from './components/Chart';
+import MindMap from './components/MindMap';
+import Report from './components/Report';
+import VideoPlayer from './components/VideoPlayer';
+import AudioPlayer from './components/AudioPlayer';
+import Timeline from './components/Timeline';
+import Grid from './components/Grid';
+import Schedule from './components/Schedule';
+import Job from './components/Job';
+import Range from './components/Range';
+import Workflow from './components/Workflow';
+import Countdown from './components/Countdown';
+import MenuBar from './components/MenuBar';
+import ToolBar, { ToolBarSeparator, ToolBarGroup } from './components/ToolBar';
+import TrackBar from './components/TrackBar';
+import Board from './components/Board';
+import Rating from './components/Rating';
+import Timer from './components/Timer';
+import Rectangle from './components/Rectangle';
+import Circle from './components/Circle';
+import Triangle from './components/Triangle';
+import Spreadsheet from './components/Spreadsheet';
+import Slideshow from './components/Slideshow';
+import Slide from './components/Slide';
+import Document from './components/Document';
+import FormControl from './components/FormControl';
+import Ribbon from './components/Ribbon';
+import RibbonMenu from './components/RibbonMenu';
+import SlideDeck, { SlideData } from './components/SlideDeck';
+import Image from './components/Image';
+import Splitter from './components/Splitter';
+import Stepper from './components/Stepper';
+import PivotGrid from './components/PivotGrid';
+import TreeList from './components/TreeList';
+import Gantt from './components/Gantt';
+import Gauge from './components/Gauge';
+import NumericTextBox from './components/NumericTextBox';
+
+import { 
+  RadioOption, 
+  MenuItem, 
+  GeneratedContent, 
+  TreeItem, 
+  ListItem, 
+  DataTableColumn, 
+  GraphDataPoint, 
+  SelectOption,
+  TabItem,
+  ScheduleTask,
+  JobState,
+  WorkflowStep,
+  BoardColumn,
+  RibbonTabItem,
+  StepperItem,
+  TreeListDataItem,
+  TreeListColumn,
+  StatusType,
+  GanttTask
+} from './types';
+import { generateDemoContent } from './services/geminiService';
+
+const treeData: TreeItem[] = [
+  {
+    id: '1',
+    label: 'Root Folder',
+    children: [
+      { id: '1-1', label: 'Documents', children: [{ id: '1-1-1', label: 'Resume.pdf' }] },
+      { id: '1-2', label: 'Images', children: [{ id: '1-2-1', label: 'Avatar.png' }] },
+    ]
+  },
+  { id: '2', label: 'Settings.json' }
+];
+
+const listData: ListItem[] = [
+  { id: '1', title: 'New Message', description: 'You received a new message from Jane.', metadata: '2m ago', icon: <span>✉️</span> },
+  { id: '2', title: 'Update Available', description: 'Version 2.0 is now ready to install.', metadata: '1h ago', icon: <span>⚙️</span> },
+  { id: '3', title: 'Storage Warning', description: 'Your disk space is running low.', metadata: 'Yesterday', icon: <span>⚠️</span> },
+];
+
+const tableColumns: DataTableColumn[] = [
+  { key: 'id', header: 'ID' },
+  { key: 'name', header: 'User Name' },
+  { key: 'email', header: 'Email Address' },
+  { key: 'role', header: 'Role', align: 'center' },
+];
+
+const tableData = [
+  { id: '1', name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+  { id: '2', name: 'Jane Smith', email: 'jane@example.com', role: 'Editor' },
+  { id: '3', name: 'Bob Johnson', email: 'bob@example.com', role: 'Viewer' },
+];
+
+const radioOptions: RadioOption[] = [
+  { id: 'r1', label: 'Standard Tier', value: 'option-1' },
+  { id: 'r2', label: 'Premium Tier', value: 'option-2' },
+  { id: 'r3', label: 'Enterprise Tier', value: 'option-3' },
+];
+
+const menuItems: MenuItem[] = [
+  { label: 'View Profile', onClick: () => alert('View Profile'), icon: <span>👤</span> },
+  { label: 'Account Settings', onClick: () => alert('Settings'), icon: <span>⚙️</span> },
+  { type: 'separator' },
+  { label: 'Download Data', onClick: () => alert('Downloading...'), icon: <span>💾</span>, disabled: true },
+  { label: 'System Logs', onClick: () => alert('Opening Logs'), icon: <span>📋</span> },
+  { type: 'separator' },
+  { label: 'Log Out', onClick: () => alert('Log Out'), variant: 'danger', icon: <span>🚪</span> },
+];
+
+const sidebarItems = [
+  { id: 'general', label: 'General', icon: <span>⚙️</span> },
+  { id: 'security', label: 'Security', icon: <span>🔒</span> },
+  { id: 'billing', label: 'Billing', icon: <span>💳</span> },
+];
+
+const scheduleTasks: ScheduleTask[] = [
+  { id: 's1', title: 'Gemini 3 Integration Sync', startHour: 9, duration: 1.5, type: 'info', category: 'TEAM SYNC' },
+  { id: 's2', title: 'Security Audit Review', startHour: 11, duration: 1, type: 'warning', category: 'COMPLIANCE' },
+  { id: 's3', title: 'UI Component Stress Test', startHour: 13, duration: 2, type: 'success', category: 'QA' },
+  { id: 's4', title: 'Product Launch Webinar', startHour: 16, duration: 1.5, type: 'error', category: 'MARKETING' },
+];
+
+const activeJobs: JobState[] = [
+  { 
+    id: 'JOB-9021', 
+    name: 'Vector Embeddings Sync', 
+    status: 'running', 
+    progress: 64, 
+    runtime: '12m 45s', 
+    logs: ['[INFO] Connecting to pinecone cluster...', '[INFO] Fetching metadata...', '[INFO] Upserting 4500 vectors...'] 
+  },
+  { 
+    id: 'JOB-8812', 
+    name: 'Nightly Backup Task', 
+    status: 'completed', 
+    progress: 100, 
+    runtime: '4m 12s', 
+    logs: ['[INFO] Init backup...', '[SUCCESS] Backup verified.'] 
+  },
+  { 
+    id: 'JOB-7734', 
+    name: 'Legacy Cleanup', 
+    status: 'failed', 
+    progress: 22, 
+    runtime: '1m 02s', 
+    logs: ['[ERROR] Socket timeout exception', '[ERROR] Job aborted.'] 
+  },
+];
+
+const demoWorkflow: WorkflowStep[] = [
+  { id: 'w1', label: 'Initialize Build', status: 'completed', description: 'Setting up environment and installing dependencies from registry.', duration: '12s' },
+  { id: 'w2', label: 'Run Unit Tests', status: 'completed', description: 'Executing 452 test cases across 12 modules. All tests passed.', duration: '1m 24s' },
+  { id: 'w3', label: 'Security Scan', status: 'completed', description: 'Running static analysis (SAST) and credential leak detection.', duration: '45s' },
+  { id: 'w4', label: 'Deploy to Staging', status: 'running', description: 'Provisioning AWS resources and updating ECS clusters.', duration: 'Running...' },
+  { id: 'w5', label: 'Database Migration', status: 'pending', description: 'Applying v2.5 schema updates to PostgreSQL production mirror.' },
+  { id: 'w6', label: 'Smoke Tests', status: 'pending', description: 'Verification of core application endpoints post-deployment.' },
+];
+
+const demoMenuBar: { label: string; items: MenuItem[] }[] = [
+  {
+    label: 'File',
+    items: [
+      { label: 'New Project', icon: <span>➕</span>, onClick: () => {} },
+      { label: 'Open...', icon: <span>📂</span>, onClick: () => {} },
+      { type: 'separator' },
+      { label: 'Save All', icon: <span>💾</span>, onClick: () => {} },
+      { label: 'Export to PDF', icon: <span>📑</span>, onClick: () => {} },
+    ]
+  },
+  {
+    label: 'Edit',
+    items: [
+      { label: 'Undo', icon: <span>↩️</span>, onClick: () => {} },
+      { label: 'Redo', icon: <span>↪️</span>, onClick: () => {} },
+      { type: 'separator' },
+      { label: 'Cut', onClick: () => {} },
+      { label: 'Copy', onClick: () => {} },
+      { label: 'Paste', onClick: () => {} },
+    ]
+  },
+  {
+    label: 'Terminal',
+    items: [
+      { label: 'New Terminal', icon: <span>💻</span>, onClick: () => {} },
+      { label: 'Run Build Task', icon: <span>🔨</span>, onClick: () => {} },
+      { label: 'Clear Logs', icon: <span>🗑️</span>, onClick: () => {} },
+    ]
+  },
+  {
+    label: 'Help',
+    items: [
+      { label: 'Documentation', onClick: () => {} },
+      { label: 'Check for Updates', onClick: () => {} },
+      { label: 'About Forge', onClick: () => {} },
+    ]
+  }
+];
+
+const demoBoard: BoardColumn[] = [
+  {
+    id: 'col-1',
+    title: 'To Do',
+    tasks: [
+      { id: 't-1', title: 'Implement Auth Middleware', description: 'Setup JWT verification for all secure routes.', priority: 'high', tags: ['security', 'backend'], assignee: { name: 'Alice' } },
+      { id: 't-2', title: 'Style Component Documentation', description: 'Write CSS guides for the new design system.', priority: 'medium', tags: ['documentation'], assignee: { name: 'Bob' } },
+    ]
+  },
+  {
+    id: 'col-2',
+    title: 'In Progress',
+    tasks: [
+      { id: 't-3', title: 'Gemini 3.0 Integration', description: 'Refactor current AI calls to use the new native audio and image models.', priority: 'high', tags: ['ai', 'feature'], assignee: { name: 'Charlie', avatar: 'https://i.pravatar.cc/150?u=charlie' } },
+      { id: 't-4', title: 'Performance Audit', description: 'Identify bottleneck in the data visualization rendering engine.', priority: 'medium', tags: ['qa'], assignee: { name: 'Dave' } },
+    ]
+  },
+  {
+    id: 'col-3',
+    title: 'Done',
+    tasks: [
+      { id: 't-5', title: 'Finalize Branding', description: 'Approve final logo and color palette for Component Forge.', priority: 'low', tags: ['design'], assignee: { name: 'Eve', avatar: 'https://i.pravatar.cc/150?u=eve' } },
+      { id: 't-6', title: 'Setup CI/CD Pipeline', description: 'Automate deployments to AWS using GitHub Actions.', priority: 'high', tags: ['devops'], assignee: { name: 'Alice' } },
+    ]
+  }
+];
+
+const spreadsheetDemoData = [
+  ['Financial Forecast Q4', '', '', '', '', '', '', ''],
+  ['', 'Oct', 'Nov', 'Dec', 'Avg', 'Total', 'Goal', 'Status'],
+  ['Inference Cost', '1250', '1400', '1650', '1433', '4300', '4000', 'OVER'],
+  ['Storage (S3)', '450', '460', '480', '463', '1390', '1500', 'OK'],
+  ['Vector Ops', '890', '920', '1100', '970', '2910', '3000', 'OK'],
+  ['Auth Layer', '120', '120', '125', '121', '365', '400', 'OK'],
+  ['Total Opex', '2710', '2900', '3355', '2988', '8965', '8900', 'LIMIT'],
+  ['', '', '', '', '', '', '', ''],
+  ['Revenue (SaaS)', '12500', '14200', '18900', '15200', '45600', '40000', 'HIT'],
+  ['Net Profit', '9790', '11300', '15545', '12211', '36635', '31100', 'WOW'],
+  ...Array(5).fill(Array(8).fill(''))
+];
+
+const demoPivotData = [
+  { region: 'North America', category: 'Cloud', year: '2024', revenue: 125000 },
+  { region: 'North America', category: 'Hardware', year: '2024', revenue: 84000 },
+  { region: 'North America', category: 'Cloud', year: '2025', revenue: 158000 },
+  { region: 'Europe', category: 'Cloud', year: '2024', revenue: 95000 },
+  { region: 'Europe', category: 'Hardware', year: '2024', revenue: 112000 },
+  { region: 'Europe', category: 'Cloud', year: '2025', revenue: 110000 },
+  { region: 'Asia Pacific', category: 'Cloud', year: '2024', revenue: 180000 },
+  { region: 'Asia Pacific', category: 'Hardware', year: '2025', revenue: 45000 },
+  { region: 'Asia Pacific', category: 'SaaS', year: '2025', revenue: 72000 },
+  { region: 'North America', category: 'SaaS', year: '2024', revenue: 44000 },
+  { region: 'Europe', category: 'SaaS', year: '2025', revenue: 58000 },
+];
+
+const demoTreeListData: TreeListDataItem[] = [
+  {
+    id: 'p1',
+    task: 'Platform Re-Architecture',
+    owner: 'Sarah Jenkins',
+    status: 'running',
+    budget: '$45,000',
+    children: [
+      {
+        id: 'p1-1',
+        task: 'Database Migration',
+        owner: 'Tom Reed',
+        status: 'completed',
+        budget: '$12,000',
+        children: [
+          { id: 'p1-1-1', task: 'Schema Audit', owner: 'Tom Reed', status: 'completed', budget: '$2,000' },
+          { id: 'p1-1-2', task: 'ETL Pipelines', owner: 'Ana Silva', status: 'completed', budget: '$10,000' }
+        ]
+      },
+      {
+        id: 'p1-2',
+        task: 'API Gateway Implementation',
+        owner: 'Mark Wu',
+        status: 'running',
+        budget: '$28,000'
+      }
+    ]
+  },
+  {
+    id: 'p2',
+    task: 'Mobile App Beta',
+    owner: 'Jessica V.',
+    status: 'pending',
+    budget: '$15,000',
+    children: [
+      { id: 'p2-1', task: 'iOS Core Module', owner: 'Kevin L.', status: 'pending', budget: '$7,500' },
+      { id: 'p2-2', task: 'Android Core Module', owner: 'Stacy M.', status: 'pending', budget: '$7,500' }
+    ]
+  }
+];
+
+const demoTreeListColumns: TreeListColumn[] = [
+  { key: 'task', header: 'Project Task', width: '40%' },
+  { key: 'owner', header: 'Lead / Owner', width: '25%' },
+  { 
+    key: 'status', 
+    header: 'Status', 
+    width: '15%',
+    render: (val: StatusType) => <Status type={val} label={val.toUpperCase()} />
+  },
+  { key: 'budget', header: 'Budget Allocation', width: '20%', align: 'right' }
+];
+
+const demoGanttTasks: GanttTask[] = [
+  { id: '1', label: 'User Research & Synthesis', startDay: 0, duration: 5, progress: 100, type: 'success', assignee: 'sarah.j' },
+  { id: '2', label: 'High Fidelity UI Mockups', startDay: 4, duration: 7, progress: 85, type: 'info', assignee: 'mike.d' },
+  { id: '3', label: 'Component Library Refactor', startDay: 10, duration: 12, progress: 45, type: 'info', assignee: 'kevin.l' },
+  { id: '4', label: 'Gemini 3 Pro Integration', startDay: 15, duration: 8, progress: 20, type: 'warning', assignee: 'mark.w' },
+  { id: '5', label: 'QA Regression Testing', startDay: 22, duration: 5, progress: 0, type: 'neutral', assignee: 'stacy.m' },
+  { id: '6', label: 'Final Release Documentation', startDay: 25, duration: 5, progress: 0, type: 'neutral', assignee: 'ana.s' },
+];
+
+const demoRibbonTabs: RibbonTabItem[] = [
+  {
+    id: 'home',
+    label: 'Home',
+    groups: [
+      {
+        label: 'Clipboard',
+        items: [
+          { label: 'Paste', icon: <span>📋</span>, size: 'large', onClick: () => {} },
+          { label: 'Cut', icon: <span>✂️</span>, size: 'small', onClick: () => {} },
+          { label: 'Copy', icon: <span>📄</span>, size: 'small', onClick: () => {} },
+        ]
+      },
+      {
+        label: 'Engine',
+        items: [
+          { label: 'Run Build', icon: <span>🚀</span>, size: 'large', onClick: () => {} },
+          { label: 'Debug', icon: <span>🐞</span>, size: 'large', onClick: () => {} },
+        ]
+      },
+      {
+        label: 'Cloud',
+        items: [
+          { label: 'Sync', icon: <span>🔄</span>, size: 'small', onClick: () => {} },
+          { label: 'Push', icon: <span>☁️</span>, size: 'small', onClick: () => {} },
+          { label: 'Status', icon: <span>📡</span>, size: 'small', onClick: () => {} },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'insert',
+    label: 'Insert',
+    groups: [
+      {
+        label: 'Components',
+        items: [
+          { label: 'Card', icon: <span>🎴</span>, size: 'large', onClick: () => {} },
+          { label: 'Button', icon: <span>🔘</span>, size: 'large', onClick: () => {} },
+          { label: 'Chart', icon: <span>📊</span>, size: 'large', onClick: () => {} },
+        ]
+      },
+      {
+        label: 'Media',
+        items: [
+          { label: 'Image', icon: <span>🖼️</span>, size: 'small', onClick: () => {} },
+          { label: 'Video', icon: <span>🎥</span>, size: 'small', onClick: () => {} },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'ai',
+    label: 'AI Forge',
+    groups: [
+      {
+        label: 'Generation',
+        items: [
+          { label: 'Gemini 3', icon: <span>✨</span>, size: 'large', onClick: () => {} },
+          { label: 'Inference', icon: <span>🧠</span>, size: 'large', onClick: () => {} },
+        ]
+      },
+      {
+        label: 'Fine-tuning',
+        items: [
+          { label: 'Dataset', icon: <span>💾</span>, size: 'small', onClick: () => {} },
+          { label: 'Train', icon: <span>⚡</span>, size: 'small', onClick: () => {} },
+        ]
+      }
+    ]
+  }
+];
+
+const demoSlideDeck: SlideData[] = [
+  {
+    id: '1',
+    title: 'The Evolution of AI Infrastructure',
+    subtitle: 'Vision Keynote 2025',
+    layout: 'hero',
+    background: 'bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-600',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200',
+    content: 'Charting a path toward decentralized intelligence and autonomous component engineering.'
+  },
+  {
+    id: '2',
+    title: 'Core Architecture',
+    subtitle: 'Technical deep-dive',
+    layout: 'split',
+    image: 'https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=1200',
+    content: (
+      <ul className="space-y-4">
+        <li><b>Atomic Primitives:</b> Pure React components with zero runtime dependencies.</li>
+        <li><b>Semantic Layer:</b> Integrated grounding for Gemini 3 context awareness.</li>
+        <li><b>Real-time Engine:</b> Sub-100ms visual updates via edge-deployed inference.</li>
+      </ul>
+    )
+  },
+  {
+    id: '3',
+    title: 'Build Smarter.',
+    subtitle: 'Final thought',
+    layout: 'centered',
+    background: 'bg-slate-50',
+    content: 'Component Forge is the interface between human creativity and machine precision.'
+  }
+];
+
+const demoSteps: StepperItem[] = [
+  { label: 'Account', description: 'Identity verification', icon: <span>👤</span> },
+  { label: 'Workspace', description: 'Configure node clusters', icon: <span>🏗️</span> },
+  { label: 'API Keys', description: 'Credential allocation', icon: <span>🔑</span> },
+  { label: 'Finalize', description: 'Deploy to edge', icon: <span>🚀</span> },
+];
+
+const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('Overview');
+  const [toggleEnabled, setToggleEnabled] = useState(false);
+  const [selectedRadio, setSelectedRadio] = useState('option-1');
+  const [checkedItems, setCheckedItems] = useState({ check1: true, check2: false });
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedData, setGeneratedData] = useState<GeneratedContent | null>(null);
+  const [selectedDropdown, setSelectedDropdown] = useState('react');
+  const [innerSideBarTab, setInnerSideBarTab] = useState('general');
+  const [currentAppTab, setCurrentAppTab] = useState('tab1');
+  const [activeColor, setActiveColor] = useState('#4f46e5');
+
+  const [sliderVal, setSliderVal] = useState(45);
+  const [trackBarVal, setTrackBarVal] = useState(72);
+  const [freqVal, setFreqVal] = useState(440);
+  const [rangeVal, setRangeVal] = useState<[number, number]>([25, 75]);
+  const [segmentVal, setSegmentVal] = useState('monthly');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [textBoxValue, setTextBoxValue] = useState('');
+  const [chartType, setChartType] = useState<'pie' | 'line'>('pie');
+  const [userRating, setUserRating] = useState(4);
+  const [activeStep, setActiveStep] = useState(1);
+
+  const [mockCpu, setMockCpu] = useState(42);
+  const [mockRam, setMockRam] = useState(68);
+  const [mockNet, setMockNet] = useState(12);
+
+  // NumericTextBox states
+  const [demoPrice, setDemoPrice] = useState(1250);
+  const [demoPercent, setDemoPercent] = useState(75.5);
+  const [demoPrecision, setDemoPrecision] = useState(0.0042);
+
+  // Live simulation for Gauges
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMockCpu(prev => Math.max(10, Math.min(95, prev + (Math.random() * 20 - 10))));
+      setMockRam(prev => Math.max(30, Math.min(90, prev + (Math.random() * 6 - 3))));
+      setMockNet(prev => Math.max(2, Math.min(100, prev + (Math.random() * 40 - 20))));
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const componentsList = [
+    'Overview', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
+    'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
+    'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
+    'SideBar', 'Window', 'Text', 'Tab', 'Editor', 'Paint', 'Node', 'Calendar', 
+    'Color', 'Icon', 'Table', 'TextBox', 'Slider', 'ProgressBar', 'Dialog', 
+    'Segment', 'Tooltip', 'ScrollBar'
+  ];
+
+  const appTabs: TabItem[] = [
+    { id: 'tab1', label: 'Activity', icon: <span>🔥</span> },
+    { id: 'tab2', label: 'Performance', icon: <span>📈</span> },
+    { id: 'tab3', label: 'Log', icon: <span>📝</span> },
+  ];
+
+  const futureDate = new Date();
+  futureDate.setDate(futureDate.getDate() + 12);
+  futureDate.setHours(futureDate.getHours() + 4);
+
+  const criticalDate = new Date();
+  criticalDate.setSeconds(criticalDate.getSeconds() + 45);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'NumericTextBox':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Precise Numeric Inputs</Text>
+               <Text variant="small">High-fidelity inputs with steppers, boundaries, and precision formatting for mission-critical data entry.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Financial Context" subtitle="Currency and pricing entry." accent="success">
+                  <div className="py-4 space-y-6">
+                    <NumericTextBox 
+                      label="Product Unit Price"
+                      value={demoPrice} 
+                      onChange={setDemoPrice} 
+                      min={0} 
+                      step={50}
+                      prefix="$"
+                      precision={2}
+                    />
+                    <div className="p-3 bg-emerald-50 rounded-lg border border-emerald-100 flex justify-between items-center">
+                       <span className="text-xs font-bold text-emerald-800 uppercase tracking-tighter">Gross Calculation</span>
+                       <span className="font-mono font-bold text-emerald-700">${(demoPrice * 1.15).toFixed(2)} <span className="text-[10px] opacity-60">(+15% Tax)</span></span>
+                    </div>
+                  </div>
+               </Card>
+
+               <Card title="Scientific & System" subtitle="High precision and bounded values." accent="primary">
+                  <div className="py-4 space-y-6">
+                    <NumericTextBox 
+                      label="Inference Threshold"
+                      value={demoPercent} 
+                      onChange={setDemoPercent} 
+                      min={0} 
+                      max={100}
+                      suffix="%"
+                      precision={1}
+                    />
+                    <NumericTextBox 
+                      label="Quantum Coefficient"
+                      value={demoPrecision} 
+                      onChange={setDemoPrecision} 
+                      step={0.0001}
+                      precision={6}
+                    />
+                  </div>
+               </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               <Card title="Boundary Logic" variant="flat">
+                  <Text variant="small">Automatically clamps values to defined min/max on blur or enter key, ensuring data integrity within system limits.</Text>
+               </Card>
+               <Card title="Stepper Controls" variant="flat">
+                  <Text variant="small">Includes integrated micro-buttons and support for Arrow keys, allowing for quick adjustments without manual typing.</Text>
+               </Card>
+               <Card title="Formatting" variant="flat">
+                  <Text variant="small">Built-in support for fixed precision, decimal points, and visual decorators like prefixes or suffixes.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'Gauges':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">System Telemetry</Text>
+               <Text variant="small">High-precision radial and semi-circular gauges for visualizing critical infrastructure health in real-time.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               <Card title="CPU Core Load" accent="primary" hoverable className="flex items-center justify-center py-10">
+                  <Gauge 
+                    value={mockCpu} 
+                    label="Processor" 
+                    unit="%" 
+                    status={mockCpu > 80 ? 'error' : mockCpu > 60 ? 'warning' : 'info'} 
+                  />
+               </Card>
+               <Card title="Memory Usage" accent="success" hoverable className="flex items-center justify-center py-10">
+                  <Gauge 
+                    value={mockRam} 
+                    label="ECC-RAM" 
+                    unit="%" 
+                    status={mockRam > 85 ? 'error' : 'success'} 
+                  />
+               </Card>
+               <Card title="Disk I/O Rate" accent="warning" hoverable className="flex items-center justify-center py-10">
+                  <Gauge 
+                    value={mockNet} 
+                    variant="semi" 
+                    label="Throughput" 
+                    unit="MB/s" 
+                    max={200}
+                    status="warning"
+                  />
+               </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Precision Graphics" subtitle="SVG Arc Calculations">
+                  <Text variant="small">Built using pure SVG paths, these gauges support arbitrary angles and boundaries while maintaining crisp rendering at any zoom level or resolution.</Text>
+               </Card>
+               <Card title="Contextual Feedback" subtitle="Dynamic Thresholds">
+                  <Text variant="small">Semantic statuses allow the gauges to change color based on value thresholds, providing instant non-verbal cues for critical system states.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'Gantt':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Schedule Visualizer</Text>
+               <Text variant="small">A professional Gantt chart for tracking task durations, overlaps, and resource allocation across a project timeline.</Text>
+            </header>
+
+            <Card title="Product Engineering Timeline" subtitle="Q4 Infrastructure Modernization Sprint">
+               <div className="py-4">
+                  <Gantt tasks={demoGanttTasks} totalDays={30} />
+               </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Progress Overlays" subtitle="Visualizing velocity">
+                  <Text variant="small">Each task bar includes an internal progress fill, allowing project managers to instantly identify lagging items vs. completed milestones.</Text>
+               </Card>
+               <Card title="Interactive Context" subtitle="Density management">
+                  <Text variant="small">Built-in tooltips and a sticky task sidebar ensure that metadata and context remain accessible even when navigating dense, high-duration schedules.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'TreeList':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Hierarchical Data Grid</Text>
+               <Text variant="small">A sophisticated table for nested data structures with individual node controls.</Text>
+            </header>
+
+            <Card title="Project Work Breakdown Structure" subtitle="Managing complex nesting of tasks and resources.">
+               <div className="py-4">
+                  <TreeList 
+                    data={demoTreeListData}
+                    columns={demoTreeListColumns}
+                  />
+               </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Recursive Rendering" subtitle="Deep nesting support">
+                  <Text variant="small">The TreeList uses a recursive component pattern to allow for infinite levels of depth without losing column alignment integrity.</Text>
+               </Card>
+               <Card title="Contextual UI" subtitle="Dynamic column types">
+                  <Text variant="small">Support for custom renderers in any column allows for badges, avatars, or interactive controls while maintaining the structural hierarchy.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'PivotGrid':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Multi-Dimensional Analysis</Text>
+               <Text variant="small">A powerful data engine for summarizing complex hierarchical datasets across multiple axes.</Text>
+            </header>
+
+            <Card title="Sales Intelligence Hub" subtitle="Analyzing global revenue by region and product category.">
+               <div className="py-4">
+                  <PivotGrid 
+                    data={demoPivotData}
+                    rows={[{key: 'region', label: 'Region'}]}
+                    columns={[{key: 'year', label: 'Year'}, {key: 'category', label: 'Product'}]}
+                    measures={[{key: 'revenue', label: 'Revenue', aggregator: 'sum'}]}
+                  />
+               </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Dynamic Aggregation" subtitle="Sum vs. Count">
+                  <Text variant="small">Built-in support for different mathematical aggregators. The grid can automatically switch between measuring totals, averages, or record frequencies.</Text>
+               </Card>
+               <Card title="Fixed-Axis Scrolling" subtitle="Handling density">
+                  <Text variant="small">Optimized for high-density information with sticky headers for both row dimensions and column hierarchies, ensuring context is never lost during navigation.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'Stepper':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Progress Stepper</Text>
+               <Text variant="small">A guiding interface for multi-stage workflows with animated status transitions and branching logic support.</Text>
+            </header>
+
+            <Card title="Interactive Demonstration" subtitle="Control the flow and see state updates.">
+               <div className="py-10">
+                  <Stepper steps={demoSteps} currentStep={activeStep} onStepClick={setActiveStep} />
+               </div>
+               
+               <div className="flex justify-between items-center bg-slate-50 border border-slate-100 rounded-2xl p-6 mt-4">
+                  <div className="flex flex-col">
+                    <Text variant="caption">Current Stage</Text>
+                    <Text variant="h4" className="text-indigo-600 font-black uppercase">{demoSteps[activeStep].label}</Text>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setActiveStep(prev => Math.max(0, prev - 1))} disabled={activeStep === 0}>Back</Button>
+                    <Button size="sm" onClick={() => setActiveStep(prev => Math.min(demoSteps.length - 1, prev + 1))} disabled={activeStep === demoSteps.length - 1}>Next Step</Button>
+                  </div>
+               </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Vertical Orientation" subtitle="Ideal for sidebars or complex wizards">
+                 <div className="py-4">
+                    <Stepper steps={demoSteps.slice(0, 3)} currentStep={1} orientation="vertical" />
+                 </div>
+              </Card>
+              <Card title="Customized State" subtitle="Semantic feedback and icons">
+                 <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                       <div className="w-6 h-6 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center"><svg className="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"/></svg></div>
+                       <Text variant="small" className="font-bold text-slate-700 uppercase tracking-tighter">Status: Completed</Text>
+                    </div>
+                    <div className="flex items-center gap-3">
+                       <div className="w-6 h-6 rounded-full border-2 border-indigo-600 flex items-center justify-center"><div className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"/></div>
+                       <Text variant="small" className="font-bold text-slate-700 uppercase tracking-tighter">Status: Active (Processing)</Text>
+                    </div>
+                    <div className="flex items-center gap-3">
+                       <div className="w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center"><span className="text-[10px] font-black text-slate-300">3</span></div>
+                       <Text variant="small" className="font-bold text-slate-400 uppercase tracking-tighter">Status: Pending</Text>
+                    </div>
+                 </div>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'Splitter':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 h-[600px] flex flex-col">
+             <header>
+               <Text variant="h3">Layout Splitter</Text>
+               <Text variant="small">Fluid, resizable panel containers for dynamic application shells.</Text>
+            </header>
+
+            <Card className="flex-1 overflow-hidden" padding="none">
+               <Splitter orientation="horizontal" initialSize={25} minSize={15} maxSize={40}>
+                  {/* Left Sidebar Panel */}
+                  <div className="bg-slate-50 h-full border-r border-slate-200">
+                    <div className="p-4 border-b border-slate-200 bg-white">
+                      <Text variant="caption" className="font-black text-indigo-600">Explorer</Text>
+                    </div>
+                    <div className="p-2">
+                       <TreeView items={treeData} />
+                    </div>
+                  </div>
+
+                  {/* Right Content Area (Vertical Split) */}
+                  <Splitter orientation="vertical" initialSize={70}>
+                    {/* Top Main Editor */}
+                    <div className="h-full bg-white flex flex-col">
+                       <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+                         <div className="flex gap-2">
+                            <span className="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Main.tsx</span>
+                            <span className="text-[10px] text-slate-400 px-2 py-0.5 rounded font-bold uppercase tracking-widest">Styles.css</span>
+                         </div>
+                       </div>
+                       <div className="flex-1 p-6">
+                         <Editor initialValue={`// Resizable IDE Mockup\nexport function Component() {\n  return <div>Hello World</div>;\n}`} />
+                       </div>
+                    </div>
+
+                    {/* Bottom Console/Terminal */}
+                    <div className="h-full bg-slate-900 text-emerald-400 font-mono text-xs p-4 overflow-auto custom-scrollbar">
+                      <div className="opacity-50 mb-2 border-b border-slate-800 pb-2">TERMINAL • BASH</div>
+                      <div>$ npm run build</div>
+                      <div className="text-white">✓ Build complete in 1.2s</div>
+                      <div className="animate-pulse">_</div>
+                    </div>
+                  </Splitter>
+               </Splitter>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 shrink-0">
+               <Card title="Nested Layouts" subtitle="Unlimited depth support">
+                  <Text variant="small">The Splitter component can be nested infinitely, allowing you to create complex multi-pane layouts with independent resizing logic for each section.</Text>
+               </Card>
+               <Card title="Orientation Support" subtitle="Horizontal & Vertical">
+                  <Text variant="small">Switch between side-by-side or stacked panels with a single property. Constraints ensure your UI never breaks into unusable dimensions.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'Image':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Asset Container</Text>
+               <Text variant="small">High-fidelity image wrapper with aspect ratio handling, lazy-load effects, and stylized filters.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Standard Variants" subtitle="Rounded corners and shadows">
+                <div className="grid grid-cols-2 gap-4">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=400" 
+                    alt="Abstract Art" 
+                    aspectRatio="1:1"
+                  />
+                  <Image 
+                    src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80&w=400" 
+                    alt="Gradient" 
+                    aspectRatio="1:1" 
+                    rounded="full"
+                    zoomOnHover
+                  />
+                </div>
+                <Text variant="caption" className="mt-4 text-center block">Fixed 1:1 Aspect Ratio (Square / Circle)</Text>
+              </Card>
+
+              <Card title="Interactive Overlays" subtitle="Captions and buttons">
+                <Image 
+                  src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&q=80&w=600" 
+                  alt="Cityscape" 
+                  aspectRatio="16:9"
+                  zoomOnHover
+                  overlay={
+                    <div className="absolute inset-0 bg-black/40 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="text-white">
+                        <h4 className="font-black uppercase tracking-widest text-xs">Project Alpha</h4>
+                        <p className="text-[10px] opacity-80">Rendered in high-fidelity 4K</p>
+                      </div>
+                    </div>
+                  }
+                />
+                <Text variant="caption" className="mt-4 text-center block">Fixed 16:9 Aspect Ratio (Video Style)</Text>
+              </Card>
+
+              <Card title="Artistic Filters" subtitle="CSS-driven aesthetics">
+                <div className="grid grid-cols-2 gap-4">
+                   <div className="space-y-2">
+                    <Image 
+                      src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=300" 
+                      alt="Forest" 
+                      filter="grayscale" 
+                      aspectRatio="1:1"
+                    />
+                    <Text variant="caption" className="text-center block">Grayscale</Text>
+                   </div>
+                   <div className="space-y-2">
+                    <Image 
+                      src="https://images.unsplash.com/photo-1501854140801-50d01674aa3e?auto=format&fit=crop&q=80&w=300" 
+                      alt="Hills" 
+                      filter="blur" 
+                      aspectRatio="1:1"
+                    />
+                    <Text variant="caption" className="text-center block">Soft Blur</Text>
+                   </div>
+                </div>
+              </Card>
+
+              <Card title="Portrait Scaling" subtitle="Mobile-first dimensions">
+                <div className="flex justify-center">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300" 
+                    alt="Portrait" 
+                    aspectRatio="9:16" 
+                    className="w-48"
+                    zoomOnHover
+                  />
+                </div>
+                <Text variant="caption" className="mt-4 text-center block">9:16 Portrait Ratio</Text>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'SlideDeck':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Interactive SlideDeck</Text>
+               <Text variant="small">A professional presentation component with overview mode, fullscreen support, and keyboard navigation.</Text>
+            </header>
+
+            <SlideDeck slides={demoSlideDeck} />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Shortcuts" subtitle="Keyboard interactivity">
+                  <div className="space-y-2 text-xs font-mono text-slate-500">
+                    <div className="flex justify-between p-2 bg-slate-50 rounded"><span>Next Slide</span><span className="bg-white px-1 border rounded shadow-sm">Space / →</span></div>
+                    <div className="flex justify-between p-2 bg-slate-50 rounded"><span>Prev Slide</span><span className="bg-white px-1 border rounded shadow-sm">←</span></div>
+                    <div className="flex justify-between p-2 bg-slate-50 rounded"><span>Overview</span><span className="bg-white px-1 border rounded shadow-sm">O</span></div>
+                    <div className="flex justify-between p-2 bg-slate-50 rounded"><span>Fullscreen</span><span className="bg-white px-1 border rounded shadow-sm">F</span></div>
+                  </div>
+               </Card>
+               <Card title="Layout Engine" subtitle="Responsive slide compositions">
+                  <Text variant="small">Supports 'Hero', 'Split', and 'Centered' layouts out of the box, with automatic dark/light background optimization based on contrast.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'RibbonMenu':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Command Ribbon</Text>
+               <Text variant="small">A dense, productivity-focused interface for professional toolsets and complex control surfaces.</Text>
+            </header>
+
+            <Card title="Live Demonstration" subtitle="Switch tabs and explore categorized command groups.">
+               <div className="py-4">
+                  <RibbonMenu tabs={demoRibbonTabs} />
+               </div>
+               <div className="mt-8 p-6 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center italic text-slate-400">
+                  Select a command from the ribbon above to perform an action.
+               </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Categorical Grouping" subtitle="Logical separation of concerns">
+                  <Text variant="small">Items are grouped into semantic sections with labels at the bottom, making dense interfaces much easier to navigate and learn.</Text>
+               </Card>
+               <Card title="Adaptive Sizing" subtitle="Large vs. Small controls">
+                  <Text variant="small">Primary actions use large tiles for visual hierarchy, while secondary or related utility actions use compact list-style controls.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'Ribbon':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Corner Adornments</Text>
+               <Text variant="small">High-impact diagonal ribbons for highlighting specific statuses or features.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               <Card padding="none" className="h-64 relative overflow-hidden group">
+                  <Ribbon text="New" variant="primary" size="sm" />
+                  <div className="p-6 flex flex-col items-center justify-center h-full">
+                     <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-4 group-hover:scale-110 transition-transform">
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                     </div>
+                     <Text variant="h4">Small Ribbon</Text>
+                  </div>
+               </Card>
+
+               <Card padding="none" className="h-64 relative overflow-hidden group border-emerald-100 bg-emerald-50/10">
+                  <Ribbon text="Beta 2.0" variant="success" size="md" />
+                  <div className="p-6 flex flex-col items-center justify-center h-full">
+                     <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-4 group-hover:rotate-12 transition-transform">
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                     </div>
+                     <Text variant="h4">Medium Success</Text>
+                  </div>
+               </Card>
+
+               <Card padding="none" className="h-64 relative overflow-hidden group border-rose-100 bg-rose-50/10">
+                  <Ribbon text="Critical" variant="error" size="lg" />
+                  <div className="p-6 flex flex-col items-center justify-center h-full">
+                     <div className="w-16 h-16 bg-rose-50 rounded-2xl flex items-center justify-center text-rose-600 mb-4 animate-pulse">
+                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                     </div>
+                     <Text variant="h4">Large Alert</Text>
+                  </div>
+               </Card>
+            </div>
+
+            <Card title="Positional Variants" subtitle="Ribbons can be placed on either the top-left or top-right corner.">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-4">
+                  <div className="h-48 border-2 border-dashed border-slate-200 rounded-2xl relative overflow-hidden flex items-center justify-center">
+                     <Ribbon text="Top Left" position="top-left" variant="info" />
+                     <Text variant="small">Position: Top-Left</Text>
+                  </div>
+                  <div className="h-48 border-2 border-dashed border-slate-200 rounded-2xl relative overflow-hidden flex items-center justify-center">
+                     <Ribbon text="Top Right" position="top-right" variant="warning" />
+                     <Text variant="small">Position: Top-Right</Text>
+                  </div>
+               </div>
+            </Card>
+          </div>
+        );
+      case 'Controls':
+        return (
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
+             <header>
+               <Text variant="h3">Form Infrastructure</Text>
+               <Text variant="small">Standardized wrappers for consistent labeling, validation, and layout logic.</Text>
+            </header>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Input Synergy" subtitle="TextBox + FormControl">
+                <div className="space-y-6">
+                  <FormControl 
+                    label="Username" 
+                    description="Enter a unique handle for your forge profile."
+                    required
+                  >
+                    <TextBox placeholder="@handle" />
+                  </FormControl>
+                  
+                  <FormControl 
+                    label="Emergency Email" 
+                    error="This email domain is blacklisted."
+                  >
+                    <TextBox value="admin@malicious.com" />
+                  </FormControl>
+                </div>
+              </Card>
+
+              <Card title="Selection Controls" subtitle="Dropdown + Radio + Toggle">
+                <div className="space-y-6">
+                   <FormControl label="Deployment Region">
+                      <DropDown 
+                        options={[{label: 'US East (Virginia)', value: 'us-east-1'}, {label: 'EU West (Dublin)', value: 'eu-west-1'}]} 
+                        value="us-east-1" 
+                        onChange={() => {}}
+                      />
+                   </FormControl>
+
+                   <FormControl label="Notification Sensitivity">
+                      <RadioButton 
+                        name="sensitivity" 
+                        options={[{id: 'low', label: 'Critical Only', value: 'low'}, {id: 'high', label: 'All Activity', value: 'high'}]} 
+                        value="low" 
+                        onChange={() => {}}
+                      />
+                   </FormControl>
+
+                   <FormControl label="Real-time Sync" description="Enable peer-to-peer data synchronization.">
+                      <ToggleButton enabled={toggleEnabled} setEnabled={setToggleEnabled} />
+                   </FormControl>
+                </div>
+              </Card>
+
+              <Card title="Continuous Inputs" subtitle="Slider + Range">
+                <div className="space-y-8 py-2">
+                  <FormControl label="Inference Precision" description="Balance between speed and accuracy.">
+                    <Slider value={sliderVal} onChange={setSliderVal} />
+                  </FormControl>
+
+                  <FormControl label="Compute Threshold (ms)">
+                    <Range min={0} max={2000} value={rangeVal} onChange={setRangeVal} />
+                  </FormControl>
+                </div>
+              </Card>
+
+              <Card title="Complex Selection" subtitle="CheckButtons">
+                <FormControl label="Required Modules" description="Select the core services to include in this build.">
+                  <div className="flex flex-col gap-3 mt-1">
+                    <CheckButton id="c1" label="Authentication Engine" checked={checkedItems.check1} onChange={(v) => setCheckedItems({...checkedItems, check1: v})} />
+                    <CheckButton id="c2" label="Vector Database Layer" checked={checkedItems.check2} onChange={(v) => setCheckedItems({...checkedItems, check2: v})} />
+                    <CheckButton id="c3" label="Websocket Gateway" checked={true} onChange={() => {}} />
+                  </div>
+                </FormControl>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'Document':
+        return (
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+               <Text variant="h3">Document Editor Showcase</Text>
+               <Text variant="small">A sophisticated interface for reading and managing structured internal knowledge.</Text>
+            </header>
+            <Document 
+              title="Architecture Overview: Component Forge Engine"
+              author="Senior Architect Team"
+              date="October 25, 2025"
+              status="info"
+              tags={['technical', 'internal', 'v2.5']}
+              content={
+                <>
+                  <h2>1. Introduction</h2>
+                  <p>
+                    Component Forge is designed as an intelligent atomic design system. It bridges the gap between static design specs 
+                    and dynamic, functional code by leveraging <strong>Gemini 3 Pro</strong> reasoning.
+                  </p>
+                  <h2>2. Core Principles</h2>
+                  <ul>
+                    <li><strong>Predictability:</strong> Every component must behave consistently across all viewports.</li>
+                    <li><strong>Performance:</strong> Zero-dependency core logic with lightweight CSS footprint.</li>
+                    <li><strong>Intelligence:</strong> Built-in hooks for real-time data synthesis.</li>
+                  </ul>
+                  <h2>3. Roadmap</h2>
+                  <p>
+                    Phase 2 focuses on real-time collaboration and multi-speaker TTS support within the Documentation layer.
+                  </p>
+                  <blockquote>
+                    "The future of engineering is not writing every line of code, but orchestrating the systems that do."
+                  </blockquote>
+                </>
+              }
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
+              <Card title="Typography Optimized" subtitle="Readability first">
+                <Text variant="small">Features custom serif stacks and optimized line-heights for long-form technical reading.</Text>
+              </Card>
+              <Card title="Export Capabilities" subtitle="Multi-format support">
+                <Text variant="small">Supports seamless conversion to PDF, Markdown, and clean HTML structures.</Text>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'Slideshow':
+        return (
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+               <Text variant="h3">Presentation Engine</Text>
+               <Text variant="small">Smooth transitions and flexible slide layouts for high-impact visual delivery.</Text>
+            </header>
+            <Slideshow autoPlay interval={6000}>
+              <Slide 
+                layout="hero"
+                subtitle="Vision 2025"
+                title="The Future of Component Engineering"
+                content="Harnessing the power of Gemini 3.0 to automate high-fidelity UI generation."
+                background="bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-600"
+                image="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=1200"
+              />
+              <Slide 
+                layout="split"
+                subtitle="Technical Architecture"
+                title="Atomic Design with AI Integration"
+                content={
+                  <div className="space-y-4">
+                    <p className="text-slate-600">Our components are built on a strict atomic structure, allowing the AI to compose complex layouts from primitive elements.</p>
+                    <ul className="list-disc list-inside text-slate-500 text-sm space-y-2">
+                      <li>Strict Tailwind utility constraints</li>
+                      <li>Semantic HTML hierarchy</li>
+                      <li>Direct access to GenAI context</li>
+                      <li>Real-time visual feedback loops</li>
+                    </ul>
+                  </div>
+                }
+                image="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=600"
+              />
+              <Slide 
+                layout="centered"
+                subtitle="Conclusion"
+                title="Build Smarter, Not Harder."
+                content="Component Forge is more than a library—it's an intelligent workspace for the modern engineer."
+                background="bg-slate-50"
+              />
+            </Slideshow>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card title="Keyboard Support" subtitle="Left/Right navigation">
+                <Text variant="small">The slideshow supports full keyboard accessibility for manual override during auto-play sessions.</Text>
+              </Card>
+              <Card title="Responsive Scaling" subtitle="Viewport optimization">
+                <Text variant="small">Slides automatically adjust their internal content scaling to ensure readability across all devices.</Text>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'Spreadsheet':
+        return (
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <header>
+               <Text variant="h3">Interactive Grid Engine</Text>
+               <Text variant="small">A data-intensive spreadsheet container with real-time editing and navigation.</Text>
+            </header>
+            <Card padding="none" variant="outline" className="border-slate-200">
+              <Spreadsheet data={spreadsheetDemoData} />
+            </Card>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card title="Cell Validation" subtitle="Built-in data sanitization.">
+                <Text variant="small">Automatically formatting strings and numbers based on column headers.</Text>
+              </Card>
+              <Card title="Virtual Scrolling" subtitle="Handling massive datasets.">
+                <Text variant="small">Efficiently rendering 10k+ rows using viewport slicing techniques.</Text>
+              </Card>
+              <Card title="Formula Support" subtitle="Algebraic expression engine.">
+                <Text variant="small">Supports standard functions like SUM, AVG, and conditional logic.</Text>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'Rectangle':
+        return (
+          <div className="space-y-8">
+            <Card title="Rectangle Showcase" subtitle="Base geometric container with various configurations.">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <Text variant="caption">Default Variant</Text>
+                  <Rectangle />
+                </div>
+                <div className="space-y-4">
+                  <Text variant="caption">Accent Border & Rounded-3xl</Text>
+                  <Rectangle color="bg-indigo-50" border rounded="3xl" />
+                </div>
+                <div className="space-y-4">
+                  <Text variant="caption">Dark Gradient</Text>
+                  <Rectangle color="bg-gradient-to-br from-slate-800 to-slate-900" />
+                </div>
+                <div className="space-y-4">
+                  <Text variant="caption">Warning Flat</Text>
+                  <Rectangle color="bg-amber-400" shadow={false} rounded="none" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        );
+      case 'Circle':
+        return (
+          <div className="space-y-8">
+            <Card title="Circle Showcase" subtitle="Standard circular elements for avatars or indicators.">
+              <div className="flex flex-wrap items-center justify-around gap-8 py-10">
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Small</Text>
+                  <Circle size="sm" color="bg-indigo-600" />
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Medium Pulse</Text>
+                  <Circle size="md" color="bg-emerald-500" pulse />
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Large</Text>
+                  <Circle size="lg" color="bg-rose-500" />
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Hero (2XL)</Text>
+                  <Circle size="2xl" color="bg-gradient-to-tr from-indigo-500 to-sky-500" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        );
+      case 'Triangle':
+        return (
+          <div className="space-y-8">
+            <Card title="Triangle Showcase" subtitle="SVG-based directional indicators.">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-10">
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Up</Text>
+                  <Triangle direction="up" size={80} color="#6366f1" />
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Right</Text>
+                  <Triangle direction="right" size={80} color="#10b981" />
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Down</Text>
+                  <Triangle direction="down" size={80} color="#f43f5e" />
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                  <Text variant="caption">Left</Text>
+                  <Triangle direction="left" size={80} color="#f59e0b" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        );
+      case 'Timer':
+        return (
+          <div className="max-w-md mx-auto py-10">
+            <Card title="Interactive Timer" subtitle="Standard countdown tool for task management.">
+              <Timer initialSeconds={600} />
+            </Card>
+          </div>
+        );
+      case 'Rating':
+        return (
+          <div className="space-y-10">
+            <Card title="Interactive Feedback" subtitle="Star-based evaluation components." accent="primary">
+              <div className="max-w-md py-6 space-y-8">
+                <Rating 
+                  label="Rate your experience" 
+                  value={userRating} 
+                  onChange={setUserRating} 
+                  size="lg" 
+                />
+                <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-xl">
+                  <Text variant="small" className="text-indigo-800">
+                    User selected: <span className="font-black">{userRating} stars</span>
+                  </Text>
+                </div>
+              </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Display Only" subtitle="Static rating visualization.">
+                <div className="space-y-4">
+                  <Rating label="System Integrity" value={5} readOnly size="sm" />
+                  <Rating label="Average Latency" value={3} readOnly size="sm" />
+                </div>
+              </Card>
+              <Card title="Scale Variants" subtitle="Customizing max value and sizing.">
+                <div className="space-y-4">
+                  <Rating value={7} max={10} size="sm" label="10-Point Scale" />
+                  <Rating value={1} size="md" label="Medium Alert Level" />
+                </div>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'Board':
+        return (
+          <div className="space-y-8">
+            <header className="flex items-center justify-between mb-2">
+              <div>
+                <Text variant="h3">Project Kanban</Text>
+                <Text variant="small">Component Forge Sprint #14 - Q4 2025</Text>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">Filters</Button>
+                <Button size="sm">New Task</Button>
+              </div>
+            </header>
+            <Board columns={demoBoard} onTaskClick={(t) => alert(`Clicked task: ${t.title}`)} />
+          </div>
+        );
+      case 'TrackBar':
+        return (
+          <div className="space-y-10">
+            <Card title="Calibrated Controls" subtitle="Precision input with scale visualization." accent="primary">
+              <div className="max-w-xl py-6 space-y-12">
+                <TrackBar 
+                  label="Master Output Gain (dB)" 
+                  min={-60} 
+                  max={12} 
+                  step={0.5} 
+                  value={trackBarVal} 
+                  onChange={setTrackBarVal} 
+                />
+                
+                <TrackBar 
+                  label="Reference Frequency (Hz)" 
+                  min={20} 
+                  max={20000} 
+                  step={10} 
+                  value={freqVal} 
+                  onChange={setFreqVal}
+                  tickInterval={2000}
+                />
+              </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Granular Precision" subtitle="Small step values for fine-tuning.">
+                <TrackBar 
+                  min={0} 
+                  max={1} 
+                  step={0.01} 
+                  value={0.42} 
+                  onChange={() => {}} 
+                  label="Opacity"
+                />
+              </Card>
+              <Card title="Simplified UI" subtitle="Ticks only, no labels variant.">
+                <TrackBar 
+                  min={0} 
+                  max={10} 
+                  value={5} 
+                  onChange={() => {}} 
+                  showLabels={false}
+                  label="Snap Strength"
+                />
+              </Card>
+            </div>
+          </div>
+        );
+      case 'MenuBar':
+        return (
+          <div className="space-y-8">
+            <Card title="Application MenuBar" subtitle="Classic horizontal menu structure for enterprise apps." padding="none">
+              <MenuBar categories={demoMenuBar} />
+              <div className="h-64 bg-slate-50 flex items-center justify-center">
+                <Text variant="small">Main application content area below the MenuBar.</Text>
+              </div>
+            </Card>
+
+            <Card title="Inside Window Example" subtitle="Combining MenuBar with a floating window container.">
+              <Window title="VS Code - Forge Project">
+                 <MenuBar categories={demoMenuBar.slice(0, 2)} className="rounded-t-lg -mx-6 -mt-6 mb-4" />
+                 <div className="bg-slate-900 rounded-lg p-6 font-mono text-xs text-indigo-400">
+                    <p>// Welcome to the forge workspace</p>
+                    <p>const app = new ForgeApplication();</p>
+                    <p>app.init();</p>
+                 </div>
+              </Window>
+            </Card>
+          </div>
+        );
+      case 'ToolBar':
+        return (
+          <div className="space-y-8">
+            <Card title="Editor ToolBar" subtitle="Standard grouping of controls for rich text or graphics editors.">
+              <ToolBar>
+                <ToolBarGroup>
+                  <Tooltip content="Bold"><Button variant="ghost" size="sm" className="px-2"><b>B</b></Button></Tooltip>
+                  <Tooltip content="Italic"><Button variant="ghost" size="sm" className="px-2"><i>I</i></Button></Tooltip>
+                  <Tooltip content="Underline"><Button variant="ghost" size="sm" className="px-2"><u>U</u></Button></Tooltip>
+                </ToolBarGroup>
+                
+                <ToolBarSeparator />
+                
+                <ToolBarGroup>
+                  <Tooltip content="Align Left"><Button variant="ghost" size="sm" className="px-2">左</Button></Tooltip>
+                  <Tooltip content="Align Center"><Button variant="ghost" size="sm" className="px-2">中</Button></Tooltip>
+                  <Tooltip content="Align Right"><Button variant="ghost" size="sm" className="px-2">右</Button></Tooltip>
+                </ToolBarGroup>
+
+                <ToolBarSeparator />
+
+                <ToolBarGroup>
+                   <div className="w-32"><DropDown options={[{label: 'Inter', value: 'inter'}, {label: 'Monospace', value: 'mono'}]} value="inter" onChange={() => {}} /></div>
+                </ToolBarGroup>
+
+                <div className="flex-1" />
+
+                <ToolBarGroup>
+                  <Button variant="primary" size="sm">Publish</Button>
+                </ToolBarGroup>
+              </ToolBar>
+
+              <div className="mt-4 h-32 border border-slate-200 rounded-xl bg-white p-4 italic text-slate-400 text-sm">
+                Start typing your content here...
+              </div>
+            </Card>
+
+            <Card title="Utility ToolBar" subtitle="Flat variant often used in sidebars or footers." variant="flat">
+               <ToolBar variant="flat">
+                  <Button variant="ghost" size="sm">🔄</Button>
+                  <Button variant="ghost" size="sm">🔍</Button>
+                  <ToolBarSeparator />
+                  <div className="flex-1 px-4"><Slider value={50} onChange={() => {}} /></div>
+                  <ToolBarSeparator />
+                  <Button variant="ghost" size="sm">⚙️</Button>
+               </ToolBar>
+            </Card>
+          </div>
+        );
+      case 'Countdown':
+        return (
+          <div className="space-y-12">
+            <Card title="Hero Countdown" subtitle="High-impact timer for major events." variant="glass" padding="lg">
+              <Countdown 
+                targetDate={futureDate} 
+                title="MAINFRAME UPGRADE PHASE 2" 
+                size="lg" 
+              />
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Success Variant" subtitle="Subtle and positive progress." accent="success">
+                <Countdown 
+                  targetDate={futureDate} 
+                  variant="success" 
+                  size="md" 
+                />
+              </Card>
+
+              <Card title="Critical Alert" subtitle="Urgent countdown with pulse effect." accent="error">
+                <Countdown 
+                  targetDate={criticalDate} 
+                  variant="danger" 
+                  size="md" 
+                  title="EMERGENCY SHUTDOWN INITIATED"
+                />
+              </Card>
+
+              <Card title="Compact View" subtitle="Fits in toolbars or sidebars." padding="sm">
+                <Countdown 
+                  targetDate={futureDate} 
+                  size="sm" 
+                />
+              </Card>
+            </div>
+          </div>
+        );
+      case 'Workflow':
+        return (
+          <Card title="CI/CD Workflow Pipeline" subtitle="Visualizing automated build and deployment sequences." accent="primary" hoverable>
+            <div className="py-4">
+              <Workflow steps={demoWorkflow} />
+            </div>
+            <div className="mt-8 p-4 bg-slate-900 rounded-xl font-mono text-[10px] text-emerald-400 overflow-hidden relative">
+               <div className="absolute top-2 right-3 flex space-x-1.5">
+                  <div className="w-2 h-2 rounded-full bg-slate-700" />
+                  <div className="w-2 h-2 rounded-full bg-slate-700" />
+               </div>
+               <div className="opacity-60">[LOG] Attempting deployment to region us-east-1...</div>
+               <div className="opacity-60">[LOG] Uploading assets to S3... 85%</div>
+               <div className="animate-pulse">[RUN] node scripts/verify-checksums.js</div>
+            </div>
+          </Card>
+        );
+      case 'Graph':
+        return (
+          <Card 
+            title="System Performance Visualizer" 
+            subtitle="Real-time resource allocation and process throughput."
+            accent="primary"
+            hoverable
+          >
+            <div className="p-4">
+              <Graph data={[
+                { label: 'Jan', value: 450, color: 'bg-gradient-to-t from-slate-700 to-slate-500' },
+                { label: 'Feb', value: 720, color: 'bg-gradient-to-t from-indigo-700 to-indigo-500' },
+                { label: 'Mar', value: 380, color: 'bg-gradient-to-t from-slate-700 to-slate-500' },
+                { label: 'Apr', value: 910, color: 'bg-gradient-to-t from-emerald-600 to-emerald-400' },
+                { label: 'May', value: 640, color: 'bg-gradient-to-t from-indigo-700 to-indigo-500' },
+                { label: 'Jun', value: 850, color: 'bg-gradient-to-t from-indigo-700 to-indigo-500' },
+              ]} />
+            </div>
+            <div className="mt-8 grid grid-cols-3 gap-4 border-t border-slate-100 pt-6">
+              <div className="text-center">
+                <div className="text-[10px] font-black text-slate-400 uppercase">Avg Throughput</div>
+                <div className="text-xl font-black text-slate-800">658 <span className="text-[10px] font-medium text-slate-400">MB/s</span></div>
+              </div>
+              <div className="text-center border-x border-slate-100">
+                <div className="text-[10px] font-black text-slate-400 uppercase">Peak Load</div>
+                <div className="text-xl font-black text-emerald-600">910 <span className="text-[10px] font-medium text-slate-400">REQ/s</span></div>
+              </div>
+              <div className="text-center">
+                <div className="text-[10px] font-black text-slate-400 uppercase">Efficiency</div>
+                <div className="text-xl font-black text-indigo-600">94.2 <span className="text-[10px] font-medium text-slate-400">%</span></div>
+              </div>
+            </div>
+          </Card>
+        );
+      case 'Card':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card title="Default Variant" subtitle="Subtle shadow and white background" hoverable>
+              <Text variant="body">The default card is perfect for grouping common dashboard elements.</Text>
+            </Card>
+            
+            <Card title="Outline Variant" variant="outline" subtitle="No shadow, solid borders">
+              <Text variant="body">Useful for secondary information that shouldn't draw too much attention.</Text>
+            </Card>
+
+            <Card title="Accent Variants" subtitle="Themed status borders" accent="primary" hoverable>
+              <Text variant="body">Top border accents allow you to categorize cards by status or type.</Text>
+              <div className="flex gap-2 mt-4">
+                <Status type="success" label="Healthy" />
+                <Status type="info" label="Active" />
+              </div>
+            </Card>
+
+            <Card title="Glassmorphism" variant="glass" subtitle="Blurs the background" className="bg-gradient-to-br from-indigo-500/10 to-rose-500/10">
+              <Text variant="body">Perfect for overlays or high-impact creative sections. Requires backdrop-blur support.</Text>
+            </Card>
+
+            <Card title="Interactive Card" subtitle="Click this card" hoverable onClick={() => alert('Card Clicked!')} accent="info">
+              <div className="py-4 flex items-center justify-center">
+                <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
+                </div>
+              </div>
+            </Card>
+
+            <Card title="Compact Formatting" padding="sm" subtitle="Minimal padding variant" accent="warning">
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                <Text variant="small">Densely packed information for toolbars or sidebars.</Text>
+              </div>
+            </Card>
+          </div>
+        );
+      case 'Range':
+        return (
+          <Card title="Range Picker" subtitle="Dual-handled slider for selecting numeric intervals.">
+            <div className="max-w-md space-y-12 py-6">
+              <Range 
+                label="Price Interval ($)" 
+                min={0} 
+                max={1000} 
+                step={10} 
+                value={rangeVal} 
+                onChange={setRangeVal} 
+              />
+              <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl">
+                 <Text variant="caption" className="mb-2 block">Current Selection</Text>
+                 <div className="flex gap-4">
+                    <div className="flex-1">
+                      <span className="text-[10px] text-slate-400 font-bold">MIN</span>
+                      <div className="text-xl font-black text-slate-900">${rangeVal[0]}</div>
+                    </div>
+                    <div className="flex-1">
+                      <span className="text-[10px] text-slate-400 font-bold">MAX</span>
+                      <div className="text-xl font-black text-slate-900">${rangeVal[1]}</div>
+                    </div>
+                 </div>
+              </div>
+            </div>
+          </Card>
+        );
+      case 'Schedule':
+        return (
+          <div className="space-y-6">
+            <Schedule tasks={scheduleTasks} />
+            <Card title="Usage Note" subtitle="Schedule component handles overlapping tasks and high-density time management scenarios.">
+               <Text variant="small">It supports multiple status types and absolute positioning based on fractional hours.</Text>
+            </Card>
+          </div>
+        );
+      case 'Job':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {activeJobs.map(j => <Job key={j.id} job={j} />)}
+          </div>
+        );
+      case 'Report':
+        return (
+          <Report 
+            title="System Audit Analysis"
+            subtitle="Detailed verification of neural-net inference logs and security heartbeats."
+            metrics={[
+              { label: 'Efficiency', value: '98.4%', trend: 'up', status: 'success' },
+              { label: 'Latency', value: '24ms', trend: 'down', status: 'info' },
+              { label: 'Security', value: 'High', status: 'success' },
+              { label: 'System Load', value: '42%', trend: 'up', status: 'warning' },
+            ]}
+            data={[
+              { id: '001', service: 'Edge-Primary', uptime: '99.9%', load: '12%' },
+              { id: '002', service: 'Auth-Gateway', uptime: '98.5%', load: '85%' },
+              { id: '003', service: 'Database-V4', uptime: '99.9%', load: '30%' },
+            ]}
+          />
+        );
+      case 'VideoPlayer':
+        return (
+          <Card title="Themed Video Player" subtitle="Custom UI components for high-quality video content">
+            <VideoPlayer />
+          </Card>
+        );
+      case 'AudioPlayer':
+        return (
+          <Card title="Music & Audio" subtitle="Compact player for podcasts or soundtracks">
+            <div className="space-y-6">
+               <AudioPlayer title="Midnight Drive" artist="Neon Synthesis" />
+               <AudioPlayer 
+                  title="Gemini 3 Keynote" 
+                  artist="Google DeepMind" 
+                  cover="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=200" 
+                />
+            </div>
+          </Card>
+        );
+      case 'Timeline':
+        return (
+          <Card title="Project Activity" subtitle="Historical audit of system events">
+            <Timeline events={[
+              { time: '10:30 AM', title: 'System Deployed', description: 'Version 2.5.4 successfully pushed to production edge clusters.', status: 'success' },
+              { time: '09:15 AM', title: 'Security Patch', description: 'Mandatory rotation of JWT encryption keys completed.', status: 'info' },
+              { time: 'Yesterday', title: 'Database Outage', description: 'A query spike in the vector DB caused a 2-minute partial service degradation.', status: 'error' },
+              { time: 'Oct 12', title: 'Sprint Review', status: 'warning' },
+            ]} />
+          </Card>
+        );
+      case 'Grid':
+        return (
+          <Card title="Grid Playground" subtitle="Demonstrating layout flexibility across different viewports">
+            <Grid />
+          </Card>
+        );
+      case 'MindMap':
+        return (
+          <Card title="Organic Mind Map" subtitle="Brainstorming concepts with fluid connections">
+            <MindMap />
+          </Card>
+        );
+      case 'Diagram':
+        return (
+          <Card title="Flow Diagram" subtitle="Visualizing automated process chains">
+            <Diagram />
+          </Card>
+        );
+      case 'Chart':
+        return (
+          <Card 
+            title="Data Visualizers" 
+            subtitle="SVG charts with high precision rendering"
+            headerAction={
+              <Segment 
+                options={[
+                  { label: 'Pie/Donut', value: 'pie' },
+                  { label: 'Line Area', value: 'line' },
+                ]}
+                value={chartType}
+                onChange={(v) => setChartType(v as any)}
+              />
+            }
+          >
+            <Chart 
+              type={chartType} 
+              data={[
+                { label: 'Cloud', value: 340, color: '#6366f1' },
+                { label: 'Edge', value: 120, color: '#10b981' },
+                { label: 'On-Prem', value: 85, color: '#f59e0b' },
+                { label: 'Hybrid', value: 195, color: '#ec4899' },
+              ]} 
+            />
+          </Card>
+        );
+      case 'ScrollBar':
+        return (
+          <div className="space-y-8">
+            <Card title="Vertical Scroll Area" subtitle="Custom scrollbar with smooth utility actions">
+              <ScrollArea height="250px">
+                <div className="space-y-4">
+                  <Text variant="h3">Long Form Content Example</Text>
+                  {Array.from({ length: 15 }).map((_, i) => (
+                    <p key={i} className="text-sm text-slate-500">
+                      Paragraph {i + 1}: This container utilizes the .custom-scrollbar class defined in our global styles. 
+                      It features a smooth indigo thumb and a transparent track for a modern, minimal aesthetic.
+                    </p>
+                  ))}
+                  <Text variant="h4" className="pt-4">End of Document</Text>
+                </div>
+              </ScrollArea>
+            </Card>
+
+            <Card title="Horizontal Scroll Area" subtitle="Useful for large datasets or image carousels">
+              <ScrollArea height="auto" horizontal>
+                <div className="inline-flex space-x-4 py-2">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i} className="w-48 h-32 bg-indigo-50 rounded-xl border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
+                      Item {i + 1}
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </Card>
+          </div>
+        );
+      case 'TextBox':
+        return (
+          <Card title="Input Components" subtitle="Standard text and textarea fields">
+            <div className="space-y-6 max-w-md">
+              <TextBox 
+                label="Email Address" 
+                placeholder="you@example.com" 
+                value={textBoxValue}
+                onChange={(e) => setTextBoxValue(e.target.value)}
+              />
+              <TextBox 
+                label="Project Description" 
+                multiline 
+                placeholder="Describe your goals..." 
+              />
+              <TextBox 
+                label="API Key" 
+                error="Invalid API key detected" 
+                value="sk-1234567890" 
+                readOnly
+              />
+            </div>
+          </Card>
+        );
+      case 'Slider':
+        return (
+          <Card title="Range Selection" subtitle="Tactile slider for numeric input">
+            <div className="max-w-md space-y-8 py-4">
+              <Slider label="Volume" value={sliderVal} onChange={setSliderVal} />
+              <Slider label="Brightness" min={0} max={10} step={0.5} value={sliderVal / 10} onChange={(v) => setSliderVal(v * 10)} />
+            </div>
+          </Card>
+        );
+      case 'ProgressBar':
+        return (
+          <Card title="Progress Indicators" subtitle="Visualizing completion states">
+            <div className="space-y-8 max-w-md">
+              <ProgressBar label="System Health" progress={sliderVal} />
+              <ProgressBar label="Deployment" progress={75} variant="success" />
+              <ProgressBar label="Critical Tasks" progress={30} variant="error" />
+              <ProgressBar label="Disk usage" progress={90} variant="warning" />
+            </div>
+          </Card>
+        );
+      case 'Dialog':
+        return (
+          <Card title="Modals" subtitle="Overlays for critical interactions">
+            <div className="py-10 text-center">
+              <Button onClick={() => setIsDialogOpen(true)}>Open Confirmation Dialog</Button>
+              <Dialog 
+                isOpen={isDialogOpen} 
+                onClose={() => setIsDialogOpen(false)}
+                title="Save Changes?"
+                description="Are you sure you want to save the current configuration to the cloud?"
+              >
+                <div className="bg-amber-50 border border-amber-100 p-3 rounded-lg flex items-start space-x-3">
+                  <span className="text-amber-500 text-lg">⚠️</span>
+                  <p className="text-xs text-amber-800">Saving this will overwrite your previous build settings. This action is not reversible.</p>
+                </div>
+              </Dialog>
+            </div>
+          </Card>
+        );
+      case 'Segment':
+        return (
+          <Card title="Segmented Control" subtitle="Toggling between exclusive views">
+            <div className="space-y-6">
+              <Segment 
+                options={[
+                  { label: 'Monthly', value: 'monthly' },
+                  { label: 'Quarterly', value: 'quarterly' },
+                  { label: 'Yearly', value: 'yearly' },
+                ]}
+                value={segmentVal}
+                onChange={setSegmentVal}
+              />
+              <p className="text-sm text-slate-500">Active View: <span className="font-bold text-indigo-600">{segmentVal}</span></p>
+            </div>
+          </Card>
+        );
+      case 'Tooltip':
+        return (
+          <Card title="Context Tooltips" subtitle="Hover feedback components">
+            <div className="flex flex-wrap gap-10 py-10">
+              <Tooltip content="Deletes the current entry forever">
+                <Button variant="danger">Delete Item</Button>
+              </Tooltip>
+              <Tooltip content="Sync with cloud storage" position="bottom">
+                <Button variant="outline">Cloud Sync</Button>
+              </Tooltip>
+              <Tooltip content="View detailed analytics" position="right">
+                <div className="p-3 bg-indigo-50 rounded-lg cursor-help text-indigo-600 font-bold">Hover Me</div>
+              </Tooltip>
+            </div>
+          </Card>
+        );
+      case 'Tab':
+        return (
+          <Card title="Tab Navigation" subtitle="Switchable content panes">
+            <div className="space-y-8">
+              <div className="space-y-2">
+                <Text variant="caption">Underline Variant</Text>
+                <Tab tabs={appTabs} activeTab={currentAppTab} onTabChange={setCurrentAppTab} variant="underline" />
+              </div>
+              <div className="space-y-2">
+                <Text variant="caption">Pills Variant</Text>
+                <Tab tabs={appTabs} activeTab={currentAppTab} onTabChange={setCurrentAppTab} variant="pills" />
+              </div>
+            </div>
+          </Card>
+        );
+      case 'Editor':
+        return (
+          <Card title="Code Editor" subtitle="Monospace text with syntax feel">
+            <Editor initialValue={`import { GoogleGenAI } from "@google/genai";\n\nconst ai = new GoogleGenAI({ apiKey: process.env.API_KEY });\n\nasync function main() {\n  const response = await ai.models.generateContent({\n    model: "gemini-3-flash-preview",\n    contents: "Hello world!",\n  });\n  console.log(response.text);\n}`} />
+          </Card>
+        );
+      case 'Paint':
+        return (
+          <Card title="Sketch Pad" subtitle="Interactive HTML5 canvas sketching">
+            <Paint />
+          </Card>
+        );
+      case 'Node':
+        return (
+          <Card title="Flow Nodes" subtitle="Visual logic building blocks">
+            <div className="flex flex-wrap gap-10 justify-center p-10 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+              <Node title="API Request" type="input" status="success">Fetch data from Gemini endpoint.</Node>
+              <Node title="Logic Processor" type="logic" status="info">Transform raw bytes to JSON.</Node>
+              <Node title="Error Handler" type="logic" status="error">Catch and log failures.</Node>
+              <Node title="Terminal Output" type="output" status="warning">Display result to user.</Node>
+            </div>
+          </Card>
+        );
+      case 'Calendar':
+        return (
+          <Card title="Event Calendar" subtitle="Date-based scheduling view">
+            <Calendar events={[
+              { date: '2025-10-12', title: 'Gemini Hackathon', type: 'info' },
+              { date: '2025-10-15', title: 'System Maintenance', type: 'warning' },
+              { date: '2025-10-21', title: 'Project Launch', type: 'success' },
+            ]} />
+          </Card>
+        );
+      case 'Color':
+        return (
+          <Card title="Color Picker" subtitle="Selection swatches and hex control">
+            <Color value={activeColor} onChange={setActiveColor} />
+          </Card>
+        );
+      case 'Icon':
+        return (
+          <Card title="Icon Gallery" subtitle="Standard SVG interface icons">
+            <Icon />
+          </Card>
+        );
+      case 'Table':
+        return (
+          <Card title="Simple Table" subtitle="Semantic HTML table data">
+            <Table 
+              headers={['ID', 'Name', 'Role', 'Status']} 
+              data={[
+                { id: '001', name: 'Alice', role: 'Dev', status: 'Online' },
+                { id: '002', name: 'Bob', role: 'Design', status: 'Away' },
+                { id: '003', name: 'Charlie', role: 'Manager', status: 'Offline' },
+              ]} 
+            />
+          </Card>
+        );
+      case 'DropDown':
+        return (
+          <Card title="Custom Select" subtitle="Styled dropdown for single selection">
+            <div className="max-w-xs space-y-4">
+              <DropDown 
+                label="Preferred Framework" 
+                options={[
+                  { label: 'React Framework', value: 'react' },
+                  { label: 'Vue.js', value: 'vue' },
+                  { label: 'Angular', value: 'angular' },
+                ]} 
+                value={selectedDropdown} 
+                onChange={setSelectedDropdown} 
+              />
+              <p className="text-xs text-slate-400">Selected: <span className="font-bold text-indigo-600 uppercase">{selectedDropdown}</span></p>
+            </div>
+          </Card>
+        );
+      case 'ComboBox':
+        return (
+          <Card title="Searchable ComboBox" subtitle="Hybrid input with filtering results">
+            <div className="max-w-md">
+              <ComboBox 
+                label="Find a Library" 
+                options={[
+                  { label: 'React', value: 'react' },
+                  { label: 'Redux', value: 'redux' },
+                  { label: 'Tailwind', value: 'tailwind' },
+                  { label: 'Gemini AI', value: 'gemini' },
+                ]} 
+                onSelect={(val) => alert(`Selected: ${val}`)} 
+              />
+            </div>
+          </Card>
+        );
+      case 'StatusBar':
+        return (
+          <Card title="System Status Bar" subtitle="Application footer feedback">
+            <div className="p-8 text-center border-2 border-dashed border-slate-200 rounded-xl">
+              <p className="text-slate-500">The status bar is currently active at the bottom of the screen.</p>
+            </div>
+          </Card>
+        );
+      case 'SideBar':
+        return (
+          <Card title="Internal Navigation" subtitle="Secondary layout sidebar component">
+            <div className="flex h-64 border border-slate-200 rounded-xl overflow-hidden bg-white">
+              <SideBar items={sidebarItems} activeId={innerSideBarTab} onSelect={setInnerSideBarTab} />
+              <div className="flex-1 p-6 flex flex-col items-center justify-center text-center">
+                <Text variant="h4">Current View: {innerSideBarTab.toUpperCase()}</Text>
+                <Text variant="small">Secondary content area within a sidebar layout.</Text>
+              </div>
+            </div>
+          </Card>
+        );
+      case 'Window':
+        return (
+          <div className="max-w-2xl mx-auto py-10">
+            <Window title="Developer Terminal" icon={<span>💻</span>}>
+              <div className="bg-slate-900 rounded-lg p-4 font-mono text-emerald-400 text-sm">
+                <p>$ npm install @google/genai</p>
+                <p className="text-slate-500">Installing dependencies...</p>
+                <p>$ gemini build --mode production</p>
+                <p className="text-white mt-2">✓ Application successfully built in 142ms</p>
+              </div>
+            </Window>
+          </div>
+        );
+      case 'Text':
+        return (
+          <Card title="Typography System" subtitle="Variants and hierarchies">
+            <div className="space-y-6">
+              <Text variant="h1">Level 1 Heading</Text>
+              <Text variant="h2">Level 2 Heading</Text>
+              <Text variant="h3">Level 3 Subheading</Text>
+              <Text variant="h4">Level 4 Minor Heading</Text>
+              <Text variant="body">Standard body text for readable paragraphs.</Text>
+              <Text variant="small">Small utility text for metadata.</Text>
+              <Text variant="caption">Capitalized Caption Labels</Text>
+            </div>
+          </Card>
+        );
+      case 'TreeView':
+        return <Card title="Tree View" subtitle="Hierarchical data structure"><TreeView items={treeData} /></Card>;
+      case 'ListView':
+        return <Card title="List View" subtitle="Sequential item display"><ListView items={listData} onItemClick={(i) => alert(i.title)} /></Card>;
+      case 'DataTable':
+        return <Card title="Data Table" subtitle="Structured tabular data"><DataTable columns={tableColumns} data={tableData} /></Card>;
+      case 'Button':
+        return (
+          <Card title="Buttons" subtitle="Interactive action triggers">
+            <div className="flex flex-wrap gap-3">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="danger">Danger</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button isLoading>Loading</Button>
+            </div>
+          </Card>
+        );
+      case 'Breadcrumbs':
+        return <Card title="Breadcrumbs" subtitle="Path navigation"><Breadcrumbs items={[{label: 'Home'}, {label: 'Library'}, {label: 'Components'}]} /></Card>;
+      case 'RadioButton':
+        return (
+          <Card title="Radio Group" subtitle="Single selection options">
+            <RadioButton name="app_radio" options={radioOptions} value={selectedRadio} onChange={setSelectedRadio} />
+          </Card>
+        );
+      case 'CheckButton':
+        return (
+          <Card title="Checkbox" subtitle="Multiple selection toggle">
+            <div className="flex flex-col gap-4">
+              <CheckButton id="c1" label="Newsletter" checked={checkedItems.check1} onChange={(v) => setCheckedItems({...checkedItems, check1: v})} />
+              <CheckButton id="c2" label="Notifications" checked={checkedItems.check2} onChange={(v) => setCheckedItems({...checkedItems, check2: v})} />
+            </div>
+          </Card>
+        );
+      case 'ToggleButton':
+        return <Card title="Toggle" subtitle="Binary state switch"><ToggleButton enabled={toggleEnabled} setEnabled={setToggleEnabled} label="Dark Mode" /></Card>;
+      case 'Menu':
+        return <Card title="Menu" subtitle="Overlay navigation with groups and disabled states"><Menu trigger={<Button variant="outline">Open Advanced Menu</Button>} items={menuItems} /></Card>;
+      case 'Status':
+        return (
+          <Card title="Status" subtitle="Visual state badges">
+            <div className="flex gap-2">
+              <Status type="success" label="Healthy" />
+              <Status type="warning" label="Warning" />
+              <Status type="error" label="Error" />
+              <Status type="info" label="Info" />
+            </div>
+          </Card>
+        );
+      case 'Overview':
+      default:
+        return (
+          <div className="space-y-8 animate-in fade-in duration-500 pb-12">
+             <Card title="Welcome to Component Forge" subtitle="An AI-powered design system playground">
+                <Text variant="body">
+                  Explore our comprehensive suite of enterprise UI components. This playground is built to showcase high-quality, 
+                  responsive, and accessible React components designed with Tailwind CSS and integrated with Google's Gemini API.
+                </Text>
+             </Card>
+
+             <Card 
+              title="AI Content Lab" 
+              subtitle="Generate dynamic data with Gemini"
+              headerAction={
+                <Button size="sm" onClick={async () => {
+                  setIsGenerating(true);
+                  const res = await generateDemoContent("A modern landing page description");
+                  setGeneratedData(res);
+                  setIsGenerating(false);
+                }} isLoading={isGenerating}>Generate Data</Button>
+              }
+            >
+              {generatedData ? (
+                <div className="space-y-2">
+                  <Text variant="h3">{generatedData.title}</Text>
+                  <Text variant="body">{generatedData.description}</Text>
+                  <div className="flex gap-2 pt-2">
+                    {generatedData.tags.map(t => <Status key={t} type="info" label={t} />)}
+                  </div>
+                </div>
+              ) : <div className="p-8 text-center text-slate-400 italic">No data generated yet. Click the button above to test Gemini integration.</div>}
+            </Card>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <div className="min-h-screen p-4 md:p-8 flex flex-col bg-slate-50">
+      <div className="max-w-7xl mx-auto w-full space-y-10 flex-grow pb-16">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-8 bg-white/50 backdrop-blur-sm -mx-4 px-4 sticky top-0 z-50">
+          <div>
+            <Breadcrumbs items={[{label: 'Forge'}, {label: activeTab}]} />
+            <Text variant="h1">Component Forge</Text>
+            <Text variant="small">High-fidelity UI components for professional applications.</Text>
+          </div>
+          <div className="flex space-x-2">
+            <Button variant="outline" size="sm" onClick={() => window.open('https://github.com', '_blank')}>Source</Button>
+            <Button size="sm">Download</Button>
+          </div>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <aside className="lg:col-span-3">
+            <div className="sticky top-32 space-y-8 max-h-[70vh] overflow-y-auto custom-scrollbar pr-2">
+              <nav className="flex flex-col space-y-1.5">
+                <Text variant="caption" className="mb-2 px-2">Navigation</Text>
+                {componentsList.map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => setActiveTab(item)}
+                    className={`flex items-center px-4 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
+                      activeTab === item
+                        ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100'
+                        : 'text-slate-600 hover:bg-white hover:shadow-sm'
+                    }`}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </aside>
+
+          <main className="lg:col-span-9 space-y-6">
+             <div className="flex items-center justify-between">
+                <Text variant="h2">{activeTab}</Text>
+                {activeTab !== 'Overview' && <Button variant="ghost" size="sm" onClick={() => setActiveTab('Overview')}>← Overview</Button>}
+             </div>
+             {renderContent()}
+          </main>
+        </div>
+      </div>
+      <StatusBar 
+        status="CONNECTED" 
+        items={[
+          {label: 'View', value: activeTab},
+          {label: 'Lang', value: 'TypeScript'}
+        ]} 
+      />
+    </div>
+  );
+};
+
+export default App;
