@@ -71,6 +71,8 @@ import TreeList from './components/TreeList';
 import Gantt from './components/Gantt';
 import Gauge from './components/Gauge';
 import NumericTextBox from './components/NumericTextBox';
+import SplitButton from './components/SplitButton';
+import Paginator from './components/Paginator';
 
 import { 
   RadioOption, 
@@ -489,6 +491,10 @@ const App: React.FC = () => {
   const [mockRam, setMockRam] = useState(68);
   const [mockNet, setMockNet] = useState(12);
 
+  // Pagination states
+  const [paginatorPage, setPaginatorPage] = useState(1);
+  const [longPaginatorPage, setLongPaginatorPage] = useState(4);
+
   // NumericTextBox states
   const [demoPrice, setDemoPrice] = useState(1250);
   const [demoPercent, setDemoPercent] = useState(75.5);
@@ -505,7 +511,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -529,6 +535,130 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Paginator':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Data Navigation</Text>
+              <Text variant="small">Scalable pagination controls for navigating large datasets with support for smart truncation.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Standard Pagination" subtitle="Basic usage with few pages." accent="primary">
+                <div className="py-12 flex flex-col items-center gap-6">
+                  <Paginator 
+                    currentPage={paginatorPage} 
+                    totalItems={50} 
+                    itemsPerPage={10} 
+                    onPageChange={setPaginatorPage} 
+                  />
+                  <Text variant="small" className="text-slate-400">Showing page <span className="text-indigo-600 font-bold">{paginatorPage}</span> of 5</Text>
+                </div>
+              </Card>
+
+              <Card title="Smart Truncation" subtitle="Handling massive page counts (e.g. 500 pages)." accent="info">
+                <div className="py-12 flex flex-col items-center gap-6">
+                  <Paginator 
+                    currentPage={longPaginatorPage} 
+                    totalItems={5000} 
+                    itemsPerPage={10} 
+                    onPageChange={setLongPaginatorPage} 
+                  />
+                  <div className="max-w-md text-center">
+                    <Text variant="small" className="text-slate-400">
+                      The component automatically calculates buffer zones and adds ellipsis to maintain a fixed width even with <span className="text-indigo-600 font-bold">500 total pages</span>.
+                    </Text>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card title="Accessibility" variant="flat">
+                <Text variant="small">Includes full ARIA navigation support, allowing screen readers to correctly identify pagination roles and current page states.</Text>
+              </Card>
+              <Card title="Haptic Feel" variant="flat">
+                <Text variant="small">Features smooth scaling animations and shadow transitions on active states for a high-fidelity interaction experience.</Text>
+              </Card>
+              <Card title="Boundary Logic" variant="flat">
+                <Text variant="small">Intelligently disables 'Next' and 'Previous' buttons at the edges of the dataset to prevent out-of-bounds requests.</Text>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'SplitButton':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Split Actions</Text>
+              <Text variant="small">A combined interface for a primary action and a secondary set of related commands.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Contextual Commands" subtitle="Standard usage in dashboards." accent="primary">
+                <div className="py-6 flex flex-wrap gap-4 items-center">
+                  <SplitButton 
+                    label="Save Project" 
+                    onClick={() => alert('Main: Project Saved')} 
+                    menuItems={[
+                      { label: 'Save and Deploy', onClick: () => alert('Menu: Deploying...'), icon: <span>🚀</span> },
+                      { label: 'Save as Template', onClick: () => alert('Menu: Template created'), icon: <span>📄</span> },
+                      { type: 'separator' },
+                      { label: 'Export JSON', onClick: () => alert('Menu: Exporting...'), icon: <span>💾</span> }
+                    ]}
+                  />
+
+                  <SplitButton 
+                    variant="success"
+                    label="Publish Changes" 
+                    onClick={() => alert('Main: Published')} 
+                    menuItems={[
+                      { label: 'Schedule Post', onClick: () => {} },
+                      { label: 'Draft Mode', onClick: () => {} }
+                    ]}
+                  />
+                </div>
+              </Card>
+
+              <Card title="Destructive & System" subtitle="Danger variants and small sizes." accent="error">
+                <div className="py-6 flex flex-wrap gap-4 items-center">
+                  <SplitButton 
+                    variant="danger"
+                    label="Delete Repository" 
+                    onClick={() => alert('Primary Delete')} 
+                    menuItems={[
+                      { label: 'Archive Instead', onClick: () => {}, icon: <span>📦</span> },
+                      { label: 'Wipe All History', variant: 'danger', onClick: () => {} }
+                    ]}
+                  />
+
+                  <SplitButton 
+                    size="sm"
+                    variant="secondary"
+                    label="Edit Metadata" 
+                    onClick={() => {}} 
+                    menuItems={[
+                      { label: 'View Logs', onClick: () => {} },
+                      { label: 'Check Status', onClick: () => {} }
+                    ]}
+                  />
+                </div>
+              </Card>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card title="Accessibility" variant="flat">
+                <Text variant="small">The right-side arrow is a separate button with dedicated keyboard focus and ARIA labels, ensuring screen readers can distinguish between the main action and the menu.</Text>
+              </Card>
+              <Card title="Consistency" variant="flat">
+                <Text variant="small">Reuses the atomic 'Button' and 'Menu' primitives to ensure styling, ripple effects, and transition timings are identical across the entire forge.</Text>
+              </Card>
+              <Card title="State Handling" variant="flat">
+                <Text variant="small">Built-in support for loading states. When the primary action is processing, both sides of the split button are automatically synchronized to prevent duplicate triggers.</Text>
+              </Card>
+            </div>
+          </div>
+        );
       case 'NumericTextBox':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
@@ -1667,7 +1797,7 @@ const App: React.FC = () => {
                <AudioPlayer 
                   title="Gemini 3 Keynote" 
                   artist="Google DeepMind" 
-                  cover="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=200" 
+                  cover="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=200" 
                 />
             </div>
           </Card>
