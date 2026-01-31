@@ -191,3 +191,13 @@ export interface TourStep {
   content: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
 }
+
+export interface MapLocation {
+  id: string;
+  name: string;
+  x: number; // 0-100 percentage based
+  y: number; // 0-100 percentage based
+  status: StatusType;
+  details?: string;
+  metrics?: { label: string; value: string }[];
+}

@@ -85,6 +85,8 @@ import Tour from './components/Tour';
 import TimePicker from './components/TimePicker';
 import PivotTable from './components/PivotTable';
 import Dashboard from './components/Dashboard';
+import Gallery, { GalleryItem } from './components/Gallery';
+import Map from './components/Map';
 
 import { 
   RadioOption, 
@@ -107,7 +109,8 @@ import {
   TreeListColumn,
   StatusType,
   GanttTask,
-  TourStep
+  TourStep,
+  MapLocation
 } from './types';
 import { generateDemoContent } from './services/geminiService';
 
@@ -315,6 +318,27 @@ const demoPivotTableData = [
   { category: 'Clothing', subcategory: 'Shoes', region: 'Asia', sales: 25000 },
   { category: 'Electronics', subcategory: 'Audio', region: 'Asia', sales: 18000 },
   { category: 'Electronics', subcategory: 'Audio', region: 'Europe', sales: 24000 },
+];
+
+const demoGalleryItems: GalleryItem[] = [
+  { id: 'g1', src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800', alt: 'Ether Cycles', category: 'Abstract', title: 'Ether Cycles', description: 'A fluid exploration of digital motion and light gradients.' },
+  { id: 'g2', src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800', alt: 'Deep Canopy', category: 'Nature', title: 'Deep Canopy', description: 'Capturing the interplay of sunlight through ancient woodland.' },
+  { id: 'g3', src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800', alt: 'Glass Monolith', category: 'Architecture', title: 'Glass Monolith', description: 'Minimalist perspective of modern commercial infrastructure.' },
+  { id: 'g4', src: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=800', alt: 'Alpine Peak', category: 'Nature', title: 'Alpine Peak', description: 'Dusk settling over the northern mountain ranges.' },
+  { id: 'g5', src: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800', alt: 'Retro Hardware', category: 'Tech', title: 'Retro Hardware', description: 'Nostalgic close-up of early computing aesthetic.' },
+  { id: 'g6', src: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=800', alt: 'Paper Fold', category: 'Abstract', title: 'Paper Fold', description: 'Geometric shadows created by complex origami structures.' },
+  { id: 'g7', src: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800', alt: 'Interface Focus', category: 'Tech', title: 'Interface Focus', description: 'Precision human-computer interaction workspace.' },
+  { id: 'g8', src: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&q=80&w=800', alt: 'Urban Symmetry', category: 'Architecture', title: 'Urban Symmetry', description: 'Reflective surfaces of a high-density living complex.' },
+];
+
+const demoMapLocations: MapLocation[] = [
+  { id: 'LOC-NYC', name: 'New York (East Hub)', x: 22, y: 32, status: 'success', metrics: [{label: 'Traffic', value: '42 TB/s'}, {label: 'Latency', value: '12ms'}] },
+  { id: 'LOC-LND', name: 'London (EU Primary)', x: 46, y: 28, status: 'info', metrics: [{label: 'Traffic', value: '28 TB/s'}, {label: 'Latency', value: '18ms'}] },
+  { id: 'LOC-TOK', name: 'Tokyo (AP-North)', x: 82, y: 35, status: 'success', metrics: [{label: 'Traffic', value: '56 TB/s'}, {label: 'Latency', value: '9ms'}] },
+  { id: 'LOC-SYD', name: 'Sydney (OC Cluster)', x: 85, y: 78, status: 'warning', details: 'Performing routine maintenance on redundant power rails.', metrics: [{label: 'Traffic', value: '12 TB/s'}, {label: 'Latency', value: '45ms'}] },
+  { id: 'LOC-SFO', name: 'San Francisco (HQ)', x: 12, y: 35, status: 'success', metrics: [{label: 'Traffic', value: '88 TB/s'}, {label: 'Latency', value: '4ms'}] },
+  { id: 'LOC-BLR', name: 'Bangalore (Dev Node)', x: 70, y: 55, status: 'info', metrics: [{label: 'Traffic', value: '34 TB/s'}, {label: 'Latency', value: '24ms'}] },
+  { id: 'LOC-GRU', name: 'São Paulo (SA Node)', x: 30, y: 75, status: 'error', details: 'Critical underwater cable interruption detected. Rerouting via satellite.', metrics: [{label: 'Traffic', value: '2 TB/s'}, {label: 'Latency', value: '250ms'}] },
 ];
 
 const demoTreeListData: TreeListDataItem[] = [
@@ -622,7 +646,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -646,6 +670,49 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Map':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Interactive Spatial Intelligence</Text>
+              <Text variant="small">SVG-based global mesh visualizer with real-time status markers and telemetry integration.</Text>
+            </header>
+
+            <Map 
+              title="Global Edge Operations" 
+              locations={demoMapLocations} 
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Pulse Technology" variant="outline" accent="info">
+                  <Text variant="small">Markers utilize a pure CSS pulse animation to indicate live activity, ensuring a high-performance visual experience without the need for heavyweight libraries.</Text>
+               </Card>
+               <Card title="Digital Twin Strategy" variant="outline" accent="primary">
+                  <Text variant="small">Each geographic node is directly mapped to a backend instance, allowing for a 1:1 visual-to-infrastructure monitoring ratio.</Text>
+               </Card>
+            </div>
+          </div>
+        );
+      case 'Gallery':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Asset Discovery Center</Text>
+              <Text variant="small">High-fidelity media gallery with categorical filtering and immersive lightbox support.</Text>
+            </header>
+
+            <Gallery items={demoGalleryItems} />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="UX Pattern: Lightbox" variant="outline" accent="info">
+                  <Text variant="small">Utilizes a backdrop-blur overlay with high-contrast UI controls to maintain focus on the primary visual content while providing context.</Text>
+               </Card>
+               <Card title="Dynamic Filtering" variant="outline" accent="primary">
+                  <Text variant="small">State-driven filtering allows for instantaneous re-ordering of assets without expensive page reloads or layout shifts.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Dashboard':
         return (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
