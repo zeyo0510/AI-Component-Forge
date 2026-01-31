@@ -74,6 +74,7 @@ import NumericTextBox from './components/NumericTextBox';
 import SplitButton from './components/SplitButton';
 import Paginator from './components/Paginator';
 import ColorPicker from './components/ColorPicker';
+import AngleSlider from './components/AngleSlider';
 
 import { 
   RadioOption, 
@@ -504,6 +505,9 @@ const App: React.FC = () => {
   // ColorPicker state
   const [themeColor, setThemeColor] = useState('#6366f1');
 
+  // AngleSlider state
+  const [demoAngle, setDemoAngle] = useState(45);
+
   // Live simulation for Gauges
   useEffect(() => {
     const interval = setInterval(() => {
@@ -515,7 +519,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -539,6 +543,62 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'AngleSlider':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Rotary Controls</Text>
+              <Text variant="small">High-fidelity circular angle picker for graphic adjustments, 3D rotations, and directional mapping.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Interactive Demonstration" subtitle="Drag the handle to change the angle." accent="primary">
+                 <div className="py-12 flex flex-col items-center">
+                    <AngleSlider 
+                      label="Rotation Degree"
+                      value={demoAngle} 
+                      onChange={setDemoAngle} 
+                    />
+                    <div className="mt-8 flex gap-4">
+                       <div className="px-4 py-2 bg-slate-50 border border-slate-100 rounded-xl">
+                          <Text variant="caption" className="block">Current</Text>
+                          <Text variant="h4" className="font-mono">{demoAngle}°</Text>
+                       </div>
+                       <Button variant="outline" size="sm" onClick={() => setDemoAngle(0)}>Reset</Button>
+                    </div>
+                 </div>
+              </Card>
+
+              <Card title="Visual Application" subtitle="Synchronized CSS transform example." variant="outline">
+                <div className="h-full flex flex-col items-center justify-center p-8 space-y-8">
+                   <div 
+                      className="w-32 h-32 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-2xl flex items-center justify-center transition-transform duration-150"
+                      style={{ transform: `rotate(${demoAngle}deg)` }}
+                   >
+                      <svg className="w-12 h-12 text-white/50" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
+                      </svg>
+                   </div>
+                   <Text variant="small" className="text-center italic text-slate-400">
+                      The container above is rotated <span className="font-bold text-indigo-600">{demoAngle} degrees</span> using CSS.
+                   </Text>
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Polar Math" variant="flat">
+                  <Text variant="small">Calculates angles using `Math.atan2` for precise 360° input tracking with responsive touch support.</Text>
+               </Card>
+               <Card title="Design Language" variant="flat">
+                  <Text variant="small">Incorporates SVG tick marks and a center readout following the Component Forge atomic design specs.</Text>
+               </Card>
+               <Card title="Precision" variant="flat">
+                  <Text variant="small">Values are rounded to the nearest integer, ensuring consistent state updates across the rendering pipeline.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'ColorPicker':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
