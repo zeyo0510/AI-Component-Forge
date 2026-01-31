@@ -77,6 +77,7 @@ import ColorPicker from './components/ColorPicker';
 import AngleSlider from './components/AngleSlider';
 import Skeleton from './components/Skeleton';
 import Blockquote from './components/Blockquote';
+import DataGrid from './components/DataGrid';
 
 import { 
   RadioOption, 
@@ -85,6 +86,7 @@ import {
   TreeItem, 
   ListItem, 
   DataTableColumn, 
+  DataGridColumn,
   GraphDataPoint, 
   SelectOption,
   TabItem,
@@ -468,6 +470,46 @@ const demoSteps: StepperItem[] = [
   { label: 'Finalize', description: 'Deploy to edge', icon: <span>🚀</span> },
 ];
 
+const demoDataGridColumns: DataGridColumn[] = [
+  { key: 'nodeId', header: 'Node ID', sortable: true, width: '120px' },
+  { key: 'location', header: 'DC Region', sortable: true },
+  { 
+    key: 'load', 
+    header: 'System Load', 
+    sortable: true,
+    render: (val) => (
+      <div className="flex items-center gap-2">
+        <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden w-20">
+          <div className={`h-full ${val > 80 ? 'bg-rose-500' : val > 50 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${val}%` }} />
+        </div>
+        <span className="text-[10px] font-mono font-bold">{val}%</span>
+      </div>
+    )
+  },
+  { 
+    key: 'status', 
+    header: 'Status', 
+    sortable: true,
+    render: (val: StatusType) => <Status type={val} label={val.toUpperCase()} />
+  },
+  { key: 'latency', header: 'Latency', sortable: true, align: 'right', render: (val) => <span className="font-mono text-indigo-600">{val}ms</span> }
+];
+
+const demoDataGridData = [
+  { nodeId: 'EDG-001', location: 'US-East', load: 42, status: 'success', latency: 12 },
+  { nodeId: 'EDG-002', location: 'US-West', load: 85, status: 'warning', latency: 45 },
+  { nodeId: 'EDG-003', location: 'EU-North', load: 12, status: 'success', latency: 8 },
+  { nodeId: 'EDG-004', location: 'AP-South', load: 92, status: 'error', latency: 124 },
+  { nodeId: 'EDG-005', location: 'US-Central', load: 33, status: 'success', latency: 22 },
+  { nodeId: 'EDG-006', location: 'EU-West', load: 56, status: 'info', latency: 18 },
+  { nodeId: 'EDG-007', location: 'AP-East', load: 21, status: 'success', latency: 14 },
+  { nodeId: 'EDG-008', location: 'SA-East', load: 48, status: 'info', latency: 32 },
+  { nodeId: 'EDG-009', location: 'AF-South', load: 74, status: 'warning', latency: 56 },
+  { nodeId: 'EDG-010', location: 'EU-South', load: 15, status: 'success', latency: 11 },
+  { nodeId: 'EDG-011', location: 'US-North', load: 98, status: 'error', latency: 250 },
+  { nodeId: 'EDG-012', location: 'OC-South', load: 10, status: 'success', latency: 9 },
+];
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Overview');
   const [toggleEnabled, setToggleEnabled] = useState(false);
@@ -521,7 +563,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -545,6 +587,38 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'DataGrid':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Enterprise Data Grid</Text>
+              <Text variant="small">High-performance grid with native sorting, pagination, and semantic status rendering.</Text>
+            </header>
+
+            <Card title="Infrastructure Monitoring Hub" subtitle="Live edge node performance and health status.">
+              <div className="py-4">
+                <DataGrid 
+                  columns={demoDataGridColumns} 
+                  data={demoDataGridData} 
+                  rowsPerPage={5}
+                  onRowClick={(item) => alert(`Selected Node: ${item.nodeId}`)}
+                />
+              </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Integrated Sorting" variant="flat">
+                  <Text variant="small">Built-in logic for both numeric and string-based column sorting with intuitive UI feedback.</Text>
+               </Card>
+               <Card title="Paginated Views" variant="flat">
+                  <Text variant="small">Handles large datasets by chunking data into manageable views to maintain high framerate rendering.</Text>
+               </Card>
+               <Card title="Custom Cells" variant="flat">
+                  <Text variant="small">The render hook allows for complex logic within cells, such as progress bars or semantic status badges.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Blockquote':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">

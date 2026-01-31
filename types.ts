@@ -51,6 +51,15 @@ export interface DataTableColumn {
   align?: 'left' | 'center' | 'right';
 }
 
+export interface DataGridColumn {
+  key: string;
+  header: string;
+  width?: string;
+  sortable?: boolean;
+  align?: 'left' | 'center' | 'right';
+  render?: (value: any, item: any) => React.ReactNode;
+}
+
 export interface GraphDataPoint {
   label: string;
   value: number;
