@@ -82,6 +82,7 @@ import Marquee from './components/Marquee';
 import CompareSlider from './components/CompareSlider';
 import DatePicker from './components/DatePicker';
 import Tour from './components/Tour';
+import TimePicker from './components/TimePicker';
 
 import { 
   RadioOption, 
@@ -589,6 +590,10 @@ const App: React.FC = () => {
   const [demoDate, setDemoDate] = useState<Date | undefined>(new Date());
   const [emptyDate, setEmptyDate] = useState<Date | undefined>(undefined);
 
+  // TimePicker state
+  const [demoTime24, setDemoTime24] = useState("14:30");
+  const [demoTime12, setDemoTime12] = useState("02:30 PM");
+
   // Live simulation for Gauges
   useEffect(() => {
     const interval = setInterval(() => {
@@ -600,7 +605,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -624,6 +629,69 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'TimePicker':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Interactive Time Selector</Text>
+              <Text variant="small">High-fidelity time selection with support for 12h/24h formats and scrollable column logic.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="System Log Analysis" subtitle="24-hour military format." accent="primary">
+                <div className="py-4 space-y-6">
+                   <TimePicker 
+                      label="Select Log Timestamp"
+                      value={demoTime24} 
+                      onChange={setDemoTime24} 
+                   />
+                   <div className="p-4 bg-slate-900 rounded-2xl flex items-center justify-between border border-slate-800">
+                       <div className="flex flex-col">
+                          <Text variant="caption" className="text-slate-500">ISO Format</Text>
+                          <Text variant="small" className="font-mono text-emerald-400 font-bold">
+                            T{demoTime24}:00Z
+                          </Text>
+                       </div>
+                       <Status type="info" label="SYNCHRONIZED" />
+                    </div>
+                </div>
+              </Card>
+
+              <Card title="Patient Scheduling" subtitle="12-hour AM/PM format with 15m intervals." variant="outline">
+                <div className="py-4 space-y-6">
+                   <TimePicker 
+                      label="Available Slot"
+                      use12Hours={true}
+                      minuteStep={15}
+                      value={demoTime12} 
+                      onChange={setDemoTime12} 
+                   />
+                   <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-between">
+                       <div className="flex flex-col">
+                          <Text variant="caption">Appointment Time</Text>
+                          <Text variant="small" className="font-bold text-indigo-700">
+                            {demoTime12}
+                          </Text>
+                       </div>
+                       <Button size="sm">Book Now</Button>
+                    </div>
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Column Scrolling" variant="flat">
+                  <Text variant="small">Features independent scrollable columns for hours and minutes, ensuring rapid selection without keyboard overhead.</Text>
+               </Card>
+               <Card title="Format Agnostic" variant="flat">
+                  <Text variant="small">Internal logic seamlessly translates between string-based state and selection UI, supporting localization needs.</Text>
+               </Card>
+               <Card title="Granular Steps" variant="flat">
+                  <Text variant="small">Configure minute increments (e.g., 5, 15, 30) to streamline user selection for specific business rules.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Tour':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
@@ -757,7 +825,7 @@ const App: React.FC = () => {
                         <div className="w-1/2 h-4 bg-slate-700 rounded" />
                         <div className="mt-4 flex gap-2">
                            <div className="w-20 h-8 bg-indigo-600 rounded-lg" />
-                           <div className="w-20 h-8 bg-slate-800 rounded-lg" />
+                           <div className="w-20 h-8 bg-slate-200 rounded-lg" />
                         </div>
                       </div>
                     }
@@ -2442,7 +2510,7 @@ const App: React.FC = () => {
                   {Array.from({ length: 15 }).map((_, i) => (
                     <p key={i} className="text-sm text-slate-500">
                       Paragraph {i + 1}: This container utilizes the .custom-scrollbar class defined in our global styles. 
-                      It features a smooth indigo thumb and a transparent track for a modern, minimal aesthetic.
+                      It features a smooth indigo thumb and a transparent track for a modern, minmal aesthetic.
                     </p>
                   ))}
                   <Text variant="h4" className="pt-4">End of Document</Text>
