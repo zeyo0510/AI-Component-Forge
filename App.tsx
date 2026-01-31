@@ -83,6 +83,7 @@ import CompareSlider from './components/CompareSlider';
 import DatePicker from './components/DatePicker';
 import Tour from './components/Tour';
 import TimePicker from './components/TimePicker';
+import PivotTable from './components/PivotTable';
 
 import { 
   RadioOption, 
@@ -298,6 +299,21 @@ const demoPivotData = [
   { region: 'Asia Pacific', category: 'SaaS', year: '2025', revenue: 72000 },
   { region: 'North America', category: 'SaaS', year: '2024', revenue: 44000 },
   { region: 'Europe', category: 'SaaS', year: '2025', revenue: 58000 },
+];
+
+const demoPivotTableData = [
+  { category: 'Electronics', subcategory: 'Mobile', region: 'North America', sales: 45000 },
+  { category: 'Electronics', subcategory: 'Mobile', region: 'Europe', sales: 38000 },
+  { category: 'Electronics', subcategory: 'Laptops', region: 'North America', sales: 82000 },
+  { category: 'Electronics', subcategory: 'Laptops', region: 'Europe', sales: 71000 },
+  { category: 'Clothing', subcategory: 'Shoes', region: 'North America', sales: 12000 },
+  { category: 'Clothing', subcategory: 'Shoes', region: 'Europe', sales: 15000 },
+  { category: 'Clothing', subcategory: 'Apparel', region: 'North America', sales: 22000 },
+  { category: 'Clothing', subcategory: 'Apparel', region: 'Europe', sales: 19000 },
+  { category: 'Electronics', subcategory: 'Mobile', region: 'Asia', sales: 95000 },
+  { category: 'Clothing', subcategory: 'Shoes', region: 'Asia', sales: 25000 },
+  { category: 'Electronics', subcategory: 'Audio', region: 'Asia', sales: 18000 },
+  { category: 'Electronics', subcategory: 'Audio', region: 'Europe', sales: 24000 },
 ];
 
 const demoTreeListData: TreeListDataItem[] = [
@@ -605,7 +621,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -629,6 +645,36 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'PivotTable':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Advanced Pivot Table</Text>
+              <Text variant="small">High-performance data summarization tool with hierarchical row grouping and automatic totals.</Text>
+            </header>
+
+            <Card title="Global Sales Intelligence" subtitle="Interactive breakdown of quarterly performance.">
+               <div className="py-4">
+                  <PivotTable 
+                    data={demoPivotTableData}
+                    rowFields={['category', 'subcategory']}
+                    columnFields={['region']}
+                    measureField="sales"
+                    aggregator="sum"
+                  />
+               </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="Hierarchical Rendering" variant="outline" accent="info">
+                  <Text variant="small">The table automatically generates a tree structure from row dimensions, allowing users to drill down into sub-categories while maintaining aggregate context.</Text>
+               </Card>
+               <Card title="Cross-Tabulation" variant="outline" accent="primary">
+                  <Text variant="small">Seamlessly map multiple dimensions into columns. Values are automatically distributed and summarized across the entire pivot matrix.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'TimePicker':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
