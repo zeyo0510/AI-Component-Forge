@@ -78,6 +78,7 @@ import AngleSlider from './components/AngleSlider';
 import Skeleton from './components/Skeleton';
 import Blockquote from './components/Blockquote';
 import DataGrid from './components/DataGrid';
+import Marquee from './components/Marquee';
 
 import { 
   RadioOption, 
@@ -563,7 +564,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -587,6 +588,74 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Marquee':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Infinite Marquee</Text>
+              <Text variant="small">Smooth, high-performance scrolling containers for dynamic content highlighting.</Text>
+            </header>
+
+            <div className="space-y-10">
+              <Card title="Brand & Tech Stack Flow" subtitle="Horizontal scrolling with edge fading." accent="primary">
+                 <div className="py-4">
+                    <Marquee speed={30}>
+                      <div className="flex items-center gap-12 text-slate-400 font-black text-2xl tracking-tighter italic">
+                         <div className="flex items-center gap-2"><span>REACT</span><div className="w-1.5 h-1.5 rounded-full bg-sky-400"/></div>
+                         <div className="flex items-center gap-2"><span>TYPESCRIPT</span><div className="w-1.5 h-1.5 rounded-full bg-blue-500"/></div>
+                         <div className="flex items-center gap-2"><span>TAILWIND</span><div className="w-1.5 h-1.5 rounded-full bg-teal-400"/></div>
+                         <div className="flex items-center gap-2"><span>GEMINI AI</span><div className="w-1.5 h-1.5 rounded-full bg-indigo-500"/></div>
+                         <div className="flex items-center gap-2"><span>NEXT.JS</span><div className="w-1.5 h-1.5 rounded-full bg-slate-800"/></div>
+                      </div>
+                    </Marquee>
+                 </div>
+              </Card>
+
+              <Card title="Breaking News Ticker" subtitle="Fast directional scrolling without fading." accent="error" variant="outline">
+                <Marquee speed={15} direction="right" fade={false} className="bg-rose-50 rounded-xl">
+                   <div className="flex items-center gap-8 text-rose-700 font-bold uppercase tracking-widest text-xs">
+                      <span>• CRITICAL SECURITY PATCH DEPLOYED TO EDGE NODES</span>
+                      <span>• GEMINI 3 PRO INTEGRATION NOW LIVE</span>
+                      <span>• SYSTEM PERFORMANCE INCREASED BY 42%</span>
+                      <span>• NEW WORKFLOW ENGINE BETA INVITES SENT</span>
+                   </div>
+                </Marquee>
+              </Card>
+
+              <Card title="Unlimited Testimonials" subtitle="Custom component scrolling with hover pause." accent="info">
+                 <div className="py-2">
+                    <Marquee speed={40} pauseOnHover={true}>
+                       {[1, 2, 3, 4].map(i => (
+                         <div key={i} className="w-72 bg-slate-50 border border-slate-100 p-4 rounded-2xl flex flex-col gap-3 shadow-sm">
+                            <Rating value={5} size="sm" readOnly />
+                            <p className="text-xs text-slate-600 italic">"The component forge has transformed our internal prototyping speed. Incredible AI integration!"</p>
+                            <div className="flex items-center gap-3 mt-1">
+                               <div className="w-8 h-8 rounded-full bg-indigo-100 border border-indigo-200" />
+                               <div className="flex flex-col">
+                                  <span className="text-[10px] font-black text-slate-700">USER_ID_{i}024</span>
+                                  <span className="text-[8px] font-bold text-slate-400 uppercase">Principal Architect</span>
+                               </div>
+                            </div>
+                         </div>
+                       ))}
+                    </Marquee>
+                 </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Hardware Accelerated" variant="flat">
+                  <Text variant="small">Utilizes CSS transforms instead of left/margin offsets to ensure zero jank even with complex children.</Text>
+               </Card>
+               <Card title="Seamless Loops" variant="flat">
+                  <Text variant="small">Internally duplicates content strings to ensure the animation cycle never shows a blank gap during resets.</Text>
+               </Card>
+               <Card title="Fade Masking" variant="flat">
+                  <Text variant="small">Built-in SVG/Gradient masks allow for professional fade-in/out effects that automatically match container background.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'DataGrid':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
@@ -1790,7 +1859,7 @@ const App: React.FC = () => {
         return (
           <div className="space-y-10">
             <Card title="Calibrated Controls" subtitle="Precision input with scale visualization." accent="primary">
-              <div className="max-w-xl py-6 space-y-12">
+              <div className="max-xl py-6 space-y-12">
                 <TrackBar 
                   label="Master Output Gain (dB)" 
                   min={-60} 
