@@ -14,6 +14,8 @@ interface CardProps {
   hoverable?: boolean;
   accent?: 'none' | 'primary' | 'success' | 'warning' | 'error' | 'info';
   onClick?: () => void;
+  // Added id prop to support element targeting for features like onboarding tours
+  id?: string;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -28,6 +30,8 @@ const Card: React.FC<CardProps> = ({
   hoverable = false,
   accent = 'none',
   onClick,
+  // Extracting id from props
+  id,
 }) => {
   const baseStyles = 'rounded-2xl overflow-hidden transition-all duration-300 relative flex flex-col';
   
@@ -59,6 +63,8 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div 
+      // Applying id to the root container
+      id={id}
       className={`
         ${baseStyles} 
         ${variants[variant]} 

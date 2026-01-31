@@ -81,6 +81,7 @@ import DataGrid from './components/DataGrid';
 import Marquee from './components/Marquee';
 import CompareSlider from './components/CompareSlider';
 import DatePicker from './components/DatePicker';
+import Tour from './components/Tour';
 
 import { 
   RadioOption, 
@@ -102,7 +103,8 @@ import {
   TreeListDataItem,
   TreeListColumn,
   StatusType,
-  GanttTask
+  GanttTask,
+  TourStep
 } from './types';
 import { generateDemoContent } from './services/geminiService';
 
@@ -513,6 +515,33 @@ const demoDataGridData = [
   { nodeId: 'EDG-012', location: 'OC-South', load: 10, status: 'success', latency: 9 },
 ];
 
+const demoTourSteps: TourStep[] = [
+  { 
+    targetSelector: '#app-header', 
+    title: 'Welcome to Forge', 
+    content: 'This is your main dashboard header where you can find global settings and project meta-data.',
+    position: 'bottom'
+  },
+  { 
+    targetSelector: '#component-sidebar', 
+    title: 'Component Library', 
+    content: 'Navigate through our entire library of atomic UI elements using this organized list.',
+    position: 'right'
+  },
+  { 
+    targetSelector: '#ai-lab-card', 
+    title: 'GenAI Integration', 
+    content: 'Experiment with Google Gemini 3 models to generate dynamic content and interface components instantly.',
+    position: 'top'
+  },
+  { 
+    targetSelector: '#status-bar-bottom', 
+    title: 'System Telemetry', 
+    content: 'Monitor real-time connection status and framework versions in this non-intrusive footer bar.',
+    position: 'top'
+  }
+];
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Overview');
   const [toggleEnabled, setToggleEnabled] = useState(false);
@@ -535,6 +564,7 @@ const App: React.FC = () => {
   const [chartType, setChartType] = useState<'pie' | 'line'>('pie');
   const [userRating, setUserRating] = useState(4);
   const [activeStep, setActiveStep] = useState(1);
+  const [isTourActive, setIsTourActive] = useState(false);
 
   const [mockCpu, setMockCpu] = useState(42);
   const [mockRam, setMockRam] = useState(68);
@@ -570,7 +600,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -594,6 +624,40 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Tour':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Interactive Guided Tour</Text>
+              <Text variant="small">Onboarding tool that highlights key features with spotlight effects and contextual popovers.</Text>
+            </header>
+
+            <Card title="Start Experience" subtitle="Trigger a multi-step platform tour." accent="primary">
+               <div className="py-12 flex flex-col items-center justify-center text-center">
+                  <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600 mb-6">
+                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                     </svg>
+                  </div>
+                  <Text variant="h4" className="mb-2">New User? Start Here</Text>
+                  <Text variant="small" className="mb-8 max-w-sm text-slate-400">Our interactive guide will walk you through the core sections of Component Forge in less than 30 seconds.</Text>
+                  <Button size="lg" onClick={() => setIsTourActive(true)}>Launch Guided Tour</Button>
+               </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Spotlight Mask" variant="flat">
+                  <Text variant="small">Utilizes dynamic SVG masking to dim the interface while focusing user attention on specific atomic elements.</Text>
+               </Card>
+               <Card title="Smart Popovers" variant="flat">
+                  <Text variant="small">Automatically detects the best position (Top, Bottom, etc.) based on the target element's viewport coordinates.</Text>
+               </Card>
+               <Card title="Smooth Navigation" variant="flat">
+                  <Text variant="small">Built-in support for scrolling target elements into view before highlighting, ensuring a consistent UX.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'DatePicker':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
@@ -2706,13 +2770,16 @@ const App: React.FC = () => {
         return (
           <div className="space-y-8 animate-in fade-in duration-500 pb-12">
              <Card title="Welcome to Component Forge" subtitle="An AI-powered design system playground">
-                <Text variant="body">
-                  Explore our comprehensive suite of enterprise UI components. This playground is built to showcase high-quality, 
-                  responsive, and accessible React components designed with Tailwind CSS and integrated with Google's Gemini API.
-                </Text>
+                <div id="welcome-text">
+                  <Text variant="body">
+                    Explore our comprehensive suite of enterprise UI components. This playground is built to showcase high-quality, 
+                    responsive, and accessible React components designed with Tailwind CSS and integrated with Google's Gemini API.
+                  </Text>
+                </div>
              </Card>
 
              <Card 
+              id="ai-lab-card"
               title="AI Content Lab" 
               subtitle="Generate dynamic data with Gemini"
               headerAction={
@@ -2742,7 +2809,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen p-4 md:p-8 flex flex-col bg-slate-50">
       <div className="max-w-7xl mx-auto w-full space-y-10 flex-grow pb-16">
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-8 bg-white/50 backdrop-blur-sm -mx-4 px-4 sticky top-0 z-50">
+        <header id="app-header" className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-8 bg-white/50 backdrop-blur-sm -mx-4 px-4 sticky top-0 z-50">
           <div>
             <Breadcrumbs items={[{label: 'Forge'}, {label: activeTab}]} />
             <Text variant="h1">Component Forge</Text>
@@ -2755,7 +2822,7 @@ const App: React.FC = () => {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          <aside className="lg:col-span-3">
+          <aside id="component-sidebar" className="lg:col-span-3">
             <div className="sticky top-32 space-y-8 max-h-[70vh] overflow-y-auto custom-scrollbar pr-2">
               <nav className="flex flex-col space-y-1.5">
                 <Text variant="caption" className="mb-2 px-2">Navigation</Text>
@@ -2785,12 +2852,22 @@ const App: React.FC = () => {
           </main>
         </div>
       </div>
-      <StatusBar 
-        status="CONNECTED" 
-        items={[
-          {label: 'View', value: activeTab},
-          {label: 'Lang', value: 'TypeScript'}
-        ]} 
+      
+      <div id="status-bar-bottom">
+        <StatusBar 
+          status="CONNECTED" 
+          items={[
+            {label: 'View', value: activeTab},
+            {label: 'Lang', value: 'TypeScript'}
+          ]} 
+        />
+      </div>
+
+      <Tour 
+        steps={demoTourSteps} 
+        isActive={isTourActive} 
+        onFinish={() => setIsTourActive(false)} 
+        onCancel={() => setIsTourActive(false)} 
       />
     </div>
   );

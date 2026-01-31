@@ -184,3 +184,10 @@ export interface GanttTask {
   type: StatusType;
   assignee?: string;
 }
+
+export interface TourStep {
+  targetSelector: string;
+  title: string;
+  content: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+}
