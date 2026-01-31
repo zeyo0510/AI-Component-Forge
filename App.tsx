@@ -75,6 +75,7 @@ import SplitButton from './components/SplitButton';
 import Paginator from './components/Paginator';
 import ColorPicker from './components/ColorPicker';
 import AngleSlider from './components/AngleSlider';
+import Skeleton from './components/Skeleton';
 
 import { 
   RadioOption, 
@@ -519,7 +520,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -543,6 +544,66 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Skeleton':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Skeleton Placeholder</Text>
+              <Text variant="small">Modern loading indicators that mimic actual content layout to reduce perceived latency.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Profile Card Example */}
+              <Card title="Profile Loading" subtitle="Circle and Text variant combination" variant="outline">
+                <div className="flex items-center gap-4 py-4">
+                  <Skeleton variant="circle" width={64} height={64} />
+                  <div className="flex-1">
+                    <Skeleton variant="text" width="60%" height={16} />
+                    <Skeleton variant="text" width="40%" height={12} />
+                  </div>
+                </div>
+                <div className="space-y-2 mt-4">
+                  <Skeleton variant="text" />
+                  <Skeleton variant="text" />
+                  <Skeleton variant="text" />
+                </div>
+              </Card>
+
+              {/* Media Card Example */}
+              <Card title="Article Loading" subtitle="Rect and Text variant combination" variant="outline">
+                <Skeleton variant="rect" width="100%" height={120} className="mb-4" />
+                <Skeleton variant="text" width="80%" height={20} />
+                <Skeleton variant="text" height={12} />
+                <Skeleton variant="text" height={12} />
+                <div className="flex gap-2 mt-4">
+                   <Skeleton variant="rect" width={60} height={24} className="rounded-full" />
+                   <Skeleton variant="rect" width={60} height={24} className="rounded-full" />
+                </div>
+              </Card>
+            </div>
+
+            <Card title="Atomic Variants" subtitle="Standard shapes for building custom layouts">
+               <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-4">
+                  <div className="flex flex-col items-center gap-2">
+                    <Skeleton variant="circle" width={80} height={80} />
+                    <Text variant="caption">Circle</Text>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-full space-y-2">
+                       <Skeleton variant="text" />
+                       <Skeleton variant="text" />
+                       <Skeleton variant="text" />
+                    </div>
+                    <Text variant="caption">Text Lines</Text>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <Skeleton variant="rect" width="100%" height={80} />
+                    <Text variant="caption">Rectangle Block</Text>
+                  </div>
+               </div>
+            </Card>
+          </div>
+        );
       case 'AngleSlider':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
