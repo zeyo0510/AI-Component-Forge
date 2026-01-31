@@ -84,6 +84,7 @@ import DatePicker from './components/DatePicker';
 import Tour from './components/Tour';
 import TimePicker from './components/TimePicker';
 import PivotTable from './components/PivotTable';
+import Dashboard from './components/Dashboard';
 
 import { 
   RadioOption, 
@@ -621,7 +622,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -645,6 +646,99 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Dashboard':
+        return (
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <Text variant="h3">System Operations Center</Text>
+                <Text variant="small">Real-time infrastructure health and commercial performance metrics.</Text>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm" onClick={() => alert('Refreshing...')}>Refresh</Button>
+                <Button size="sm">Export Report</Button>
+              </div>
+            </header>
+
+            {/* Metric Row */}
+            <Dashboard.Container>
+              <Dashboard.Metric 
+                label="Active Subscriptions" 
+                value="12,482" 
+                trend={{ value: 12.5, isUp: true }} 
+                status="success"
+                icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" strokeWidth="2"/></svg>}
+              />
+              <Dashboard.Metric 
+                label="Monthly Revenue" 
+                value="$452.9K" 
+                trend={{ value: 8.2, isUp: true }} 
+                status="info"
+                icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" strokeWidth="2"/></svg>}
+              />
+              <Dashboard.Metric 
+                label="Avg. Latency" 
+                value="24ms" 
+                trend={{ value: 4.1, isUp: false }} 
+                status="warning"
+                icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" strokeWidth="2"/></svg>}
+              />
+              <Dashboard.Metric 
+                label="Security Incidents" 
+                value="0" 
+                status="success"
+                icon={<svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" strokeWidth="2"/></svg>}
+              />
+            </Dashboard.Container>
+
+            {/* Middle Row: Chart & Activity */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+               <Dashboard.Widget title="Traffic Analysis" subtitle="Inbound requests per second" span={2}>
+                  <div className="h-64 pt-4">
+                     <Graph data={[
+                        { label: '08:00', value: 450, color: 'bg-indigo-500' },
+                        { label: '09:00', value: 720, color: 'bg-indigo-500' },
+                        { label: '10:00', value: 890, color: 'bg-indigo-600' },
+                        { label: '11:00', value: 640, color: 'bg-indigo-500' },
+                        { label: '12:00', value: 980, color: 'bg-indigo-700' },
+                        { label: '13:00', value: 1200, color: 'bg-emerald-500' },
+                     ]} />
+                  </div>
+               </Dashboard.Widget>
+
+               <Dashboard.Widget title="Live Events" subtitle="Recent infrastructure triggers">
+                  <ScrollArea height="260px">
+                     <Timeline events={[
+                        { time: '2m ago', title: 'Backup Successful', status: 'success' },
+                        { time: '15m ago', title: 'New Region: Tokyo', status: 'info' },
+                        { time: '1h ago', title: 'Threshold Alert', description: 'Node US-West-2 reached 85% CPU.', status: 'warning' },
+                        { time: '4h ago', title: 'System Deploy', status: 'success' },
+                     ]} />
+                  </ScrollArea>
+               </Dashboard.Widget>
+            </div>
+
+            {/* Bottom Row: Cluster Health & Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+               <Dashboard.Widget title="Telemetry" span={1} className="flex items-center justify-center">
+                  <Gauge value={mockCpu} label="CPU Core" unit="%" status={mockCpu > 80 ? 'error' : 'info'} size={180} />
+               </Dashboard.Widget>
+
+               <Dashboard.Widget title="Cluster Inventory" span={3}>
+                  <DataGrid 
+                    columns={[
+                      { key: 'nodeId', header: 'Node', width: '100px' },
+                      { key: 'location', header: 'Region' },
+                      { key: 'status', header: 'Status', render: (v: StatusType) => <Status type={v} label={v.toUpperCase()} /> },
+                      { key: 'load', header: 'Load', render: (v) => <ProgressBar progress={v} variant={v > 80 ? 'error' : 'default'} /> }
+                    ]} 
+                    data={demoDataGridData.slice(0, 5)} 
+                    rowsPerPage={5} 
+                  />
+               </Dashboard.Widget>
+            </div>
+          </div>
+        );
       case 'PivotTable':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
@@ -2848,7 +2942,7 @@ const App: React.FC = () => {
           </Card>
         );
       case 'Breadcrumbs':
-        return <Card title="Breadcrumbs" subtitle="Path navigation"><Breadcrumbs items={[{label: 'Home'}, {label: 'Library'}, {label: 'Components'}]} /></Card>;
+        return <Card title="Breadcrumbs" subtitle="Path navigation"><Breadcrumbs items={[{label: 'Forge'}, {label: activeTab}]} /></Card>;
       case 'RadioButton':
         return (
           <Card title="Radio Group" subtitle="Single selection options">
