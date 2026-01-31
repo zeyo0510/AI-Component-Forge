@@ -8,9 +8,11 @@ interface TextProps {
   className?: string;
   children: React.ReactNode;
   id?: string;
+  // Added style property to allow inline CSS styles on the text component
+  style?: React.CSSProperties;
 }
 
-const Text: React.FC<TextProps> = ({ variant = 'body', className = '', children, id }) => {
+const Text: React.FC<TextProps> = ({ variant = 'body', className = '', children, id, style }) => {
   const styles: Record<TextVariant, string> = {
     h1: 'text-4xl font-extrabold text-slate-900 leading-tight',
     h2: 'text-2xl font-bold text-slate-800',
@@ -35,7 +37,7 @@ const Text: React.FC<TextProps> = ({ variant = 'body', className = '', children,
   const Component = tagMap[variant];
 
   return (
-    <Component id={id} className={`${styles[variant]} ${className}`}>
+    <Component id={id} className={`${styles[variant]} ${className}`} style={style}>
       {children}
     </Component>
   );

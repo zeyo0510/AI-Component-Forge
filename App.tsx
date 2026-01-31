@@ -73,6 +73,7 @@ import Gauge from './components/Gauge';
 import NumericTextBox from './components/NumericTextBox';
 import SplitButton from './components/SplitButton';
 import Paginator from './components/Paginator';
+import ColorPicker from './components/ColorPicker';
 
 import { 
   RadioOption, 
@@ -500,6 +501,9 @@ const App: React.FC = () => {
   const [demoPercent, setDemoPercent] = useState(75.5);
   const [demoPrecision, setDemoPrecision] = useState(0.0042);
 
+  // ColorPicker state
+  const [themeColor, setThemeColor] = useState('#6366f1');
+
   // Live simulation for Gauges
   useEffect(() => {
     const interval = setInterval(() => {
@@ -511,7 +515,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -535,6 +539,65 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'ColorPicker':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Advanced Color Management</Text>
+              <Text variant="small">High-fidelity color选取器 with presets, hex input, and visual preview for design-heavy applications.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="System Theme Configuration" subtitle="Define the primary branding color." accent="primary">
+                 <div className="py-6 flex flex-col items-center">
+                    <ColorPicker 
+                      label="Primary Theme Color"
+                      value={themeColor} 
+                      onChange={setThemeColor} 
+                    />
+                    <div className="mt-8 w-full p-4 rounded-xl border border-slate-100 flex items-center justify-between transition-colors duration-500" style={{ backgroundColor: `${themeColor}11` }}>
+                       <div className="flex flex-col">
+                          <Text variant="caption">Preview Status</Text>
+                          <Text variant="small" className="font-bold" style={{ color: themeColor }}>Dynamic Theme Applied</Text>
+                       </div>
+                       <Button size="sm" style={{ backgroundColor: themeColor, borderColor: themeColor }}>Save Theme</Button>
+                    </div>
+                 </div>
+              </Card>
+
+              <Card title="Contextual Palette" subtitle="Custom presets and inline usage." variant="outline">
+                <div className="space-y-8">
+                   <FormControl label="Border Accent">
+                      <ColorPicker 
+                        value="#10b981" 
+                        onChange={() => {}} 
+                        presets={['#10b981', '#34d399', '#059669']}
+                      />
+                   </FormControl>
+                   <FormControl label="Alert Highlighting">
+                      <ColorPicker 
+                        value="#ef4444" 
+                        onChange={() => {}} 
+                        presets={['#ef4444', '#dc2626', '#b91c1c']}
+                      />
+                   </FormControl>
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Hex Validation" variant="flat">
+                  <Text variant="small">Built-in RegEx validation for Hex codes, ensuring users can only input valid 3 or 6 digit hexadecimal values.</Text>
+               </Card>
+               <Card title="Native Integration" variant="flat">
+                  <Text variant="small">Leverages the system's native color engine for the actual selector, providing access to eyedropper tools and advanced sliders while keeping a custom Forge UI shell.</Text>
+               </Card>
+               <Card title="Responsive Design" variant="flat">
+                  <Text variant="small">Optimized for touch and mouse interactions with large hit areas for presets and an easy-to-tap color preview box.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Paginator':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
