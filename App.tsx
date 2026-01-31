@@ -80,6 +80,7 @@ import Blockquote from './components/Blockquote';
 import DataGrid from './components/DataGrid';
 import Marquee from './components/Marquee';
 import CompareSlider from './components/CompareSlider';
+import DatePicker from './components/DatePicker';
 
 import { 
   RadioOption, 
@@ -554,6 +555,10 @@ const App: React.FC = () => {
   // AngleSlider state
   const [demoAngle, setDemoAngle] = useState(45);
 
+  // DatePicker state
+  const [demoDate, setDemoDate] = useState<Date | undefined>(new Date());
+  const [emptyDate, setEmptyDate] = useState<Date | undefined>(undefined);
+
   // Live simulation for Gauges
   useEffect(() => {
     const interval = setInterval(() => {
@@ -565,7 +570,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -589,6 +594,62 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'DatePicker':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Interactive Date Picker</Text>
+              <Text variant="small">High-fidelity date selection component with calendar popup and month navigation.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Appointment Booking" subtitle="Standard usage in form structures." accent="primary">
+                 <div className="py-4 space-y-6">
+                    <DatePicker 
+                      label="Select Launch Date"
+                      value={demoDate} 
+                      onChange={setDemoDate} 
+                    />
+                    <div className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl flex items-center justify-between">
+                       <div className="flex flex-col">
+                          <Text variant="caption">Formatted Value</Text>
+                          <Text variant="small" className="font-bold text-indigo-700">
+                            {demoDate?.toDateString() || 'No date selected'}
+                          </Text>
+                       </div>
+                       <Button size="sm" onClick={() => setDemoDate(new Date())}>Reset to Now</Button>
+                    </div>
+                 </div>
+              </Card>
+
+              <Card title="Empty State & Configuration" subtitle="Handling optional values." variant="outline">
+                <div className="py-4 space-y-6">
+                   <DatePicker 
+                      label="Deadline (Optional)"
+                      value={emptyDate} 
+                      onChange={setEmptyDate} 
+                      placeholder="Pick a deadline..."
+                   />
+                   <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 italic text-xs text-slate-400">
+                      Users can trigger the picker by clicking anywhere on the input surface. Outside clicks automatically close the panel.
+                   </div>
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Calendar Math" variant="flat">
+                  <Text variant="small">Built-in logic for calculating month boundaries and first-day alignments across different calendar years.</Text>
+               </Card>
+               <Card title="UX Focused" variant="flat">
+                  <Text variant="small">Features a clear visual hierarchy for the active month and year, with intuitive arrows for navigation.</Text>
+               </Card>
+               <Card title="Today Shortcut" variant="flat">
+                  <Text variant="small">Includes a one-tap shortcut to reset the view to the current date, improving workflow efficiency.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'CompareSlider':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
