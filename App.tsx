@@ -76,6 +76,7 @@ import Paginator from './components/Paginator';
 import ColorPicker from './components/ColorPicker';
 import AngleSlider from './components/AngleSlider';
 import Skeleton from './components/Skeleton';
+import Blockquote from './components/Blockquote';
 
 import { 
   RadioOption, 
@@ -520,7 +521,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -544,6 +545,59 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Blockquote':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Quotes & Callouts</Text>
+              <Text variant="small">Elegant blockquotes for highlighting key insights, testimonials, or critical notices.</Text>
+            </header>
+
+            <div className="space-y-8">
+              <Card title="Standard Quotation" subtitle="Default indigo variant with author attribution." accent="primary">
+                 <div className="py-4">
+                    <Blockquote 
+                      author="Sam Altman" 
+                      cite="CEO, OpenAI"
+                    >
+                      "The level of AI capability that we're going to see in the next few years will be the most significant technological development in human history."
+                    </Blockquote>
+                 </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Success Notice" variant="outline" accent="success">
+                  <Blockquote variant="success">
+                    Performance benchmarks show a 40% reduction in token latency across all edge nodes.
+                  </Blockquote>
+                </Card>
+                <Card title="Critical Alert" variant="outline" accent="error">
+                  <Blockquote variant="error">
+                    API rate limits have been reached for the current billing cycle. Immediate action required.
+                  </Blockquote>
+                </Card>
+              </div>
+
+              <Card title="Contextual Informational" subtitle="Using cite without author." variant="flat" accent="info">
+                <Blockquote variant="info" cite="Architecture Documentation v2.5">
+                  Component Forge utilizes a semantic grounding layer to ensure Gemini 3 responses are always contextually aware of the current UI state.
+                </Blockquote>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Decorative UI" variant="flat">
+                  <Text variant="small">Features an oversized, low-opacity SVG quotation mark to provide instant visual context without cluttering the layout.</Text>
+               </Card>
+               <Card title="Semantic Variants" variant="flat">
+                  <Text variant="small">Automatically adapts colors and borders based on StatusType, making it versatile for both content and system messages.</Text>
+               </Card>
+               <Card title="Typography Focus" variant="flat">
+                  <Text variant="small">Utilizes a refined italic serif-style weight with optimized leading for superior readability in long-form quotes.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Skeleton':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
