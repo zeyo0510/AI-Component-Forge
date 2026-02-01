@@ -89,6 +89,7 @@ import Gallery, { GalleryItem } from './components/Gallery';
 import Map from './components/Map';
 import Accordion from './components/Accordion';
 import Carousel, { CarouselItem } from './components/Carousel';
+import Drawer from './components/Drawer';
 
 import { 
   RadioOption, 
@@ -471,6 +472,10 @@ const App: React.FC = () => {
   const [mockRam, setMockRam] = useState(68);
   const [mockNet, setMockNet] = useState(12);
 
+  // Drawer States
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isLogsOpen, setIsLogsOpen] = useState(false);
+
   // Pagination states
   const [paginatorPage, setPaginatorPage] = useState(1);
   const [longPaginatorPage, setLongPaginatorPage] = useState(4);
@@ -505,7 +510,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -529,6 +534,119 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Drawer':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Interactive Slide Panels</Text>
+              <Text variant="small">Overlay containers that slide from any edge of the viewport, perfect for focused tasks or configuration.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card title="User Context" subtitle="Right-side profile drawer example" accent="primary" hoverable>
+                  <div className="py-8 flex flex-col items-center">
+                    <div className="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600 mb-6">
+                       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" strokeWidth="2"/></svg>
+                    </div>
+                    <Button onClick={() => setIsProfileOpen(true)}>Open Profile Settings</Button>
+                  </div>
+               </Card>
+
+               <Card title="System Telemetry" subtitle="Bottom-up log inspection drawer" accent="info" hoverable>
+                  <div className="py-8 flex flex-col items-center">
+                    <div className="w-16 h-16 bg-sky-50 rounded-full flex items-center justify-center text-sky-600 mb-6">
+                       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" strokeWidth="2"/></svg>
+                    </div>
+                    <Button variant="secondary" onClick={() => setIsLogsOpen(true)}>View Runtime Logs</Button>
+                  </div>
+               </Card>
+            </div>
+
+            {/* Profile Drawer Implementation */}
+            <Drawer 
+              isOpen={isProfileOpen} 
+              onClose={() => setIsProfileOpen(false)}
+              title="Identity & Access"
+              footer={
+                <>
+                  <Button className="flex-1" onClick={() => setIsProfileOpen(false)}>Save Changes</Button>
+                  <Button variant="outline" onClick={() => setIsProfileOpen(false)}>Cancel</Button>
+                </>
+              }
+            >
+              <div className="space-y-8">
+                <div className="flex flex-col items-center p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="w-20 h-20 bg-indigo-600 rounded-full border-4 border-white shadow-xl flex items-center justify-center text-white text-3xl font-black mb-4">JD</div>
+                  <Text variant="h4">John Forge-son</Text>
+                  <Status type="success" label="Active Lead" />
+                </div>
+
+                <FormControl label="Display Name">
+                   <TextBox value="John Forge-son" />
+                </FormControl>
+
+                <FormControl label="Access Tier">
+                   <RadioButton 
+                    name="tier" 
+                    options={[{id: 't1', label: 'Standard', value: 's'}, {id: 't2', label: 'Enterprise', value: 'e'}]} 
+                    value="e" 
+                    onChange={() => {}} 
+                   />
+                </FormControl>
+
+                <section className="pt-4 border-t border-slate-100">
+                   <Text variant="caption" className="block mb-3">Linked Accounts</Text>
+                   <div className="space-y-2">
+                      <div className="flex justify-between items-center p-3 bg-white border border-slate-200 rounded-xl">
+                         <span className="text-xs font-bold text-slate-600">GitHub</span>
+                         <Status type="success" label="CONNECTED" />
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-white border border-slate-200 rounded-xl opacity-50">
+                         <span className="text-xs font-bold text-slate-600">Slack</span>
+                         <span className="text-[10px] font-black text-slate-400">NOT LINKED</span>
+                      </div>
+                   </div>
+                </section>
+              </div>
+            </Drawer>
+
+            {/* Logs Drawer Implementation */}
+            <Drawer 
+              isOpen={isLogsOpen} 
+              onClose={() => setIsLogsOpen(false)}
+              position="bottom"
+              size="lg"
+              title="Global Node Log Stream"
+            >
+              <div className="bg-slate-900 rounded-2xl p-6 font-mono text-xs text-emerald-400 min-h-[300px] overflow-auto custom-scrollbar">
+                <div className="flex items-center gap-4 mb-4 border-b border-slate-800 pb-4">
+                   <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> <span className="text-white font-bold">STREAM: LIVE</span></div>
+                   <div className="text-slate-500 uppercase tracking-tighter">Region: US-EAST-1</div>
+                </div>
+                <div className="space-y-2 opacity-80">
+                   <div>[14:20:01] <span className="text-indigo-400">INFO</span> Initiating handshake with Gemini protocol...</div>
+                   <div>[14:20:03] <span className="text-emerald-400">SUCCESS</span> Auth token verified.</div>
+                   <div>[14:20:05] <span className="text-indigo-400">INFO</span> Processing layout inference for sector Delta-9...</div>
+                   <div>[14:20:08] <span className="text-amber-400">WARN</span> Sub-optimal caching detected on edge node CF-012.</div>
+                   <div>[14:20:12] <span className="text-indigo-400">INFO</span> Token usage: 125/10000 quota.</div>
+                   <div className="text-slate-500 italic">$ tail -f forge.log_</div>
+                </div>
+              </div>
+            </Drawer>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Focus Management" variant="flat">
+                  <Text variant="small">Automatically captures Escape key events and handles document overflow to ensure the background remains stable while a modal task is active.</Text>
+               </Card>
+               <Card title="Slide Animation" variant="flat">
+                  <Text variant="small">Position-aware entry animations ensure intuitive spatial mapping (e.g. bottom drawer slides up, right drawer slides left).</Text>
+               </Card>
+               <Card title="Aesthetic Layering" variant="flat">
+                  <Text variant="small">The combination of backdrop-blur and deep shadows creates a clear visual hierarchy for secondary complex interfaces.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Carousel':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
@@ -2138,7 +2256,7 @@ const App: React.FC = () => {
                 title="Atomic Design with AI Integration"
                 content={
                   <div className="space-y-4">
-                    <p className="text-slate-600">Our components are built on a strict atomic structure, allowing the AI to compose complex layouts from primitive elements.</p>
+                    <p className="text-slate-600">Our components are built on a some strict atomic structure, allowing the AI to compose complex layouts from primitive elements.</p>
                     <ul className="list-disc list-inside text-slate-500 text-sm space-y-2">
                       <li>Strict Tailwind utility constraints</li>
                       <li>Semantic HTML hierarchy</li>
