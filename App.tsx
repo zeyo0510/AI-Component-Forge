@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Button from './components/Button';
 import Breadcrumbs from './components/Breadcrumbs';
@@ -87,6 +88,7 @@ import Dashboard from './components/Dashboard';
 import Gallery, { GalleryItem } from './components/Gallery';
 import Map from './components/Map';
 import Accordion from './components/Accordion';
+import Carousel, { CarouselItem } from './components/Carousel';
 
 import { 
   RadioOption, 
@@ -341,7 +343,48 @@ const demoMapLocations: MapLocation[] = [
   { id: 'LOC-GRU', name: 'São Paulo (SA Node)', x: 30, y: 75, status: 'error', details: 'Critical underwater cable interruption detected. Rerouting via satellite.', metrics: [{label: 'Traffic', value: '2 TB/s'}, {label: 'Latency', value: '250ms'}] },
 ];
 
-// Added missing mock data for various UI demonstration components
+const demoCarouselItems: CarouselItem[] = [
+  { 
+    id: 'c1', 
+    backgroundImage: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200',
+    content: (
+      <div className="flex flex-col justify-center h-full p-12 md:p-20 text-white max-w-2xl">
+        <Status type="info" label="NEW RELEASE" />
+        <h2 className="text-4xl md:text-6xl font-black mt-4 mb-6 leading-tight">Quantum Mesh Engine 2.0</h2>
+        <p className="text-lg text-slate-200 mb-8 leading-relaxed">Experience the next generation of real-time component orchestration with our upgraded spatial reasoning layer.</p>
+        <div className="flex gap-4">
+          <Button size="lg">Explore V2.0</Button>
+          <Button variant="ghost" className="text-white border border-white/20 hover:bg-white/10" size="lg">Documentation</Button>
+        </div>
+      </div>
+    )
+  },
+  { 
+    id: 'c2', 
+    backgroundImage: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=1200',
+    content: (
+      <div className="flex flex-col justify-center h-full p-12 md:p-20 text-white max-w-2xl">
+        <Status type="success" label="CLOUD NATIVE" />
+        <h2 className="text-4xl md:text-6xl font-black mt-4 mb-6 leading-tight">Infinite Scaling Infrastructure</h2>
+        <p className="text-lg text-slate-200 mb-8 leading-relaxed">Deployed globally across 42 regions, ensuring sub-10ms latency for all AI inference requests.</p>
+        <Button size="lg" className="w-fit">View Global Map</Button>
+      </div>
+    )
+  },
+  { 
+    id: 'c3', 
+    backgroundImage: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200',
+    content: (
+      <div className="flex flex-col justify-center h-full p-12 md:p-20 text-white max-w-2xl">
+        <Status type="warning" label="BETA ACCESS" />
+        <h2 className="text-4xl md:text-6xl font-black mt-4 mb-6 leading-tight">Zero-Trust Security Layer</h2>
+        <p className="text-lg text-slate-200 mb-8 leading-relaxed">Protect your high-fidelity UI assets with our proprietary hardware-level encryption protocols.</p>
+        <Button size="lg" variant="success" className="w-fit">Request Invitation</Button>
+      </div>
+    )
+  }
+];
+
 const demoDataGridColumns: DataGridColumn[] = [
   { key: 'nodeId', header: 'Node', width: '100px', sortable: true },
   { key: 'location', header: 'Region', sortable: true },
@@ -462,7 +505,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -486,6 +529,57 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Carousel':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">High-Fidelity Carousel</Text>
+              <Text variant="small">Dynamic sliding container with hardware acceleration and touch support for professional presentation layers.</Text>
+            </header>
+
+            <Carousel 
+              items={demoCarouselItems} 
+              className="mb-8"
+            />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <Card title="Custom Node Carousel" variant="outline" accent="info">
+                <Text variant="small" className="mb-6">The carousel handles arbitrary React nodes, allowing for complex interactive slides beyond simple images.</Text>
+                <Carousel 
+                  aspectRatio="square"
+                  items={[
+                    { id: 'n1', content: <div className="h-full flex items-center justify-center bg-indigo-600 text-white font-black text-4xl">SLIDE A</div> },
+                    { id: 'n2', content: <div className="h-full flex items-center justify-center bg-emerald-600 text-white font-black text-4xl">SLIDE B</div> },
+                    { id: 'n3', content: <div className="h-full flex items-center justify-center bg-rose-600 text-white font-black text-4xl">SLIDE C</div> },
+                  ]}
+                />
+              </Card>
+              <Card title="Ultra-Wide Mode" variant="outline" accent="primary">
+                <Text variant="small" className="mb-6">Configure the aspect ratio for wide banners or compact squares to fit various layout contexts.</Text>
+                <Carousel 
+                  aspectRatio="wide"
+                  autoPlay={false}
+                  items={[
+                    { id: 'w1', backgroundImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200', content: <div className="flex items-center justify-center h-full text-white font-bold uppercase tracking-[1em]">Infinity</div> },
+                    { id: 'w2', backgroundImage: 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&q=80&w=1200', content: <div className="flex items-center justify-center h-full text-white font-bold uppercase tracking-[1em]">Compute</div> },
+                  ]}
+                />
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <Card title="Cubic Easing" variant="flat">
+                  <Text variant="small">Utilizes professional cubic-bezier timing functions to simulate physical inertia and smooth deceleration.</Text>
+               </Card>
+               <Card title="Touch Optimized" variant="flat">
+                  <Text variant="small">Built-in swipe detection with delta thresholds to distinguish between scrolling and intent-based navigation.</Text>
+               </Card>
+               <Card title="Smart Timing" variant="flat">
+                  <Text variant="small">The interval engine automatically pauses on user interaction (hover/touch) to ensure a high-quality UX.</Text>
+               </Card>
+            </div>
+          </div>
+        );
       case 'Accordion':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
@@ -2044,7 +2138,7 @@ const App: React.FC = () => {
                 title="Atomic Design with AI Integration"
                 content={
                   <div className="space-y-4">
-                    <p className="text-slate-600">Our components are built on a some strict atomic structure, allowing the AI to compose complex layouts from primitive elements.</p>
+                    <p className="text-slate-600">Our components are built on a strict atomic structure, allowing the AI to compose complex layouts from primitive elements.</p>
                     <ul className="list-disc list-inside text-slate-500 text-sm space-y-2">
                       <li>Strict Tailwind utility constraints</li>
                       <li>Semantic HTML hierarchy</li>
