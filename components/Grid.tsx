@@ -8,8 +8,8 @@ const GridPlaceholder = ({ className = "" }) => (
   </div>
 );
 
-// Added explicit typing for children as optional to resolve TypeScript compilation errors at usage sites
-const Grid: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+/* Typing children as optional and providing it in the function signature to prevent TypeScript errors in some environments */
+const Grid = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div className="space-y-12">
       <section>

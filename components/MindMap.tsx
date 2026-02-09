@@ -33,8 +33,8 @@ const MindMapNode: React.FC<MindMapNodeProps> = ({ label, x, y, color, size = 'm
   );
 };
 
-// Added explicit typing for children as optional to resolve TypeScript compilation errors at usage sites
-const MindMap: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+/* Explicitly typed optional children and provided in signature to avoid errors in strict environments */
+const MindMap = ({ children }: { children?: React.ReactNode }) => {
   // Define nodes with percentage-based coordinates for responsiveness
   const nodes = [
     { id: 'root', label: 'GEN AI PRODUCT', x: 50, y: 50, color: '#6366f1', size: 'lg' as const },

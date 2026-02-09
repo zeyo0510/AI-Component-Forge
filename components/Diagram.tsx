@@ -8,8 +8,8 @@ interface DiagramProps {
   children?: React.ReactNode;
 }
 
-// Added React.FC typing to ensure optional children are correctly handled by TypeScript
-const Diagram: React.FC<DiagramProps> = ({ children, title }) => {
+/* Explicitly destructuring props to ensure compatibility with strict TypeScript environments */
+const Diagram = ({ children, title }: DiagramProps) => {
   // Mock connection paths (Bézier curve data)
   const connections = [
     { start: [240, 100], end: [400, 50], color: 'stroke-indigo-400' },

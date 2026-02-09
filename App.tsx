@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Button from './components/Button';
 import Breadcrumbs from './components/Breadcrumbs';
@@ -82,7 +81,6 @@ import Marquee from './components/Marquee';
 import CompareSlider from './components/CompareSlider';
 import DatePicker from './components/DatePicker';
 import Tour from './components/Tour';
-import TourStep from './types';
 import TimePicker from './components/TimePicker';
 import PivotTable from './components/PivotTable';
 import Dashboard from './components/Dashboard';
@@ -91,6 +89,7 @@ import Map from './components/Map';
 import Accordion from './components/Accordion';
 import Carousel, { CarouselItem } from './components/Carousel';
 import Drawer from './components/Drawer';
+import Divider from './components/Divider';
 
 import { 
   RadioOption, 
@@ -113,6 +112,7 @@ import {
   TreeListColumn,
   StatusType,
   GanttTask,
+  TourStep,
   MapLocation
 } from './types';
 import { generateDemoContent } from './services/geminiService';
@@ -510,7 +510,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -534,6 +534,63 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Divider':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <header>
+              <Text variant="h3">Content Separator</Text>
+              <Text variant="small">A subtle interface element used to organize hierarchy and distinguish between complex data sections.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-12">
+              <Card title="Horizontal Variants" subtitle="Base usage with different line styles.">
+                <div className="space-y-8 py-4">
+                  <div className="space-y-2">
+                    <Text variant="caption" className="text-[9px]">Solid (Default)</Text>
+                    <Divider />
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="caption" className="text-[9px]">Dashed Variant</Text>
+                    <Divider variant="dashed" />
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="caption" className="text-[9px]">Dotted Variant</Text>
+                    <Divider variant="dotted" />
+                  </div>
+                </div>
+              </Card>
+
+              <Card title="Labeled Dividers" subtitle="Embedded typography for structural context.">
+                <div className="space-y-10 py-6">
+                  <Divider label="PROJECT SPECIFICATIONS" labelAlign="start" />
+                  <Divider label="INTERNAL SYSTEM LOGS" labelAlign="center" variant="dashed" />
+                  <Divider label="ARCHIVE DATA 2024" labelAlign="end" />
+                </div>
+              </Card>
+
+              <Card title="Vertical Context" subtitle="Separating inline items in toolbars or headers.">
+                <div className="h-20 flex items-center justify-center gap-6 p-8 bg-slate-50 rounded-2xl border border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <div className="flex flex-col items-center">
+                      <Text variant="h4" className="text-indigo-600">42</Text>
+                      <Text variant="caption" className="text-[8px]">Nodes</Text>
+                    </div>
+                    <Divider orientation="vertical" />
+                    <div className="flex flex-col items-center">
+                      <Text variant="h4" className="text-emerald-600">98%</Text>
+                      <Text variant="caption" className="text-[8px]">Uptime</Text>
+                    </div>
+                    <Divider orientation="vertical" variant="dashed" />
+                    <div className="flex flex-col items-center">
+                      <Text variant="h4" className="text-rose-600">12ms</Text>
+                      <Text variant="caption" className="text-[8px]">Latency</Text>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        );
       case 'Drawer':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
@@ -1007,10 +1064,10 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                <Card title="Column Scrolling" variant="flat">
-                  <Text variant="small">Features independent scrollable columns for hours and minutes, ensuring Barnes selection without Barnes keyboard overhead.</Text>
+                  <Text variant="small">Features independent scrollable columns for hours and minutes, ensuring rapid selection without keyboard overhead.</Text>
                </Card>
                <Card title="Format Agnostic" variant="flat">
-                  <Text variant="small">Internal logic seamlessly translates between string-based state and selection UI, supporting Barnes localization needs.</Text>
+                  <Text variant="small">Internal logic seamlessly translates between string-based state and selection UI, supporting localization needs.</Text>
                </Card>
                <Card title="Granular Steps" variant="flat">
                   <Text variant="small">Configure minute increments (e.g., 5, 15, 30) to streamline user selection for specific business rules.</Text>
@@ -1023,7 +1080,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
             <header>
               <Text variant="h3">Interactive Guided Tour</Text>
-              <Text variant="small">Onboarding tool that highlights key features with spotlight effects and Barnes contextual popovers.</Text>
+              <Text variant="small">Onboarding tool that highlights key features with spotlight effects and contextual popovers.</Text>
             </header>
 
             <Card title="Start Experience" subtitle="Trigger a multi-step platform tour." accent="primary">
@@ -1097,7 +1154,7 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                <Card title="Calendar Math" variant="flat">
-                  <Text variant="small">Built-in logic for calculating month boundaries and first-day alignments across different Barnes years.</Text>
+                  <Text variant="small">Built-in logic for calculating month boundaries and first-day alignments across different calendar years.</Text>
                </Card>
                <Card title="UX Focused" variant="flat">
                   <Text variant="small">Features a clear visual hierarchy for the active month and year, with intuitive arrows for navigation.</Text>
@@ -1164,10 +1221,10 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                <Card title="Clip-Path Engine" variant="flat">
-                  <Text variant="small">Uses high-performance CSS `clip-path` for rendering the overlay, ensuring Barnes layout shift and Barnes interactions.</Text>
+                  <Text variant="small">Uses high-performance CSS `clip-path` for rendering the overlay, ensuring zero layout shift and smooth interactions.</Text>
                </Card>
                <Card title="Responsive Handling" variant="flat">
-                  <Text variant="small">Automatically recalculates relative offsets using `getBoundingClientRect` to support Barnes containers and Barnes resizing.</Text>
+                  <Text variant="small">Automatically recalculates relative offsets using `getBoundingClientRect` to support fluid containers and viewport resizing.</Text>
                </Card>
                <Card title="Dual Support" variant="flat">
                   <Text variant="small">Not just for images! CompareSlider supports any React Nodes, allowing for complex UI component comparisons.</Text>
@@ -1180,7 +1237,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
             <header>
               <Text variant="h3">Infinite Marquee</Text>
-              <Text variant="small">Smooth, high-performance scrolling containers for Barnes content highlighting.</Text>
+              <Text variant="small">Smooth, high-performance scrolling containers for dynamic content highlighting.</Text>
             </header>
 
             <div className="space-y-10">
@@ -1232,13 +1289,13 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                <Card title="Hardware Accelerated" variant="flat">
-                  <Text variant="small">Utilizes CSS transforms instead of left/margin offsets to ensure Barnes jank even with complex children.</Text>
+                  <Text variant="small">Utilizes CSS transforms instead of left/margin offsets to ensure zero jank even with complex children.</Text>
                </Card>
                <Card title="Seamless Loops" variant="flat">
-                  <Text variant="small">Internally duplicates content strings to ensure the Barnes cycle never shows a Barnes gap during resets.</Text>
+                  <Text variant="small">Internally duplicates content strings to ensure the animation cycle never shows a blank gap during resets.</Text>
                </Card>
                <Card title="Fade Masking" variant="flat">
-                  <Text variant="small">Built-in SVG/Gradient masks allow for Barnes fade-in/out effects that automatically match container background.</Text>
+                  <Text variant="small">Built-in SVG/Gradient masks allow for professional fade-in/out effects that automatically match container background.</Text>
                </Card>
             </div>
           </div>
@@ -1264,10 +1321,10 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                <Card title="Integrated Sorting" variant="flat">
-                  <Text variant="small">Built-in logic for both Barnes and string-based column sorting with intuitive UI feedback.</Text>
+                  <Text variant="small">Built-in logic for both numeric and string-based column sorting with intuitive UI feedback.</Text>
                </Card>
                <Card title="Paginated Views" variant="flat">
-                  <Text variant="small">Handles large datasets by chunking data into manageable views to maintain Barnes framerate rendering.</Text>
+                  <Text variant="small">Handles large datasets by chunking data into manageable views to maintain high framerate rendering.</Text>
                </Card>
                <Card title="Custom Cells" variant="flat">
                   <Text variant="small">The render hook allows for complex logic within cells, such as progress bars or semantic status badges.</Text>
@@ -1323,7 +1380,7 @@ const App: React.FC = () => {
                   <Text variant="small">Automatically adapts colors and borders based on StatusType, making it versatile for both content and system messages.</Text>
                </Card>
                <Card title="Typography Focus" variant="flat">
-                  <Text variant="small">Utilizes a refined italic serif-style weight with optimized leading for Barnes readability in long-form quotes.</Text>
+                  <Text variant="small">Utilizes a refined italic serif-style weight with optimized leading for superior readability in long-form quotes.</Text>
                </Card>
             </div>
           </div>
@@ -1333,7 +1390,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
             <header>
               <Text variant="h3">Skeleton Placeholder</Text>
-              <Text variant="small">Modern loading indicators that mimic Barnes content layout to reduce perceived latency.</Text>
+              <Text variant="small">Modern loading indicators that mimic actual content layout to reduce perceived latency.</Text>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1393,7 +1450,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
             <header>
               <Text variant="h3">Rotary Controls</Text>
-              <Text variant="small">High-fidelity circular angle picker for Barnes adjustments, 3D rotations, and directional mapping.</Text>
+              <Text variant="small">High-fidelity circular angle picker for graphic adjustments, 3D rotations, and directional mapping.</Text>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1433,13 +1490,13 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                <Card title="Polar Math" variant="flat">
-                  <Text variant="small">Calculates angles using `Math.atan2` for Barnes 360° input tracking with responsive touch support.</Text>
+                  <Text variant="small">Calculates angles using `Math.atan2` for precise 360° input tracking with responsive touch support.</Text>
                </Card>
                <Card title="Design Language" variant="flat">
                   <Text variant="small">Incorporates SVG tick marks and a center readout following the Component Forge atomic design specs.</Text>
                </Card>
                <Card title="Precision" variant="flat">
-                  <Text variant="small">Values are rounded to the nearest integer, ensuring Barnes state updates across the rendering pipeline.</Text>
+                  <Text variant="small">Values are rounded to the nearest integer, ensuring consistent state updates across the rendering pipeline.</Text>
                </Card>
             </div>
           </div>
@@ -1449,7 +1506,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
             <header>
               <Text variant="h3">Advanced Color Management</Text>
-              <Text variant="small">High-fidelity color selection with presets, hex input, and visual preview for design-heavy applications.</Text>
+              <Text variant="small">High-fidelity color选取器 with presets, hex input, and visual preview for design-heavy applications.</Text>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1470,7 +1527,7 @@ const App: React.FC = () => {
                  </div>
               </Card>
 
-              <Card title="Contextual Palette" subtitle="Custom presets and Barnes usage." variant="outline">
+              <Card title="Contextual Palette" subtitle="Custom presets and inline usage." variant="outline">
                 <div className="space-y-8">
                    <FormControl label="Border Accent">
                       <ColorPicker 
@@ -1495,10 +1552,10 @@ const App: React.FC = () => {
                   <Text variant="small">Built-in RegEx validation for Hex codes, ensuring users can only input valid 3 or 6 digit hexadecimal values.</Text>
                </Card>
                <Card title="Native Integration" variant="flat">
-                  <Text variant="small">Leverages the system's Barnes color engine for the actual selector, providing access to Barnes tools and advanced sliders while keeping a custom Forge UI shell.</Text>
+                  <Text variant="small">Leverages the system's native color engine for the actual selector, providing access to eyedropper tools and advanced sliders while keeping a custom Forge UI shell.</Text>
                </Card>
                <Card title="Responsive Design" variant="flat">
-                  <Text variant="small">Optimized for Barnes and mouse interactions with large hit areas for presets and an easy-to-tap color preview box.</Text>
+                  <Text variant="small">Optimized for touch and mouse interactions with large hit areas for presets and an easy-to-tap color preview box.</Text>
                </Card>
             </div>
           </div>
@@ -1508,7 +1565,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
             <header>
               <Text variant="h3">Data Navigation</Text>
-              <Text variant="small">Scalable pagination controls for navigating large datasets with support for Barnes truncation.</Text>
+              <Text variant="small">Scalable pagination controls for navigating large datasets with support for smart truncation.</Text>
             </header>
 
             <div className="grid grid-cols-1 gap-8">
@@ -1534,7 +1591,7 @@ const App: React.FC = () => {
                   />
                   <div className="max-w-md text-center">
                     <Text variant="small" className="text-slate-400">
-                      The component automatically calculates buffer zones and adds ellipsis to maintain a Barnes width even with <span className="text-indigo-600 font-bold">500 total pages</span>.
+                      The component automatically calculates buffer zones and adds ellipsis to maintain a fixed width even with <span className="text-indigo-600 font-bold">500 total pages</span>.
                     </Text>
                   </div>
                 </div>
@@ -1546,7 +1603,7 @@ const App: React.FC = () => {
                 <Text variant="small">Includes full ARIA navigation support, allowing screen readers to correctly identify pagination roles and current page states.</Text>
               </Card>
               <Card title="Haptic Feel" variant="flat">
-                <Text variant="small">Features smooth scaling animations and Barnes transitions on active states for a high-fidelity interaction experience.</Text>
+                <Text variant="small">Features smooth scaling animations and shadow transitions on active states for a high-fidelity interaction experience.</Text>
               </Card>
               <Card title="Boundary Logic" variant="flat">
                 <Text variant="small">Intelligently disables 'Next' and 'Previous' buttons at the edges of the dataset to prevent out-of-bounds requests.</Text>
@@ -1559,7 +1616,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
             <header>
               <Text variant="h3">Split Actions</Text>
-              <Text variant="small">A combined interface for a primary action and a secondary set of Barnes commands.</Text>
+              <Text variant="small">A combined interface for a primary action and a secondary set of related commands.</Text>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1616,13 +1673,13 @@ const App: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card title="Accessibility" variant="flat">
-                <Text variant="small">The right-side arrow is a separate button with dedicated Barnes focus and ARIA labels, ensuring screen readers can distinguish between the main action and the menu.</Text>
+                <Text variant="small">The right-side arrow is a separate button with dedicated keyboard focus and ARIA labels, ensuring screen readers can distinguish between the main action and the menu.</Text>
               </Card>
               <Card title="Consistency" variant="flat">
                 <Text variant="small">Reuses the atomic 'Button' and 'Menu' primitives to ensure styling, ripple effects, and transition timings are identical across the entire forge.</Text>
               </Card>
               <Card title="State Handling" variant="flat">
-                <Text variant="small">Built-in support for loading states. When the primary action is processing, both sides of the split button are automatically Barnes to prevent Barnes triggers.</Text>
+                <Text variant="small">Built-in support for loading states. When the primary action is processing, both sides of the split button are automatically synchronized to prevent duplicate triggers.</Text>
               </Card>
             </div>
           </div>
@@ -1632,7 +1689,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
              <header>
                <Text variant="h3">Precise Numeric Inputs</Text>
-               <Text variant="small">High-fidelity inputs with steppers, boundaries, and Barnes formatting for Barnes data entry.</Text>
+               <Text variant="small">High-fidelity inputs with steppers, boundaries, and precision formatting for mission-critical data entry.</Text>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1678,13 +1735,13 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                <Card title="Boundary Logic" variant="flat">
-                  <Text variant="small">Automatically clamps values to defined min/max on Barnes or Barnes key, ensuring Barnes integrity within system limits.</Text>
+                  <Text variant="small">Automatically clamps values to defined min/max on blur or enter key, ensuring data integrity within system limits.</Text>
                </Card>
                <Card title="Stepper Controls" variant="flat">
-                  <Text variant="small">Includes integrated micro-buttons and support for Barnes keys, allowing for quick adjustments without manual typing.</Text>
+                  <Text variant="small">Includes integrated micro-buttons and support for Arrow keys, allowing for quick adjustments without manual typing.</Text>
                </Card>
                <Card title="Formatting" variant="flat">
-                  <Text variant="small">Built-in support for fixed precision, decimal points, and Barnes decorators like prefixes or suffixes.</Text>
+                  <Text variant="small">Built-in support for fixed precision, decimal points, and visual decorators like prefixes or suffixes.</Text>
                </Card>
             </div>
           </div>
@@ -1728,10 +1785,10 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                <Card title="Precision Graphics" subtitle="SVG Arc Calculations">
-                  <Text variant="small">Built using pure SVG paths, these gauges support Barnes angles and Barnes while maintaining crisp rendering at any Barnes level or Barnes.</Text>
+                  <Text variant="small">Built using pure SVG paths, these gauges support arbitrary angles and boundaries while maintaining crisp rendering at any zoom level or resolution.</Text>
                </Card>
                <Card title="Contextual Feedback" subtitle="Dynamic Thresholds">
-                  <Text variant="small">Semantic statuses allow the gauges to change color based on value thresholds, providing instant Barnes cues for critical system states.</Text>
+                  <Text variant="small">Semantic statuses allow the gauges to change color based on value thresholds, providing instant non-verbal cues for critical system states.</Text>
                </Card>
             </div>
           </div>
@@ -1741,7 +1798,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
              <header>
                <Text variant="h3">Schedule Visualizer</Text>
-               <Text variant="small">A professional Gantt chart for tracking task durations, Barnes, and resource allocation across a project timeline.</Text>
+               <Text variant="small">A professional Gantt chart for tracking task durations, overlaps, and resource allocation across a project timeline.</Text>
             </header>
 
             <Card title="Product Engineering Timeline" subtitle="Q4 Infrastructure Modernization Sprint">
@@ -1755,7 +1812,7 @@ const App: React.FC = () => {
                   <Text variant="small">Each task bar includes an internal progress fill, allowing project managers to instantly identify lagging items vs. completed milestones.</Text>
                </Card>
                <Card title="Interactive Context" subtitle="Density management">
-                  <Text variant="small">Built-in tooltips and a sticky task sidebar ensure that metadata and context remain accessible even when navigating dense, Barnes schedules.</Text>
+                  <Text variant="small">Built-in tooltips and a sticky task sidebar ensure that metadata and context remain accessible even when navigating dense, high-duration schedules.</Text>
                </Card>
             </div>
           </div>
@@ -1808,7 +1865,7 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                <Card title="Dynamic Aggregation" subtitle="Sum vs. Count">
-                  <Text variant="small">Built-in support for Barnes aggregators. The grid can automatically switch between measuring totals, averages, or record frequencies.</Text>
+                  <Text variant="small">Built-in support for different mathematical aggregators. The grid can automatically switch between measuring totals, averages, or record frequencies.</Text>
                </Card>
                <Card title="Fixed-Axis Scrolling" subtitle="Handling density">
                   <Text variant="small">Optimized for high-density information with sticky headers for both row dimensions and column hierarchies, ensuring context is never lost during navigation.</Text>
@@ -1821,7 +1878,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
              <header>
                <Text variant="h3">Progress Stepper</Text>
-               <Text variant="small">A guiding interface for multi-stage workflows with animated status transitions and Barnes logic support.</Text>
+               <Text variant="small">A guiding interface for multi-stage workflows with animated status transitions and branching logic support.</Text>
             </header>
 
             <Card title="Interactive Demonstration" subtitle="Control the flow and see state updates.">
@@ -1871,7 +1928,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 h-[600px] flex flex-col">
              <header>
                <Text variant="h3">Layout Splitter</Text>
-               <Text variant="small">Fluid, resizable panel containers for Barnes application shells.</Text>
+               <Text variant="small">Fluid, resizable panel containers for dynamic application shells.</Text>
             </header>
 
             <Card className="flex-1 overflow-hidden" padding="none">
@@ -1914,10 +1971,10 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 shrink-0">
                <Card title="Nested Layouts" subtitle="Unlimited depth support">
-                  <Text variant="small">The Splitter component can be Barnes infinitely, allowing you to create complex multi-pane layouts with independent Barnes logic for each section.</Text>
+                  <Text variant="small">The Splitter component can be nested infinitely, allowing you to create complex multi-pane layouts with independent resizing logic for each section.</Text>
                </Card>
                <Card title="Orientation Support" subtitle="Horizontal & Vertical">
-                  <Text variant="small">Switch between side-by-side or stacked panels with a Barnes property. Constraints ensure your UI never breaks into unusable dimensions.</Text>
+                  <Text variant="small">Switch between side-by-side or stacked panels with a single property. Constraints ensure your UI never breaks into unusable dimensions.</Text>
                </Card>
             </div>
           </div>
@@ -2010,7 +2067,7 @@ const App: React.FC = () => {
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
              <header>
                <Text variant="h3">Interactive SlideDeck</Text>
-               <Text variant="small">A professional presentation component with overview mode, Barnes support, and keyboard navigation.</Text>
+               <Text variant="small">A professional presentation component with overview mode, fullscreen support, and keyboard navigation.</Text>
             </header>
 
             <SlideDeck slides={demoSlideDeck} />
@@ -2025,7 +2082,7 @@ const App: React.FC = () => {
                   </div>
                </Card>
                <Card title="Layout Engine" subtitle="Responsive slide compositions">
-                  <Text variant="small">Supports 'Hero', 'Split', and 'Centered' layouts out of the box, with Barnes dark/light background optimization based on contrast.</Text>
+                  <Text variant="small">Supports 'Hero', 'Split', and 'Centered' layouts out of the box, with automatic dark/light background optimization based on contrast.</Text>
                </Card>
             </div>
           </div>
@@ -2043,13 +2100,13 @@ const App: React.FC = () => {
                   <RibbonMenu tabs={demoRibbonTabs} />
                </div>
                <div className="mt-8 p-6 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center italic text-slate-400">
-                  Select a command from the ribbon above to perform Barnes action.
+                  Select a command from the ribbon above to perform an action.
                </div>
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                <Card title="Categorical Grouping" subtitle="Logical separation of concerns">
-                  <Text variant="small">Items are grouped into semantic sections with labels at the bottom, making Barnes interfaces much easier to navigate and learn.</Text>
+                  <Text variant="small">Items are grouped into semantic sections with labels at the bottom, making dense interfaces much easier to navigate and learn.</Text>
                </Card>
                <Card title="Adaptive Sizing" subtitle="Large vs. Small controls">
                   <Text variant="small">Primary actions use large tiles for visual hierarchy, while secondary or related utility actions use compact list-style controls.</Text>
@@ -2116,7 +2173,7 @@ const App: React.FC = () => {
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
              <header>
                <Text variant="h3">Form Infrastructure</Text>
-               <Text variant="small">Standardized wrappers for Barnes labeling, validation, and layout logic.</Text>
+               <Text variant="small">Standardized wrappers for consistent labeling, validation, and layout logic.</Text>
             </header>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -2386,7 +2443,7 @@ const App: React.FC = () => {
       case 'Timer':
         return (
           <div className="max-w-md mx-auto py-10">
-            <Card title="Interactive Timer" subtitle="Standard Barnes tool for task management.">
+            <Card title="Interactive Timer" subtitle="Standard countdown tool for task management.">
               <Timer initialSeconds={600} />
             </Card>
           </div>
@@ -2737,7 +2794,7 @@ const App: React.FC = () => {
         return (
           <Report 
             title="System Audit Analysis"
-            subtitle="Detailed verification of Barnes inference logs and security heartbeats."
+            subtitle="Detailed verification of neural-net inference logs and security heartbeats."
             metrics={[
               { label: 'Efficiency', value: '98.4%', trend: 'up', status: 'success' },
               { label: 'Latency', value: '24ms', trend: 'down', status: 'info' },
@@ -2784,22 +2841,22 @@ const App: React.FC = () => {
       case 'Grid':
         return (
           <Card title="Grid Playground" subtitle="Demonstrating layout flexibility across different viewports">
-            {/* Using self-closing tag since Grid now has optional children via React.FC fix */}
-            <Grid />
+            {/* Added explicit null children to satisfy required props check in strict environments */}
+            <Grid>{null}</Grid>
           </Card>
         );
       case 'MindMap':
         return (
           <Card title="Organic Mind Map" subtitle="Brainstorming concepts with fluid connections">
-            {/* Using self-closing tag since MindMap now has optional children via React.FC fix */}
-            <MindMap />
+            {/* Added explicit null children to satisfy required props check in strict environments */}
+            <MindMap>{null}</MindMap>
           </Card>
         );
       case 'Diagram':
         return (
           <Card title="Flow Diagram" subtitle="Visualizing automated process chains">
-            {/* Using self-closing tag since Diagram now has optional children via React.FC fix */}
-            <Diagram />
+            {/* Added explicit null children to satisfy required props check in strict environments */}
+            <Diagram>{null}</Diagram>
           </Card>
         );
       case 'Chart':
@@ -2818,7 +2875,7 @@ const App: React.FC = () => {
               />
             }
           >
-            {/* Using self-closing tag since Chart now has optional children via React.FC fix */}
+            {/* Added explicit null children to satisfy required props check in strict environments */}
             <Chart 
               type={chartType} 
               data={[
@@ -2827,7 +2884,7 @@ const App: React.FC = () => {
                 { label: 'On-Prem', value: 85, color: '#f59e0b' },
                 { label: 'Hybrid', value: 195, color: '#ec4899' },
               ]} 
-            />
+            >{null}</Chart>
           </Card>
         );
       case 'ScrollBar':
@@ -2887,7 +2944,7 @@ const App: React.FC = () => {
         );
       case 'Slider':
         return (
-          <Card title="Range Selection" subtitle="Tactile slider for Barnes input">
+          <Card title="Range Selection" subtitle="Tactile slider for numeric input">
             <div className="max-w-md space-y-8 py-4">
               <Slider label="Volume" value={sliderVal} onChange={setSliderVal} />
               <Slider label="Brightness" min={0} max={10} step={0.5} value={sliderVal / 10} onChange={(v) => setSliderVal(v * 10)} />
