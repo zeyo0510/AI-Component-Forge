@@ -14,7 +14,8 @@ interface ChartProps {
   children?: React.ReactNode;
 }
 
-const Chart = ({ type, data, children }: ChartProps) => {
+// Added React.FC typing to correctly handle optional children and other props in strict TS environments
+const Chart: React.FC<ChartProps> = ({ type, data, children }) => {
   if (type === 'pie') {
     const total = data.reduce((sum, d) => sum + d.value, 0);
     let cumulativeAngle = 0;
