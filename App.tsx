@@ -89,6 +89,7 @@ import Map from './components/Map';
 import Accordion from './components/Accordion';
 import Carousel, { CarouselItem } from './components/Carousel';
 import Drawer from './components/Drawer';
+import LevelMeter from './components/LevelMeter';
 import Divider from './components/Divider';
 
 import { 
@@ -510,7 +511,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -534,6 +535,66 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'LevelMeter':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Hardware Level Meter</Text>
+              <Text variant="small">High-precision segmented visualization for signal strength, audio levels, or resource utilization.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Signal Monitoring" subtitle="Horizontal multi-segment meters">
+                <div className="space-y-8 py-4">
+                  <LevelMeter label="Primary Channel" value={75} segments={30} />
+                  <LevelMeter label="Secondary Channel" value={42} segments={30} />
+                  <LevelMeter label="Peak Signal" value={95} segments={30} />
+                </div>
+              </Card>
+
+              <Card title="Vertical Orientation" subtitle="Compact vertical level indicators">
+                <div className="flex justify-around items-end h-64 py-4 bg-slate-950 rounded-xl border border-slate-800">
+                  <LevelMeter orientation="vertical" value={65} label="L" segments={15} />
+                  <LevelMeter orientation="vertical" value={82} label="R" segments={15} />
+                  <LevelMeter orientation="vertical" value={45} label="C" segments={15} />
+                  <LevelMeter orientation="vertical" value={92} label="LFE" segments={15} />
+                </div>
+              </Card>
+            </div>
+
+            <Card title="Live Telemetry Simulation" subtitle="Dynamic level updates from mock data stream">
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-4">
+                  <div className="space-y-2">
+                    <Text variant="caption">CPU LOAD</Text>
+                    <LevelMeter value={mockCpu} segments={40} showValue={false} />
+                    <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                      <span>0%</span>
+                      <span>{Math.round(mockCpu)}%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="caption">MEMORY USAGE</Text>
+                    <LevelMeter value={mockRam} segments={40} showValue={false} />
+                    <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                      <span>0%</span>
+                      <span>{Math.round(mockRam)}%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="caption">NETWORK IO</Text>
+                    <LevelMeter value={mockNet} segments={40} showValue={false} />
+                    <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                      <span>0%</span>
+                      <span>{Math.round(mockNet)}%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+               </div>
+            </Card>
+          </div>
+        );
       case 'Divider':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700">
