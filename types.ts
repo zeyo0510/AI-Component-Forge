@@ -208,3 +208,11 @@ export interface TreeMapNode {
   children?: TreeMapNode[];
   color?: string;
 }
+
+export interface NavItem {
+  id: string;
+  label: string;
+  icon?: React.ReactNode;
+  badge?: string | number;
+  badgeVariant?: StatusType;
+}

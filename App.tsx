@@ -93,6 +93,8 @@ import LevelMeter from './components/LevelMeter';
 import PinTextBox from './components/PinTextBox';
 import MaskedTextBox from './components/MaskedTextBox';
 import TreeMap from './components/TreeMap';
+import NavigationBar from './components/NavigationBar';
+import Avatar, { AvatarGroup } from './components/Avatar';
 import Divider from './components/Divider';
 
 import { 
@@ -118,7 +120,8 @@ import {
   GanttTask,
   TourStep,
   MapLocation,
-  TreeMapNode
+  TreeMapNode,
+  NavItem
 } from './types';
 import { generateDemoContent } from './services/geminiService';
 
@@ -486,6 +489,13 @@ const demoTreeMapData: TreeMapNode = {
   ]
 };
 
+const demoNavItems: NavItem[] = [
+  { id: 'home', label: 'Home', icon: <span>🏠</span> },
+  { id: 'projects', label: 'Projects', icon: <span>📁</span>, badge: 12 },
+  { id: 'analytics', label: 'Analytics', icon: <span>📊</span> },
+  { id: 'settings', label: 'Settings', icon: <span>⚙️</span> },
+];
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Overview');
   const [toggleEnabled, setToggleEnabled] = useState(false);
@@ -497,6 +507,7 @@ const App: React.FC = () => {
   const [innerSideBarTab, setInnerSideBarTab] = useState('general');
   const [currentAppTab, setCurrentAppTab] = useState('tab1');
   const [activeColor, setActiveColor] = useState('#4f46e5');
+  const [activeNavId, setActiveNavId] = useState('home');
 
   const [sliderVal, setSliderVal] = useState(45);
   const [trackBarVal, setTrackBarVal] = useState(72);
@@ -552,7 +563,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -576,6 +587,145 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Avatar':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">User Identity Avatars</Text>
+              <Text variant="small">Visual representations of users or entities with support for images, initials, status indicators, and grouping.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Sizes & Shapes" subtitle="From extra small to extra large in various forms.">
+                <div className="space-y-8 py-4">
+                  <div className="flex items-end gap-4">
+                    <Avatar size="xs" name="John Doe" />
+                    <Avatar size="sm" name="John Doe" />
+                    <Avatar size="md" name="John Doe" />
+                    <Avatar size="lg" name="John Doe" />
+                    <Avatar size="xl" name="John Doe" />
+                  </div>
+                  <div className="flex items-end gap-4">
+                    <Avatar size="xs" shape="square" name="Jane Smith" />
+                    <Avatar size="sm" shape="square" name="Jane Smith" />
+                    <Avatar size="md" shape="square" name="Jane Smith" />
+                    <Avatar size="lg" shape="square" name="Jane Smith" />
+                    <Avatar size="xl" shape="square" name="Jane Smith" />
+                  </div>
+                </div>
+              </Card>
+
+              <Card title="Status Indicators" subtitle="Visual feedback for user availability." accent="primary">
+                <div className="flex flex-wrap gap-8 py-4">
+                  <div className="flex flex-col items-center gap-2">
+                    <Avatar size="lg" status="online" src="https://picsum.photos/seed/user1/200" />
+                    <Text variant="small">Online</Text>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <Avatar size="lg" status="away" src="https://picsum.photos/seed/user2/200" />
+                    <Text variant="small">Away</Text>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <Avatar size="lg" status="busy" src="https://picsum.photos/seed/user3/200" />
+                    <Text variant="small">Busy</Text>
+                  </div>
+                  <div className="flex flex-col items-center gap-2">
+                    <Avatar size="lg" status="offline" src="https://picsum.photos/seed/user4/200" />
+                    <Text variant="small">Offline</Text>
+                  </div>
+                </div>
+              </Card>
+
+              <Card title="Avatar Groups" subtitle="Displaying multiple users in a compact stack." accent="info">
+                <div className="space-y-8 py-4">
+                  <AvatarGroup max={3}>
+                    <Avatar name="Alice" src="https://picsum.photos/seed/a/100" />
+                    <Avatar name="Bob" src="https://picsum.photos/seed/b/100" />
+                    <Avatar name="Charlie" src="https://picsum.photos/seed/c/100" />
+                    <Avatar name="David" src="https://picsum.photos/seed/d/100" />
+                    <Avatar name="Eve" src="https://picsum.photos/seed/e/100" />
+                  </AvatarGroup>
+                  
+                  <AvatarGroup max={5} size="sm">
+                    <Avatar name="User 1" />
+                    <Avatar name="User 2" />
+                    <Avatar name="User 3" />
+                    <Avatar name="User 4" />
+                    <Avatar name="User 5" />
+                    <Avatar name="User 6" />
+                    <Avatar name="User 7" />
+                  </AvatarGroup>
+                </div>
+              </Card>
+
+              <Card title="Fallbacks & Borders" subtitle="Handling missing images and high-contrast backgrounds.">
+                <div className="flex gap-4 py-4">
+                  <Avatar name="System Admin" border />
+                  <Avatar name="Guest User" border className="bg-indigo-600 text-white" />
+                  <Avatar src="broken-link" name="Fallback User" />
+                  <div className="p-2 bg-slate-900 rounded-xl">
+                    <Avatar name="Dark Mode" border />
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        );
+      case 'NavigationBar':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">System Navigation Bar</Text>
+              <Text variant="small">A high-fidelity top-level navigation component for application-wide routing and global actions.</Text>
+            </header>
+
+            <div className="space-y-8">
+              <Card title="Default Variant" subtitle="Clean, standard navigation for most applications." padding="none">
+                <NavigationBar 
+                  title="FORGE OS" 
+                  items={demoNavItems} 
+                  activeId={activeNavId} 
+                  onSelect={setActiveNavId}
+                  rightContent={
+                    <div className="flex items-center gap-2">
+                      <Button variant="ghost" size="sm">🔔</Button>
+                      <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-[10px] font-black">JD</div>
+                    </div>
+                  }
+                />
+                <div className="h-32 flex items-center justify-center bg-slate-50 text-slate-400 text-xs italic">
+                  Main content area for: {activeNavId.toUpperCase()}
+                </div>
+              </Card>
+
+              <Card title="Glassmorphism Variant" subtitle="Modern, translucent design for immersive interfaces." padding="none" className="bg-gradient-to-br from-indigo-500/20 to-rose-500/20 p-8">
+                <NavigationBar 
+                  variant="glass"
+                  title="AETHER" 
+                  items={demoNavItems.slice(0, 3)} 
+                  activeId={activeNavId} 
+                  onSelect={setActiveNavId}
+                  className="rounded-2xl shadow-2xl shadow-indigo-500/10"
+                />
+                <div className="h-32" />
+              </Card>
+
+              <Card title="Dark Variant" subtitle="High-contrast navigation for dark mode or specific themes." padding="none">
+                <NavigationBar 
+                  variant="dark"
+                  title="TERMINAL" 
+                  items={demoNavItems} 
+                  activeId={activeNavId} 
+                  onSelect={setActiveNavId}
+                  rightContent={<Status type="success" label="SYSTEM ONLINE" />}
+                />
+                <div className="h-32 bg-slate-950 flex items-center justify-center text-emerald-500 font-mono text-xs">
+                  [root@forge ~]# cd /var/log/syslog
+                </div>
+              </Card>
+            </div>
+          </div>
+        );
       case 'TreeMap':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">

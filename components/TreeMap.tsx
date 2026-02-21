@@ -33,11 +33,11 @@ const TreeMap: React.FC<TreeMapProps> = ({
       .paddingInner(1)
       .round(true);
 
-    treemap(root);
+    treemap(root as d3.HierarchyNode<TreeMapNode>);
 
     const nodes = svg
       .selectAll('g')
-      .data(root.leaves())
+      .data(root.leaves() as d3.HierarchyRectangularNode<TreeMapNode>[])
       .enter()
       .append('g')
       .attr('transform', (d) => `translate(${d.x0},${d.y0})`);
