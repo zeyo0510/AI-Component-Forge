@@ -90,6 +90,7 @@ import Accordion from './components/Accordion';
 import Carousel, { CarouselItem } from './components/Carousel';
 import Drawer from './components/Drawer';
 import LevelMeter from './components/LevelMeter';
+import PinTextBox from './components/PinTextBox';
 import Divider from './components/Divider';
 
 import { 
@@ -511,7 +512,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -535,6 +536,76 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'PinTextBox':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Secure PIN Input</Text>
+              <Text variant="small">Individual character input fields for multi-factor authentication, security codes, or transaction verification.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Standard Verification" subtitle="6-digit numeric code entry">
+                <div className="py-6 flex flex-col items-center">
+                  <PinTextBox 
+                    label="Verification Code" 
+                    onComplete={(pin) => alert(`PIN Completed: ${pin}`)} 
+                  />
+                  <Text variant="small" className="mt-6 text-slate-400">A 6-digit code was sent to your registered device.</Text>
+                </div>
+              </Card>
+
+              <Card title="Masked Input" subtitle="Secure 4-digit password entry" accent="primary">
+                <div className="py-6 flex flex-col items-center">
+                  <PinTextBox 
+                    length={4} 
+                    mask 
+                    label="Security PIN" 
+                    onComplete={(pin) => alert(`Secure PIN: ${pin}`)} 
+                  />
+                  <Text variant="small" className="mt-6 text-slate-400">Enter your 4-digit security PIN to proceed.</Text>
+                </div>
+              </Card>
+
+              <Card title="Error State" subtitle="Validation feedback visualization" accent="error">
+                <div className="py-6 flex flex-col items-center">
+                  <PinTextBox 
+                    length={5} 
+                    error="Invalid code. Please try again." 
+                    label="Access Token" 
+                  />
+                </div>
+              </Card>
+
+              <Card title="Disabled State" subtitle="Read-only or locked input" variant="flat">
+                <div className="py-6 flex flex-col items-center">
+                  <PinTextBox 
+                    disabled 
+                    label="System Locked" 
+                  />
+                  <Text variant="small" className="mt-6 text-slate-400">Input is disabled during system maintenance.</Text>
+                </div>
+              </Card>
+            </div>
+
+            <Card title="Implementation Details" variant="outline">
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+                  <div className="space-y-2">
+                    <Text variant="h4">Auto-Focus</Text>
+                    <Text variant="small">Automatically shifts focus to the next input field upon character entry for a seamless user experience.</Text>
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="h4">Paste Support</Text>
+                    <Text variant="small">Supports pasting full codes from the clipboard, automatically distributing characters across fields.</Text>
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="h4">Smart Navigation</Text>
+                    <Text variant="small">Handles backspace navigation and numeric-only validation to prevent invalid input.</Text>
+                  </div>
+               </div>
+            </Card>
+          </div>
+        );
       case 'LevelMeter':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
