@@ -91,6 +91,7 @@ import Carousel, { CarouselItem } from './components/Carousel';
 import Drawer from './components/Drawer';
 import LevelMeter from './components/LevelMeter';
 import PinTextBox from './components/PinTextBox';
+import MaskedTextBox from './components/MaskedTextBox';
 import Divider from './components/Divider';
 
 import { 
@@ -512,7 +513,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -536,6 +537,94 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'MaskedTextBox':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Input Masking System</Text>
+              <Text variant="small">Enforce specific data formats for sensitive or structured inputs like phone numbers, credit cards, and license keys.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Financial Data" subtitle="Credit card and currency formatting" accent="primary">
+                <div className="space-y-6 py-4">
+                  <MaskedTextBox 
+                    label="Card Number" 
+                    mask="9999-9999-9999-9999" 
+                    placeholder="XXXX-XXXX-XXXX-XXXX"
+                  />
+                  <MaskedTextBox 
+                    label="Expiry Date" 
+                    mask="99/99" 
+                    placeholder="MM/YY"
+                  />
+                </div>
+              </Card>
+
+              <Card title="Contact Information" subtitle="Phone and regional formatting">
+                <div className="space-y-6 py-4">
+                  <MaskedTextBox 
+                    label="US Phone Number" 
+                    mask="(999) 999-9999" 
+                  />
+                  <MaskedTextBox 
+                    label="International ID" 
+                    mask="AAA-999-***" 
+                    placeholder="ABC-123-XYZ"
+                  />
+                </div>
+              </Card>
+
+              <Card title="System Credentials" subtitle="Software keys and serial numbers" accent="info">
+                <div className="space-y-6 py-4">
+                  <MaskedTextBox 
+                    label="Product License" 
+                    mask="AAAAA-AAAAA-AAAAA-AAAAA" 
+                    placeholder="5-CHAR GROUPS"
+                  />
+                  <MaskedTextBox 
+                    label="Hardware Serial" 
+                    mask="99-AAA-9999" 
+                  />
+                </div>
+              </Card>
+
+              <Card title="Validation States" subtitle="Error and disabled feedback" accent="error">
+                <div className="space-y-6 py-4">
+                  <MaskedTextBox 
+                    label="Invalid Zip Code" 
+                    mask="99999-9999" 
+                    value="123"
+                    error="Incomplete zip code format"
+                  />
+                  <MaskedTextBox 
+                    label="Locked Field" 
+                    mask="999-99-9999" 
+                    disabled
+                    placeholder="LOCKED"
+                  />
+                </div>
+              </Card>
+            </div>
+
+            <Card title="Pattern Reference" variant="outline">
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+                  <div className="space-y-2">
+                    <Text variant="h4">9 (Numeric)</Text>
+                    <Text variant="small">Restricts input to digits 0-9. Perfect for dates, amounts, and phone numbers.</Text>
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="h4">A (Alpha)</Text>
+                    <Text variant="small">Restricts input to letters A-Z (case insensitive). Useful for codes and IDs.</Text>
+                  </div>
+                  <div className="space-y-2">
+                    <Text variant="h4">* (Wildcard)</Text>
+                    <Text variant="small">Allows any alphanumeric character. Ideal for mixed-format serial keys.</Text>
+                  </div>
+               </div>
+            </Card>
+          </div>
+        );
       case 'PinTextBox':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
