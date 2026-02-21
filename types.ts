@@ -201,3 +201,10 @@ export interface MapLocation {
   details?: string;
   metrics?: { label: string; value: string }[];
 }
+
+export interface TreeMapNode {
+  name: string;
+  value?: number;
+  children?: TreeMapNode[];
+  color?: string;
+}

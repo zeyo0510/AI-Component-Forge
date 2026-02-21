@@ -92,6 +92,7 @@ import Drawer from './components/Drawer';
 import LevelMeter from './components/LevelMeter';
 import PinTextBox from './components/PinTextBox';
 import MaskedTextBox from './components/MaskedTextBox';
+import TreeMap from './components/TreeMap';
 import Divider from './components/Divider';
 
 import { 
@@ -116,7 +117,8 @@ import {
   StatusType,
   GanttTask,
   TourStep,
-  MapLocation
+  MapLocation,
+  TreeMapNode
 } from './types';
 import { generateDemoContent } from './services/geminiService';
 
@@ -447,6 +449,43 @@ const demoTourSteps: TourStep[] = [
   { targetSelector: '#ai-lab-card', title: 'Gemini AI Integration', content: 'Trigger real-time content generation via Gemini Flash 3.0.', position: 'top' },
 ];
 
+const demoTreeMapData: TreeMapNode = {
+  name: 'Root',
+  children: [
+    {
+      name: 'Infrastructure',
+      children: [
+        { name: 'AWS Cluster', value: 4500, color: '#6366f1' },
+        { name: 'GCP Nodes', value: 3200, color: '#4f46e5' },
+        { name: 'Azure Edge', value: 1800, color: '#4338ca' },
+      ]
+    },
+    {
+      name: 'Services',
+      children: [
+        { name: 'Auth API', value: 2100, color: '#10b981' },
+        { name: 'Vector DB', value: 3800, color: '#059669' },
+        { name: 'Storage', value: 1200, color: '#047857' },
+      ]
+    },
+    {
+      name: 'AI Models',
+      children: [
+        { name: 'Gemini Flash', value: 5600, color: '#f59e0b' },
+        { name: 'Gemini Pro', value: 2800, color: '#d97706' },
+        { name: 'Imagen', value: 1500, color: '#b45309' },
+      ]
+    },
+    {
+      name: 'Analytics',
+      children: [
+        { name: 'Telemetry', value: 900, color: '#ec4899' },
+        { name: 'User Logs', value: 1400, color: '#db2777' },
+      ]
+    }
+  ]
+};
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('Overview');
   const [toggleEnabled, setToggleEnabled] = useState(false);
@@ -513,7 +552,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -537,6 +576,36 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'TreeMap':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Hierarchical Data Map</Text>
+              <Text variant="small">Visualizing complex nested structures using area-proportional tiling for instant resource distribution analysis.</Text>
+            </header>
+
+            <Card title="System Resource Distribution" subtitle="Proportional allocation across infrastructure and services" accent="primary">
+              <div className="p-4">
+                <TreeMap data={demoTreeMapData} height={500} />
+              </div>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Interactive Exploration" variant="outline">
+                <Text variant="small" className="mb-4">Hover over segments to view precise values and metadata. The color coding helps distinguish between different logical groups.</Text>
+                <div className="flex flex-wrap gap-2">
+                  <Status type="info" label="Infrastructure" />
+                  <Status type="success" label="Services" />
+                  <Status type="warning" label="AI Models" />
+                  <Status type="error" label="Analytics" />
+                </div>
+              </Card>
+              <Card title="Dynamic Scaling" variant="outline">
+                <Text variant="small">The TreeMap automatically recalculates its layout when the container size changes, ensuring optimal use of available screen real estate.</Text>
+              </Card>
+            </div>
+          </div>
+        );
       case 'MaskedTextBox':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
