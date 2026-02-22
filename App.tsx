@@ -96,6 +96,7 @@ import TreeMap from './components/TreeMap';
 import NavigationBar from './components/NavigationBar';
 import Avatar, { AvatarGroup } from './components/Avatar';
 import Link from './components/Link';
+import Spinner from './components/Spinner';
 import Divider from './components/Divider';
 
 import { 
@@ -564,7 +565,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -588,6 +589,66 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Spinner':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Loading Spinners</Text>
+              <Text variant="small">Visual indicators for asynchronous operations, providing feedback that a process is underway.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Sizes" subtitle="From extra small to extra large.">
+                <div className="flex items-center gap-8 py-4">
+                  <Spinner size="xs" />
+                  <Spinner size="sm" />
+                  <Spinner size="md" />
+                  <Spinner size="lg" />
+                  <Spinner size="xl" />
+                </div>
+              </Card>
+
+              <Card title="Variants" subtitle="Different color styles for various backgrounds.">
+                <div className="flex items-center gap-8 py-4">
+                  <Spinner variant="primary" />
+                  <Spinner variant="secondary" />
+                  <Spinner variant="slate" />
+                  <div className="p-2 bg-indigo-600 rounded-lg">
+                    <Spinner variant="white" />
+                  </div>
+                </div>
+              </Card>
+
+              <Card title="Thickness" subtitle="Adjusting the weight of the spinner ring.">
+                <div className="flex items-center gap-8 py-4">
+                  <Spinner thickness="thin" size="lg" />
+                  <Spinner thickness="normal" size="lg" />
+                  <Spinner thickness="thick" size="lg" />
+                </div>
+              </Card>
+
+              <Card title="With Labels" subtitle="Providing textual context to the loading state.">
+                <div className="flex flex-wrap gap-8 py-4">
+                  <Spinner label="Loading data..." />
+                  <Spinner variant="secondary" label="Processing..." />
+                  <Spinner size="lg" label="Please wait" />
+                </div>
+              </Card>
+            </div>
+
+            <Card title="Practical Examples" subtitle="How spinners look in common UI patterns.">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-6 border border-slate-200 rounded-xl flex items-center justify-center bg-slate-50 min-h-[120px]">
+                  <Spinner size="lg" label="Fetching system logs" />
+                </div>
+                <div className="p-6 border border-slate-200 rounded-xl flex flex-col items-center justify-center gap-4">
+                  <Text variant="small" className="text-center">Your report is being generated. This may take a few moments.</Text>
+                  <Spinner variant="secondary" thickness="thick" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        );
       case 'Link':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
