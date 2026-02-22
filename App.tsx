@@ -97,6 +97,7 @@ import NavigationBar from './components/NavigationBar';
 import Avatar, { AvatarGroup } from './components/Avatar';
 import Link from './components/Link';
 import Spinner from './components/Spinner';
+import Popover from './components/Popover';
 import Divider from './components/Divider';
 
 import { 
@@ -565,7 +566,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -589,6 +590,89 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Popover':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Floating Popovers</Text>
+              <Text variant="small">Contextual overlays that appear when interacting with a trigger element, perfect for additional info or small forms.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Basic Usage" subtitle="Simple text content in a popover.">
+                <div className="flex justify-center py-8">
+                  <Popover 
+                    trigger={<Button variant="outline">Click me</Button>}
+                  >
+                    <div className="space-y-2">
+                      <Text variant="h4">Information</Text>
+                      <Text variant="small">This is a basic popover with some simple text content inside it.</Text>
+                    </div>
+                  </Popover>
+                </div>
+              </Card>
+
+              <Card title="Positions" subtitle="Top, bottom, left, and right placement.">
+                <div className="grid grid-cols-2 gap-4 py-4">
+                  <Popover position="top" trigger={<Button variant="ghost" size="sm" className="w-full">Top</Button>}>
+                    <Text variant="small">Popover on top</Text>
+                  </Popover>
+                  <Popover position="bottom" trigger={<Button variant="ghost" size="sm" className="w-full">Bottom</Button>}>
+                    <Text variant="small">Popover on bottom</Text>
+                  </Popover>
+                  <Popover position="left" trigger={<Button variant="ghost" size="sm" className="w-full">Left</Button>}>
+                    <Text variant="small">Popover on left</Text>
+                  </Popover>
+                  <Popover position="right" trigger={<Button variant="ghost" size="sm" className="w-full">Right</Button>}>
+                    <Text variant="small">Popover on right</Text>
+                  </Popover>
+                </div>
+              </Card>
+
+              <Card title="Rich Content" subtitle="Including buttons, avatars, and more.">
+                <div className="flex justify-center py-8">
+                  <Popover 
+                    trigger={
+                      <div className="flex items-center gap-2 p-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                        <Avatar size="sm" name="Alex Rivera" />
+                        <Text variant="small" className="font-bold">Alex Rivera</Text>
+                      </div>
+                    }
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <Avatar size="lg" name="Alex Rivera" />
+                        <div>
+                          <Text className="font-bold">Alex Rivera</Text>
+                          <Text variant="small" className="text-slate-500">Senior Designer</Text>
+                        </div>
+                      </div>
+                      <Divider />
+                      <div className="flex flex-col gap-2">
+                        <Button size="sm" variant="outline" className="w-full justify-start">View Profile</Button>
+                        <Button size="sm" variant="outline" className="w-full justify-start">Send Message</Button>
+                      </div>
+                    </div>
+                  </Popover>
+                </div>
+              </Card>
+
+              <Card title="Alignment" subtitle="Start, center, and end alignment.">
+                <div className="flex flex-col gap-4 py-4">
+                  <Popover align="start" trigger={<Button variant="ghost" size="sm" className="w-full justify-start">Align Start</Button>}>
+                    <Text variant="small">Aligned to the start of the trigger.</Text>
+                  </Popover>
+                  <Popover align="center" trigger={<Button variant="ghost" size="sm" className="w-full justify-center">Align Center</Button>}>
+                    <Text variant="small">Aligned to the center of the trigger.</Text>
+                  </Popover>
+                  <Popover align="end" trigger={<Button variant="ghost" size="sm" className="w-full justify-end">Align End</Button>}>
+                    <Text variant="small">Aligned to the end of the trigger.</Text>
+                  </Popover>
+                </div>
+              </Card>
+            </div>
+          </div>
+        );
       case 'Spinner':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
