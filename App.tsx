@@ -95,6 +95,7 @@ import MaskedTextBox from './components/MaskedTextBox';
 import TreeMap from './components/TreeMap';
 import NavigationBar from './components/NavigationBar';
 import Avatar, { AvatarGroup } from './components/Avatar';
+import Link from './components/Link';
 import Divider from './components/Divider';
 
 import { 
@@ -563,7 +564,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -587,6 +588,59 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Link':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Interactive Links</Text>
+              <Text variant="small">Navigation elements that connect users to other pages or resources with various styles and behaviors.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Variants & Colors" subtitle="Different visual styles for different contexts.">
+                <div className="flex flex-col gap-4 py-4">
+                  <Link href="#" variant="primary">Primary Link (Indigo)</Link>
+                  <Link href="#" variant="secondary">Secondary Link (Slate)</Link>
+                  <Link href="#" variant="subtle">Subtle Link (Light Slate)</Link>
+                  <Link href="#" variant="danger">Danger Link (Rose)</Link>
+                </div>
+              </Card>
+
+              <Card title="Underline Behaviors" subtitle="Controlling when the underline appears.">
+                <div className="flex flex-col gap-4 py-4">
+                  <Link href="#" underline="hover">Underline on Hover (Default)</Link>
+                  <Link href="#" underline="always">Always Underlined</Link>
+                  <Link href="#" underline="none">No Underline</Link>
+                </div>
+              </Card>
+
+              <Card title="Icons & Positions" subtitle="Enhancing links with visual cues.">
+                <div className="flex flex-col gap-4 py-4">
+                  <Link href="#" icon={<span>🌐</span>}>Visit Website</Link>
+                  <Link href="#" icon={<span>↗️</span>} iconPosition="right">External Resource</Link>
+                  <Link href="#" icon={<span>📥</span>} variant="secondary">Download Assets</Link>
+                  <Link href="#" icon={<span>🗑️</span>} variant="danger">Delete Permanently</Link>
+                </div>
+              </Card>
+
+              <Card title="Sizes" subtitle="Adapting to different content densities.">
+                <div className="flex items-end gap-6 py-4">
+                  <Link href="#" size="sm">Small Link</Link>
+                  <Link href="#" size="md">Medium Link</Link>
+                  <Link href="#" size="lg">Large Link</Link>
+                </div>
+              </Card>
+            </div>
+
+            <Card title="Inline Usage" subtitle="How links look within a block of text.">
+              <div className="p-4 bg-slate-50 rounded-xl">
+                <Text>
+                  Welcome to our platform! Please read our <Link href="#" underline="always">Privacy Policy</Link> and <Link href="#" underline="always">Terms of Service</Link> before continuing. If you have any questions, you can <Link href="#" icon={<span>📧</span>}>contact our support team</Link> at any time. We are here to help you <Link href="#" variant="secondary" underline="always">succeed</Link> in your journey.
+                </Text>
+              </div>
+            </Card>
+          </div>
+        );
       case 'Avatar':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
