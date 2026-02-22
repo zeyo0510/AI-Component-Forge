@@ -106,6 +106,8 @@ import BubbleChart from './components/BubbleChart';
 import DonutChart from './components/DonutChart';
 import FunnelChart from './components/FunnelChart';
 import GanttChart from './components/GanttChart';
+import StepChart from './components/StepChart';
+import PolarPlot from './components/PolarPlot';
 import Divider from './components/Divider';
 
 import { 
@@ -575,7 +577,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'GanttChart', 'FunnelChart', 'DonutChart', 'BubbleChart', 'BarChart', 'PieChart', 'LineChart', 'CandlestickChart', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'PolarPlot', 'StepChart', 'GanttChart', 'FunnelChart', 'DonutChart', 'BubbleChart', 'BarChart', 'PieChart', 'LineChart', 'CandlestickChart', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -599,6 +601,127 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'PolarPlot':
+        const skillData = [
+          { axis: 'Strength', value: 85 },
+          { axis: 'Agility', value: 70 },
+          { axis: 'Intelligence', value: 90 },
+          { axis: 'Stamina', value: 65 },
+          { axis: 'Luck', value: 50 },
+          { axis: 'Charisma', value: 75 },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Polar / Radar Analysis</Text>
+              <Text variant="small">A graphical method of displaying multivariate data in the form of a two-dimensional chart of three or more quantitative variables.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Character Attributes" subtitle="Multi-dimensional performance metrics.">
+                <div className="p-4 flex justify-center">
+                  <PolarPlot data={skillData} size={400} color="#6366f1" maxValue={100} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Market Fit" subtitle="Product vs Competitor analysis.">
+                  <div className="p-4 flex justify-center">
+                    <PolarPlot 
+                      data={[
+                        { axis: 'Price', value: 40 },
+                        { axis: 'Quality', value: 95 },
+                        { axis: 'Speed', value: 80 },
+                        { axis: 'Support', value: 60 },
+                        { axis: 'Design', value: 85 },
+                      ]} 
+                      size={300} 
+                      color="#10b981"
+                      maxValue={100}
+                    />
+                  </div>
+                </Card>
+                <Card title="Team Velocity" subtitle="Sprint performance across domains.">
+                  <div className="p-4 flex justify-center">
+                    <PolarPlot 
+                      data={[
+                        { axis: 'Frontend', value: 9 },
+                        { axis: 'Backend', value: 7 },
+                        { axis: 'DevOps', value: 4 },
+                        { axis: 'QA', value: 8 },
+                        { axis: 'UX', value: 10 },
+                      ]} 
+                      size={300} 
+                      color="#f59e0b"
+                      maxValue={10}
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'StepChart':
+        const inventoryData = [
+          { label: 'Jan', value: 120 },
+          { label: 'Feb', value: 150 },
+          { label: 'Mar', value: 150 },
+          { label: 'Apr', value: 200 },
+          { label: 'May', value: 180 },
+          { label: 'Jun', value: 220 },
+          { label: 'Jul', value: 220 },
+          { label: 'Aug', value: 250 },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Step Progress Visualization</Text>
+              <Text variant="small">Ideal for showing changes that occur at discrete intervals, such as interest rates or inventory levels.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Inventory Levels" subtitle="Monthly stock count with discrete transitions.">
+                <div className="p-4">
+                  <StepChart data={inventoryData} height={350} color="#10b981" />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Price Adjustments" subtitle="Tracking SKU pricing history.">
+                  <div className="p-4">
+                    <StepChart 
+                      data={[
+                        { label: 'v1.0', value: 49 },
+                        { label: 'v1.1', value: 59 },
+                        { label: 'v1.2', value: 59 },
+                        { label: 'v2.0', value: 89 },
+                      ]} 
+                      height={250} 
+                      color="#f59e0b"
+                    />
+                  </div>
+                </Card>
+                <Card title="System Capacity" subtitle="Server node scaling events.">
+                  <div className="p-4">
+                    <StepChart 
+                      data={[
+                        { label: '08:00', value: 2 },
+                        { label: '10:00', value: 5 },
+                        { label: '12:00', value: 8 },
+                        { label: '14:00', value: 8 },
+                        { label: '16:00', value: 4 },
+                      ]} 
+                      height={250} 
+                      color="#3b82f6"
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
       case 'GanttChart':
         const projectTasks = [
           { id: '1', name: 'Planning', start: new Date(2024, 0, 1), end: new Date(2024, 0, 5), progress: 100, color: '#6366f1' },
