@@ -98,6 +98,14 @@ import Avatar, { AvatarGroup } from './components/Avatar';
 import Link from './components/Link';
 import Spinner from './components/Spinner';
 import Popover from './components/Popover';
+import CandlestickChart from './components/CandlestickChart';
+import LineChart from './components/LineChart';
+import PieChart from './components/PieChart';
+import BarChart from './components/BarChart';
+import BubbleChart from './components/BubbleChart';
+import DonutChart from './components/DonutChart';
+import FunnelChart from './components/FunnelChart';
+import GanttChart from './components/GanttChart';
 import Divider from './components/Divider';
 
 import { 
@@ -124,7 +132,8 @@ import {
   TourStep,
   MapLocation,
   TreeMapNode,
-  NavItem
+  NavItem,
+  CandlestickData
 } from './types';
 import { generateDemoContent } from './services/geminiService';
 
@@ -566,7 +575,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'GanttChart', 'FunnelChart', 'DonutChart', 'BubbleChart', 'BarChart', 'PieChart', 'LineChart', 'CandlestickChart', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -590,6 +599,412 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'GanttChart':
+        const projectTasks = [
+          { id: '1', name: 'Planning', start: new Date(2024, 0, 1), end: new Date(2024, 0, 5), progress: 100, color: '#6366f1' },
+          { id: '2', name: 'Design', start: new Date(2024, 0, 6), end: new Date(2024, 0, 15), progress: 80, dependencies: ['1'], color: '#8b5cf6' },
+          { id: '3', name: 'Development', start: new Date(2024, 0, 16), end: new Date(2024, 1, 15), progress: 30, dependencies: ['2'], color: '#a855f7' },
+          { id: '4', name: 'Testing', start: new Date(2024, 1, 16), end: new Date(2024, 1, 28), progress: 0, dependencies: ['3'], color: '#d946ef' },
+          { id: '5', name: 'Deployment', start: new Date(2024, 2, 1), end: new Date(2024, 2, 5), progress: 0, dependencies: ['4'], color: '#ec4899' },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Project Timeline (Gantt)</Text>
+              <Text variant="small">Visualizing project schedules, task durations, and dependencies over time.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Product Roadmap" subtitle="Q1 2024 Development Schedule">
+                <div className="p-4">
+                  <GanttChart tasks={projectTasks} height={450} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Dependency Tracking" subtitle="Visualizing critical paths">
+                  <Text variant="small">The chart automatically renders dependency lines between tasks, helping teams identify bottlenecks and sequential requirements.</Text>
+                </Card>
+                <Card title="Progress Monitoring" subtitle="Real-time status updates">
+                  <Text variant="small">Each task bar features an integrated progress indicator, providing an immediate visual sense of completion status relative to the timeline.</Text>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'FunnelChart':
+        const salesFunnelData = [
+          { label: 'Website Visits', value: 12500, color: '#6366f1' },
+          { label: 'Product Views', value: 8200, color: '#8b5cf6' },
+          { label: 'Add to Cart', value: 4100, color: '#a855f7' },
+          { label: 'Checkout', value: 2500, color: '#d946ef' },
+          { label: 'Purchase', value: 1800, color: '#ec4899' },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Sales Funnel Analysis</Text>
+              <Text variant="small">Visualizing the progressive reduction of data as it passes through various stages of a process.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Conversion Pipeline" subtitle="Tracking user journey from initial visit to final purchase.">
+                <div className="p-4">
+                  <FunnelChart data={salesFunnelData} height={450} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Recruitment Funnel" subtitle="Simplifying the hiring process stages.">
+                  <div className="p-4">
+                    <FunnelChart 
+                      data={[
+                        { label: 'Applications', value: 500 },
+                        { label: 'Screening', value: 150 },
+                        { label: 'Interview', value: 40 },
+                        { label: 'Offer', value: 12 },
+                        { label: 'Hired', value: 8 },
+                      ]} 
+                      height={300} 
+                    />
+                  </div>
+                </Card>
+                <Card title="Marketing Campaign" subtitle="Lead generation efficiency.">
+                  <div className="p-4">
+                    <FunnelChart 
+                      data={[
+                        { label: 'Impressions', value: 50000, color: '#10b981' },
+                        { label: 'Clicks', value: 2500, color: '#3b82f6' },
+                        { label: 'Leads', value: 300, color: '#f59e0b' },
+                      ]} 
+                      height={300} 
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'DonutChart':
+        const deviceData = [
+          { label: 'Mobile', value: 5420, color: '#6366f1' },
+          { label: 'Desktop', value: 3210, color: '#8b5cf6' },
+          { label: 'Tablet', value: 1150, color: '#a855f7' },
+          { label: 'Smart TV', value: 450, color: '#d946ef' },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Donut Visualization</Text>
+              <Text variant="small">A variation of the pie chart with a blank center, often used to display a total value or key metric.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Traffic by Device" subtitle="Session distribution across different platform types.">
+                <div className="p-8">
+                  <DonutChart data={deviceData} size={320} thickness={70} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Thin Ring" subtitle="Minimalist aesthetic with reduced thickness.">
+                  <div className="p-8">
+                    <DonutChart 
+                      data={deviceData} 
+                      size={280} 
+                      thickness={30} 
+                    />
+                  </div>
+                </Card>
+                <Card title="Storage Usage" subtitle="Visualizing disk space allocation.">
+                  <div className="p-8">
+                    <DonutChart 
+                      data={[
+                        { label: 'System', value: 120, color: '#f43f5e' },
+                        { label: 'Apps', value: 85, color: '#3b82f6' },
+                        { label: 'Media', value: 240, color: '#10b981' },
+                        { label: 'Free', value: 60, color: '#e2e8f0' },
+                      ]} 
+                      size={280} 
+                      thickness={50}
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'BubbleChart':
+        const marketData = [
+          { label: 'Product A', x: 25, y: 45, size: 300, color: '#6366f1' },
+          { label: 'Product B', x: 45, y: 85, size: 500, color: '#8b5cf6' },
+          { label: 'Product C', x: 65, y: 35, size: 200, color: '#a855f7' },
+          { label: 'Product D', x: 85, y: 65, size: 450, color: '#d946ef' },
+          { label: 'Product E', x: 35, y: 25, size: 150, color: '#ec4899' },
+          { label: 'Product F', x: 55, y: 55, size: 350, color: '#f43f5e' },
+          { label: 'Product G', x: 75, y: 15, size: 100, color: '#f97316' },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Multidimensional Bubble Charts</Text>
+              <Text variant="small">Visualizing relationships between three variables: X-position, Y-position, and bubble size.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Market Analysis" subtitle="Comparing product performance across cost, revenue, and market share.">
+                <div className="p-4">
+                  <BubbleChart 
+                    data={marketData} 
+                    height={450} 
+                    xAxisLabel="Market Share (%)" 
+                    yAxisLabel="Growth Rate (%)" 
+                  />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Efficiency vs Output" subtitle="Technical performance metrics.">
+                  <div className="p-4">
+                    <BubbleChart 
+                      data={[
+                        { label: 'Node 1', x: 10, y: 20, size: 50 },
+                        { label: 'Node 2', x: 30, y: 40, size: 150 },
+                        { label: 'Node 3', x: 50, y: 60, size: 250 },
+                        { label: 'Node 4', x: 70, y: 80, size: 350 },
+                      ]} 
+                      height={300} 
+                      xAxisLabel="Input" 
+                      yAxisLabel="Output"
+                    />
+                  </div>
+                </Card>
+                <Card title="Risk vs Reward" subtitle="Financial portfolio distribution.">
+                  <div className="p-4">
+                    <BubbleChart 
+                      data={[
+                        { label: 'Asset X', x: 80, y: 20, size: 400, color: '#10b981' },
+                        { label: 'Asset Y', x: 20, y: 80, size: 100, color: '#f43f5e' },
+                        { label: 'Asset Z', x: 50, y: 50, size: 250, color: '#3b82f6' },
+                      ]} 
+                      height={300} 
+                      xAxisLabel="Risk Level" 
+                      yAxisLabel="Expected Return"
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'BarChart':
+        const salesData = [
+          { label: 'Q1', value: 4500, color: '#6366f1' },
+          { label: 'Q2', value: 5200, color: '#8b5cf6' },
+          { label: 'Q3', value: 4800, color: '#a855f7' },
+          { label: 'Q4', value: 6100, color: '#d946ef' },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Comparative Bar Charts</Text>
+              <Text variant="small">Visualizing discrete data categories and their relative magnitudes with vertical or horizontal bars.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Quarterly Sales" subtitle="Revenue breakdown by fiscal quarter.">
+                <div className="p-4">
+                  <BarChart data={salesData} height={350} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Horizontal Comparison" subtitle="Best for long category labels.">
+                  <div className="p-4">
+                    <BarChart 
+                      data={[
+                        { label: 'Engineering', value: 85 },
+                        { label: 'Product Design', value: 72 },
+                        { label: 'Marketing', value: 64 },
+                        { label: 'Customer Success', value: 91 },
+                      ]} 
+                      height={300} 
+                      horizontal 
+                      barColor="#10b981" 
+                    />
+                  </div>
+                </Card>
+                <Card title="Category Breakdown" subtitle="Custom color mapping per bar.">
+                  <div className="p-4">
+                    <BarChart 
+                      data={[
+                        { label: 'Mobile', value: 45, color: '#f43f5e' },
+                        { label: 'Desktop', value: 35, color: '#3b82f6' },
+                        { label: 'Tablet', value: 20, color: '#eab308' },
+                      ]} 
+                      height={300} 
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'PieChart':
+        const marketShareData = [
+          { label: 'Chrome', value: 65, color: '#4285F4' },
+          { label: 'Safari', value: 18, color: '#34A853' },
+          { label: 'Firefox', value: 8, color: '#FBBC05' },
+          { label: 'Edge', value: 5, color: '#EA4335' },
+          { label: 'Others', value: 4, color: '#9AA0A6' },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Market Distribution</Text>
+              <Text variant="small">Visualizing proportional data and category breakdowns using circular representations.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Browser Market Share" subtitle="Global statistics for the current quarter.">
+                <div className="p-8">
+                  <PieChart data={marketShareData} size={320} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Donut Variant" subtitle="Using inner radius for a modern look.">
+                  <div className="p-8">
+                    <PieChart 
+                      data={marketShareData} 
+                      size={280} 
+                      innerRadius={80} 
+                    />
+                  </div>
+                </Card>
+                <Card title="Resource Allocation" subtitle="Custom data breakdown example.">
+                  <div className="p-8">
+                    <PieChart 
+                      data={[
+                        { label: 'Development', value: 45 },
+                        { label: 'Marketing', value: 25 },
+                        { label: 'Sales', value: 20 },
+                        { label: 'Support', value: 10 },
+                      ]} 
+                      size={280} 
+                      innerRadius={40}
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'LineChart':
+        const performanceData = [
+          { label: 'Jan', value: 45 },
+          { label: 'Feb', value: 52 },
+          { label: 'Mar', value: 48 },
+          { label: 'Apr', value: 70 },
+          { label: 'May', value: 61 },
+          { label: 'Jun', value: 85 },
+          { label: 'Jul', value: 78 },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Performance Analytics</Text>
+              <Text variant="small">Visualizing trends and data changes over a continuous interval with smooth line representations.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Revenue Growth" subtitle="Monthly performance metrics for the current fiscal year.">
+                <div className="p-4">
+                  <LineChart data={performanceData} height={350} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="User Engagement" subtitle="Simplified view without area fill.">
+                  <div className="p-4">
+                    <LineChart 
+                      data={performanceData} 
+                      height={250} 
+                      showArea={false} 
+                      lineColor="#10b981" 
+                    />
+                  </div>
+                </Card>
+                <Card title="System Load" subtitle="Custom color scheme for technical metrics.">
+                  <div className="p-4">
+                    <LineChart 
+                      data={performanceData.map(d => ({ ...d, value: Math.floor(Math.random() * 100) }))} 
+                      height={250} 
+                      lineColor="#f43f5e" 
+                      areaColor="#fff1f2" 
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
+      case 'CandlestickChart':
+        const stockData: CandlestickData[] = [
+          { date: 'Mon', open: 150, high: 158, low: 148, close: 155 },
+          { date: 'Tue', open: 155, high: 162, low: 154, close: 160 },
+          { date: 'Wed', open: 160, high: 161, low: 152, close: 153 },
+          { date: 'Thu', open: 153, high: 157, low: 150, close: 156 },
+          { date: 'Fri', open: 156, high: 165, low: 155, close: 163 },
+          { date: 'Sat', open: 163, high: 164, low: 158, close: 159 },
+          { date: 'Sun', open: 159, high: 168, low: 158, close: 166 },
+          { date: 'Mon ', open: 166, high: 170, low: 164, close: 168 },
+          { date: 'Tue ', open: 168, high: 175, low: 167, close: 172 },
+          { date: 'Wed ', open: 172, high: 173, low: 165, close: 166 },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Financial Candlestick Charts</Text>
+              <Text variant="small">Visualizing price movements over time with open, high, low, and close values.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Market Performance" subtitle="Daily price action for the current trading week.">
+                <div className="p-4">
+                  <CandlestickChart data={stockData} height={400} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Bullish Trend" subtitle="Example of positive price movement.">
+                  <div className="p-4">
+                    <CandlestickChart 
+                      data={stockData.filter(d => d.close >= d.open)} 
+                      height={200} 
+                    />
+                  </div>
+                </Card>
+                <Card title="Bearish Trend" subtitle="Example of negative price movement.">
+                  <div className="p-4">
+                    <CandlestickChart 
+                      data={stockData.filter(d => d.close < d.open)} 
+                      height={200} 
+                    />
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
       case 'Popover':
         return (
           <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">

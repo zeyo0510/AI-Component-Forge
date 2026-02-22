@@ -209,6 +209,14 @@ export interface TreeMapNode {
   color?: string;
 }
 
+export interface CandlestickData {
+  date: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+}
+
 export interface NavItem {
   id: string;
   label: string;
