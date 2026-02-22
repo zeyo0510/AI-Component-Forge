@@ -108,6 +108,7 @@ import FunnelChart from './components/FunnelChart';
 import GanttChart from './components/GanttChart';
 import StepChart from './components/StepChart';
 import PolarPlot from './components/PolarPlot';
+import BoxPlot from './components/BoxPlot';
 import Divider from './components/Divider';
 
 import { 
@@ -577,7 +578,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'PolarPlot', 'StepChart', 'GanttChart', 'FunnelChart', 'DonutChart', 'BubbleChart', 'BarChart', 'PieChart', 'LineChart', 'CandlestickChart', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'BoxPlot', 'PolarPlot', 'StepChart', 'GanttChart', 'FunnelChart', 'DonutChart', 'BubbleChart', 'BarChart', 'PieChart', 'LineChart', 'CandlestickChart', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -601,6 +602,50 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'BoxPlot':
+        const boxPlotData = [
+          { 
+            label: 'Group A', 
+            values: [12, 15, 17, 18, 19, 21, 22, 25, 28, 30, 35, 40, 5, 55],
+            color: '#6366f1'
+          },
+          { 
+            label: 'Group B', 
+            values: [22, 24, 25, 27, 28, 30, 32, 35, 38, 40, 42, 45, 10, 60],
+            color: '#8b5cf6'
+          },
+          { 
+            label: 'Group C', 
+            values: [15, 18, 20, 22, 23, 25, 26, 28, 30, 32, 34, 36, 8, 50],
+            color: '#a855f7'
+          },
+        ];
+
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Distribution Analysis (Box Plot)</Text>
+              <Text variant="small">Visualizing the distribution of numerical data and skewness through quartiles and outliers.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 gap-8">
+              <Card title="Statistical Distribution" subtitle="Five-number summary across different datasets.">
+                <div className="p-4">
+                  <BoxPlot data={boxPlotData} height={400} />
+                </div>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <Card title="Outlier Detection" subtitle="Identifying anomalies">
+                  <Text variant="small">The box plot automatically identifies and renders outliers—data points that fall significantly outside the typical range (1.5x IQR).</Text>
+                </Card>
+                <Card title="Comparative Analysis" subtitle="Group performance">
+                  <Text variant="small">Easily compare medians, ranges, and variance across multiple categories to identify performance gaps or consistency issues.</Text>
+                </Card>
+              </div>
+            </div>
+          </div>
+        );
       case 'PolarPlot':
         const skillData = [
           { axis: 'Strength', value: 85 },
