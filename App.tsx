@@ -109,6 +109,7 @@ import GanttChart from './components/GanttChart';
 import StepChart from './components/StepChart';
 import PolarPlot from './components/PolarPlot';
 import BoxPlot from './components/BoxPlot';
+import Counter from './components/Counter';
 import Divider from './components/Divider';
 
 import { 
@@ -578,7 +579,7 @@ const App: React.FC = () => {
   }, []);
 
   const componentsList = [
-    'Overview', 'BoxPlot', 'PolarPlot', 'StepChart', 'GanttChart', 'FunnelChart', 'DonutChart', 'BubbleChart', 'BarChart', 'PieChart', 'LineChart', 'CandlestickChart', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
+    'Overview', 'Counter', 'BoxPlot', 'PolarPlot', 'StepChart', 'GanttChart', 'FunnelChart', 'DonutChart', 'BubbleChart', 'BarChart', 'PieChart', 'LineChart', 'CandlestickChart', 'Popover', 'Spinner', 'Link', 'Avatar', 'NavigationBar', 'TreeMap', 'MaskedTextBox', 'PinTextBox', 'LevelMeter', 'Divider', 'Drawer', 'Carousel', 'Accordion', 'Map', 'Gallery', 'Dashboard', 'PivotTable', 'TimePicker', 'Tour', 'DatePicker', 'CompareSlider', 'Marquee', 'DataGrid', 'Blockquote', 'Skeleton', 'AngleSlider', 'ColorPicker', 'Paginator', 'SplitButton', 'NumericTextBox', 'Gauges', 'Gantt', 'TreeList', 'PivotGrid', 'Stepper', 'Splitter', 'Image', 'SlideDeck', 'RibbonMenu', 'Ribbon', 'Controls', 'Document', 'Slideshow', 'Spreadsheet', 'Rectangle', 'Circle', 'Triangle', 'Timer', 'Rating', 'Board', 'TrackBar', 'MenuBar', 'ToolBar', 'Countdown', 'Workflow', 'Schedule', 'Job', 'Range', 'Button', 'Breadcrumbs', 'Card', 'RadioButton', 'CheckButton', 
     'ToggleButton', 'Menu', 'Status', 'TreeView', 'ListView', 'DataTable',
     'Graph', 'Chart', 'Diagram', 'MindMap', 'Report', 'VideoPlayer', 'AudioPlayer',
     'Timeline', 'Grid', 'DropDown', 'ComboBox', 'StatusBar', 
@@ -602,6 +603,62 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     switch (activeTab) {
+      case 'Counter':
+        return (
+          <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-700 pb-12">
+            <header>
+              <Text variant="h3">Interactive Counter</Text>
+              <Text variant="small">A versatile numeric input component with smooth animations and state management.</Text>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <Card title="Standard Counter" subtitle="Default settings">
+                <div className="p-4 flex justify-center">
+                  <Counter label="Quantity" />
+                </div>
+              </Card>
+
+              <Card title="Bounded Counter" subtitle="Min: 0, Max: 10, Step: 2">
+                <div className="p-4 flex justify-center">
+                  <Counter label="Items" min={0} max={10} step={2} initialValue={4} />
+                </div>
+              </Card>
+
+              <Card title="Negative Range" subtitle="Starting at -50">
+                <div className="p-4 flex justify-center">
+                  <Counter label="Offset" initialValue={-50} step={10} />
+                </div>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card title="Usage Guidelines" subtitle="Best practices for counters">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">1</div>
+                    <Text variant="small">Use for small numeric adjustments where precise control is needed.</Text>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">2</div>
+                    <Text variant="small">Provide clear labels to indicate what the number represents.</Text>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">3</div>
+                    <Text variant="small">Set appropriate min/max bounds to prevent invalid data entry.</Text>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card title="Animation Details" subtitle="Motion & Feedback">
+                <Text variant="small">
+                  The counter uses <code className="bg-slate-100 px-1 rounded text-pink-500">AnimatePresence</code> for smooth digit transitions. 
+                  The layout shifts are minimized using <code className="bg-slate-100 px-1 rounded text-pink-500">popLayout</code> mode, 
+                  ensuring a premium feel during rapid interactions.
+                </Text>
+              </Card>
+            </div>
+          </div>
+        );
       case 'BoxPlot':
         const boxPlotData = [
           { 
